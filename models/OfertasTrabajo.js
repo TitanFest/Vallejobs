@@ -1,4 +1,4 @@
-// models/JobOffer.js
+// models/OfertasTrabajo.js
 
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database');
@@ -9,11 +9,19 @@ const OfertasTrabajo = sequelize.define('OfertasTrabajo', {
         autoIncrement: true,
         primaryKey: true,
     },
-    titulo: {
-        type: DataTypes.STRING,
+    // Llave foránea: quién publicó la oferta
+    userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: { model: 'users', key: 'id' },
     },
-    categoria: {
+    // Llave foránea: categoría de la oferta
+    categoriaId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: { model: 'categoria', key: 'id' },
+    },
+    titulo: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -28,26 +36,12 @@ const OfertasTrabajo = sequelize.define('OfertasTrabajo', {
     salario: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        validate: {
-            isInt: true,
-        },
+        validate: { isInt: true },
     },
-    postulantes: {
-        type: DataTypes.JSON,
-        allowNull: true,
-        get() {
-            return this.getDataValue('postulantes') 
-                ? JSON.parse(this.getDataValue('postulantes')) 
-                : [];
-        },
-        set(value) {
-            this.setDataValue('postulantes', JSON.stringify(value));
-        },
-    },
-    
     estado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
     },
     descripcion: {
         type: DataTypes.TEXT,
@@ -57,24 +51,15 @@ const OfertasTrabajo = sequelize.define('OfertasTrabajo', {
         type: DataTypes.JSON,
         allowNull: true,
         get() {
-            return this.getDataValue('requerimientos') 
-                ? JSON.parse(this.getDataValue('requerimientos')) 
-                : [];
+            const val = this.getDataValue('requerimientos');
+            return val ? (typeof val === 'string' ? JSON.parse(val) : val) : [];
         },
         set(value) {
             this.setDataValue('requerimientos', JSON.stringify(value));
         },
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    },
 }, {
-    tableName: 'ofertasTrabajo', 
+    tableName: 'ofertasTrabajo',
 });
 
 module.exports = OfertasTrabajo;

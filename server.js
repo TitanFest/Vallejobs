@@ -3,9 +3,10 @@
 const express = require('express');
 const { testConnection, sequelize } = require('./database');
 require('dotenv').config();
-const User = require('./models/User');
-const OfertasTrabajo = require('./models/OfertasTrabajo');
-const Categoria = require('./models/Categoria');
+
+// Cargar asociaciones (esto importa todos los modelos internamente)
+require('./models/associations');
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/Usuarios/', require('./routes/users'));
 app.use('/Trabajos/', require('./routes/ofertas'));
 app.use('/Categoria/', require('./routes/categoria'));
+app.use('/Postulaciones/', require('./routes/postulaciones'));
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -33,11 +35,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         await testConnection();
-
-        // FIX: se eliminó force:true — ese flag borraba todas las tablas y datos
-        // al reiniciar el servidor. alter:true solo actualiza la estructura si cambia.
         await sequelize.sync({ alter: true });
-
         console.log('Modelos sincronizados con la base de datos.');
 
         app.listen(PORT, () => {

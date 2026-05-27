@@ -10,6 +10,10 @@ const User = sequelize.define('User', {
         autoIncrement: true,
         primaryKey: true,
     },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     apellido: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -17,43 +21,54 @@ const User = sequelize.define('User', {
     documento: {
         type: DataTypes.STRING,
         allowNull: false,
-        //unique: true,
     },
     telefono: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: false,
-        validate: {
-            isEmail: true,
-        },
+        unique: true,
+        validate: { isEmail: true },
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
         set(value) {
             const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(value, salt);
-            this.setDataValue('password', hash);
+            this.setDataValue('password', bcrypt.hashSync(value, salt));
         },
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+    // Campos de perfil (usados en UserProfile y EditProfile)
+    foto: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+    cv: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    ubicacion: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    descripcion: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    rating_empleador: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: 0,
+    },
+    rating_empleado: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: 0,
     },
 }, {
-    tableName: 'users', 
+    tableName: 'users',
 });
 
 module.exports = User;
