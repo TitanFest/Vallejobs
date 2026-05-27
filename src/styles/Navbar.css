@@ -1,142 +1,205 @@
-/* src/styles/Navbar.css */
+/* Navbar.css */
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f5f8fc;
-  padding: 8px 20px;
-  color: #333;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0 24px;
+  height: 64px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-
-.menu-btn {
-  background-color: #4a3f8c;
-  color: white;
-  border: 1px solid #4a3f8c;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-left: 5px;
-  min-width: 80px;
+.navbar-left {
+  flex-shrink: 0;
 }
-
 
 .logo {
-  font-weight: bold;
-  font-size: 24px;
+  font-weight: 800;
+  font-size: 22px;
   color: #1a2a5a;
-  margin-right: 20px;
+  letter-spacing: 1px;
+  cursor: pointer;
 }
 
+.navbar-center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+}
 
 .search-bar {
   display: flex;
-  flex-grow: 1;
-  max-width: 800px;
-  margin: 30px;
-  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  height: 40px;
+  align-items: stretch;
 }
 
 .search-bar input {
-  padding: 10px 20px;
+  flex-grow: 1;
+  padding: 0 16px;
   border: 2px solid #ddd;
+  border-right: none;
   border-radius: 8px 0 0 8px;
-  width: 100%;
-  font-size: 16px;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  height: 40px;
+  box-sizing: border-box;
 }
 
 .search-bar input:focus {
-
   border-color: #4a3f8c;
-  box-shadow: 0 0 5px rgba(74, 63, 140, 0.2);
-  padding: 10px 30px; 
-  border-radius: 0 8px 8px 0;
-  border: none;
 }
 
 .search-btn {
   background-color: #4a3f8c;
   border: none;
-  padding: 10px 30px;
+  padding: 0 20px;
   color: white;
   cursor: pointer;
   border-radius: 0 8px 8px 0;
   font-size: 16px;
-  transition: all 0.3s ease;
-  margin-left: 5px;
-  margin-top: 5px;
-  position: relative;
-  top: 10px;
-  left: 0;
+  height: 40px;
+  width: 52px;
+  box-sizing: border-box;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-btn:hover {
   background-color: #3d3575;
 }
 
-.register-btn, .login-btn {
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.register-btn,
+.login-btn {
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.register-btn {
   background-color: #4a3f8c;
   color: white;
-  border: 1px solid #4a3f8c;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  position: relative;
-  top: 10px;
+  border: 2px solid #4a3f8c;
+}
+
+.register-btn:hover {
+  background-color: #3d3575;
+  border-color: #3d3575;
 }
 
 .login-btn {
   background-color: transparent;
-  color: #402ea7;
-  text-decoration: none;
-  margin-top: 5px;
+  color: #4a3f8c;
+  border: 2px solid #4a3f8c;
 }
 
-.register-btn:hover, .login-btn:hover, menu-btn:hover {
-  background-color: #3d3575;
+.login-btn:hover {
+  background-color: #4a3f8c;
   color: white;
 }
 
-.nav-buttons {
+/* Perfil dropdown */
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-btn {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 2px solid #4a3f8c;
+  border-radius: 50px;
+  padding: 4px 12px 4px 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-btn:hover {
+  background-color: #f0eeff;
+}
+
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #4a3f8c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+}
+
+.profile-arrow {
+  font-size: 10px;
+  color: #4a3f8c;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  min-width: 180px;
+  overflow: hidden;
+  z-index: 200;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
   gap: 10px;
-  margin-left: 15px;
+  transition: background 0.15s;
 }
 
-/* Asegurando que todos los botones tengan el mismo tamaño y estilo */
-.menu-btn, .search-btn, .register-btn, .login-btn {
-  min-width: 100px; /* Asegura que todos los botones tengan un ancho mínimo igual */
-  height: 40px; /* Establece una altura uniforme para todos los botones */
-  display: flex; /* Asegura que el contenido del botón esté centrado */
-  align-items: center; /* Centra verticalmente el contenido */
-  justify-content: center; /* Centra horizontalmente el contenido */
-  padding: 0; /* Asegura que no haya padding adicional */
-  border: 1px solid #4a3f8c; /* Asegura que todos los botones tengan un borde consistente */
-  border-radius: 4px; /* Bordes redondeados */
-  background-color: #4a3f8c; /* Color de fondo para todos los botones */
-  color: white; /* Color del texto */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-  margin-top: -10px; /* Ajusta la posición vertical */
+.profile-dropdown button:hover {
+  background-color: #f5f0ff;
+  color: #4a3f8c;
 }
 
-.login-btn {
-  background-color: transparent; /* Fondo transparente para el botón de iniciar sesión */
-  color: #402ea7; /* Color del texto para el botón de iniciar sesión */
-  border: px solid #402ea7; /* Borde para el botón de iniciar sesión */
+.dropdown-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 4px 0;
 }
 
-.register-btn:hover, .login-btn:hover, .menu-btn:hover {
-  background-color: #3d3575; /* Color de fondo al pasar el mouse */
-  color: white; /* Color del texto al pasar el mouse */
+.logout-btn {
+  color: #e53935 !important;
 }
 
+.logout-btn:hover {
+  background-color: #fff0f0 !important;
+  color: #e53935 !important;
+}

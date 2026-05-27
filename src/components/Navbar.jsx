@@ -1,25 +1,82 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { isLoggedIn, logout } from '../services/authService';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const loggedIn = isLoggedIn();
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = '/';
+  };
+
   return (
-    <div className="navbar">
-      <div className="logo">VALLEJOBS</div>
-      <div className="search-bar">
-        <input type="text" placeholder="Buscar empleos..." />
-        <button className="search-btn">
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
+    <nav className="navbar">
+      <div className="navbar-left">
+        <span className="logo" onClick={() => window.location.href = '/'}>VALLEJOBS</span>
       </div>
-      <div className="nav-buttons">
-        <button className="register-btn" onClick={() => window.location.href = '/registro'}>REGISTRAR</button>
-        <button className="login-btn" onClick={() => window.location.href = '/login'}>Login</button>
+
+      <div className="navbar-center">
+        <div className="search-bar">
+          <input type="text" placeholder="Buscar empleos..." />
+          <button className="search-btn">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
       </div>
-    </div>
+
+      <div className="navbar-right">
+        {loggedIn ? (
+          <div className="profile-menu-wrapper" ref={menuRef}>
+            <button className="profile-btn" onClick={() => setMenuOpen(!menuOpen)}>
+              <div className="profile-avatar">
+                <FontAwesomeIcon icon={faUser} />
+              </div>
+              <span className="profile-arrow">{menuOpen ? '▲' : '▼'}</span>
+            </button>
+
+            {menuOpen && (
+              <div className="profile-dropdown">
+                <button onClick={() => window.location.href = '/UserProfile'}>
+                  <FontAwesomeIcon icon={faUser} /> Mi perfil
+                </button>
+                <button onClick={() => window.location.href = '/dashboard'}>
+                  <FontAwesomeIcon icon={faUser} /> Dashboard
+                </button>
+                <div className="dropdown-divider" />
+                <button className="logout-btn" onClick={handleLogout}>
+                  <FontAwesomeIcon icon={faRightFromBracket} /> Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <button className="register-btn" onClick={() => window.location.href = '/registro'}>
+              Registrar
+            </button>
+            <button className="login-btn" onClick={() => window.location.href = '/login'}>
+              Login
+            </button>
+          </>
+        )}
+      </div>
+    </nav>
   );
 };
 
 export default Navbar;
-
