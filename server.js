@@ -11,21 +11,18 @@ const PORT = process.env.PORT || 5000;
 
 const cors = require('cors');
 app.use(cors({
-    origin: 'http://localhost:3000', 
+    origin: 'http://localhost:3000',
     credentials: true
 }));
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('¡Bienvenido a la API!');
+    res.send('¡Bienvenido a la API Vallejobs!');
 });
 
-
-app.use('/Usuarios/', require('./routes/users')); 
-
+app.use('/Usuarios/', require('./routes/users'));
 app.use('/Trabajos/', require('./routes/ofertas'));
-
 app.use('/Categoria/', require('./routes/categoria'));
 
 app.use((err, req, res, next) => {
@@ -36,10 +33,13 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
     try {
         await testConnection();
-        await sequelize.sync({ alter : true , force : true });
-        await sequelize.sync({ alter : true /*, force : true*/ }); // Sincroniza todos los modelos
+
+        // FIX: se eliminó force:true — ese flag borraba todas las tablas y datos
+        // al reiniciar el servidor. alter:true solo actualiza la estructura si cambia.
+        await sequelize.sync({ alter: true });
+
         console.log('Modelos sincronizados con la base de datos.');
-        
+
         app.listen(PORT, () => {
             console.log(`Servidor escuchando en http://localhost:${PORT}`);
         });

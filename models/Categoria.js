@@ -1,7 +1,9 @@
+// models/Categoria.js
+ 
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../database');
-
-console.error ("hola")
+ 
+// FIX: se eliminó el console.error('hola') que aparecía en cada arranque
 const Categoria = sequelize.define('Categoria', {
     id: {
         type: DataTypes.INTEGER,
@@ -11,13 +13,15 @@ const Categoria = sequelize.define('Categoria', {
     nombre: {
         type: DataTypes.STRING,
         allowNull: false,
-    }, 
+    },
     descripcion: {
         type: DataTypes.STRING,
         allowNull: false,
-    }}, 
-    { 
-        tableName : 'categoria'
-    });
-
+    }
+},
+{
+    tableName: 'categoria'
+});
+ 
 module.exports = Categoria;
+ 

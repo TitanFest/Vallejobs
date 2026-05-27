@@ -4,7 +4,7 @@ const Categoria = require('../models/Categoria');
 
 const createCategory = async (req, res) => {
     try {
-        const {nombre, descripcion } = req.body;
+        const { nombre, descripcion } = req.body;
         const newCategory = await Categoria.create({ nombre, descripcion });
         res.status(201).json(newCategory);
     } catch (error) {
@@ -23,14 +23,15 @@ const getAllCategorys = async (req, res) => {
     }
 };
 
+// FIX: usaba User.findByPk en vez de Categoria.findByPk
 const getCategoryById = async (req, res) => {
     try {
         const { id } = req.params;
-        const Category = await User.findByPk(id);
+        const Category = await Categoria.findByPk(id);
         if (Category) {
             res.json(Category);
         } else {
-            res.status(404).json({ error: 'categoria no encontrada' });
+            res.status(404).json({ error: 'Categoria no encontrada' });
         }
     } catch (error) {
         console.error('Error al obtener categoria:', error);
@@ -48,10 +49,10 @@ const updateCategory = async (req, res) => {
             const updatedCategory = await Categoria.findByPk(id);
             res.json(updatedCategory);
         } else {
-            res.status(404).json({ error: 'categoria no encontrada' });
+            res.status(404).json({ error: 'Categoria no encontrada' });
         }
     } catch (error) {
-        console.error('Error al obtener categoria:', error);
+        console.error('Error al actualizar categoria:', error);
         res.status(500).json({ error: 'Error al actualizar la categoria' });
     }
 };
@@ -63,9 +64,9 @@ const deleteCategory = async (req, res) => {
             where: { id },
         });
         if (deleted) {
-            res.json({ message: 'categoria eliminada correctamente' });
+            res.json({ message: 'Categoria eliminada correctamente' });
         } else {
-            res.status(404).json({ error: 'categoria no encontrada' });
+            res.status(404).json({ error: 'Categoria no encontrada' });
         }
     } catch (error) {
         console.error('Error al eliminar categoria:', error);

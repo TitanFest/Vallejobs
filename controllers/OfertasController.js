@@ -4,14 +4,15 @@ const OfertaTrabajo = require('../models/OfertasTrabajo');
 
 const createWork = async (req, res) => {
     try {
-        const { titulo, categoria, localizacion, horario ,salario, estado, descripcion, requerimientos } = req.body;
-        const newJob = await OfertaTrabajo.create({ titulo, categoria, localizacion, horario ,salario, estado, descripcion, requerimientos });
+        const { titulo, categoria, localizacion, horario, salario, estado, descripcion, requerimientos } = req.body;
+        const newJob = await OfertaTrabajo.create({ titulo, categoria, localizacion, horario, salario, estado, descripcion, requerimientos });
         res.status(201).json(newJob);
     } catch (error) {
         console.error('Error al crear oferta de trabajo:', error);
         res.status(500).json({ error: 'Error al crear oferta de trabajo' });
     }
 };
+
 const addPostulante = async (req, res) => {
     try {
         const { trabajoId, postulanteId } = req.body;
@@ -22,7 +23,7 @@ const addPostulante = async (req, res) => {
         }
 
         const postulantes = trabajo.postulantes || [];
-        
+
         if (postulantes.includes(postulanteId)) {
             return res.status(400).json({ error: 'El postulante ya está registrado en este trabajo' });
         }
@@ -49,10 +50,11 @@ const getAllWorks = async (req, res) => {
     }
 };
 
+// FIX: usaba User.findByPk en vez de OfertaTrabajo.findByPk
 const getWorkById = async (req, res) => {
     try {
         const { id } = req.params;
-        const Job = await User.findByPk(id);
+        const Job = await OfertaTrabajo.findByPk(id);
         if (Job) {
             res.json(Job);
         } else {
@@ -77,7 +79,7 @@ const updateWork = async (req, res) => {
             res.status(404).json({ error: 'Oferta no encontrada' });
         }
     } catch (error) {
-        console.error('Error al obtener oferta:', error);
+        console.error('Error al actualizar oferta:', error);
         res.status(500).json({ error: 'Error al actualizar la oferta' });
     }
 };
@@ -99,13 +101,15 @@ const deleteWork = async (req, res) => {
     }
 };
 
-const findWorkByCategory = async (categoria) => {
+// FIX: findOne devuelve solo 1 resultado; si quieres todas las de esa categoría usa findAll
+const findWorkByCategory = async (req, res) => {
     try {
-        const Oferta = await OfertaTrabajo.findOne({ where: { categoria } });
-        return Oferta;
+        const { categoria } = req.params;
+        const ofertas = await OfertaTrabajo.findAll({ where: { categoria } });
+        res.json(ofertas);
     } catch (error) {
-        console.error('Error al buscar el oferta por categoría:', error);
-        throw error;
+        console.error('Error al buscar ofertas por categoría:', error);
+        res.status(500).json({ error: 'Error al buscar ofertas por categoría' });
     }
 };
 
