@@ -216,3 +216,30 @@
     flex-direction: column;
   }
 } 
+
+.default-avatar-icon {
+  font-size: 80px;
+  color: #4a3f8c;
+}
+
+.user-location {
+  color: #666;
+  font-size: 14px;
+  margin: 5px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.profile-loading,
+.profile-error {
+  text-align: center;
+  padding: 60px;
+  font-size: 16px;
+  color: #666;
+}
+
+.status.pendiente  { background-color: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+.status.aceptado   { background-color: #e6f4ea; color: #1e7e34; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
+.status.rechazado  { background-color: #fde8e8; color: #c62828; padding: 3px 8px; border-radius: 4px; font-size: 12px; }

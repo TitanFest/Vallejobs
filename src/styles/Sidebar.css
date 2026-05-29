@@ -25,3 +25,8 @@
   background-color: #6a5acd;
   transform: scale(1.05); 
 }
+
+.sidebar-btn.active {
+  background-color: #6a5acd;
+  font-weight: 700;
+}

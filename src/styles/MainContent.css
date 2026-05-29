@@ -42,3 +42,10 @@
 .job-title {
   font-size: 16px;
 }
+
+.no-jobs {
+  text-align: center;
+  color: #999;
+  margin-top: 40px;
+  font-size: 15px;
+}

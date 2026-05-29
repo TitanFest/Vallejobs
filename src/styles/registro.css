@@ -1,3 +1,5 @@
+/* registro.css */
+
 .registro-wrapper {
     min-height: 100vh;
     display: flex;
@@ -18,7 +20,7 @@
     left: 0;
     background: 
         linear-gradient(45deg, transparent 0%, transparent 100%),
-        url("data:image/svg+xml,%3Csvg width='200%25' height='200%25' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10%25' y='10%25' font-size='60' font-family='Arial' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='30%25' y='15%25' font-size='120' font-family='Impact' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='50%25' y='20%25' font-size='90' font-family='Georgia' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='70%25' y='25%25' font-size='75' font-family='Verdana' fill='rgba(255,255,255,0.05)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='90%25' y='30%25' font-size='100' font-family='Times New Roman' font-style='italic' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='20%25' y='35%25' font-size='85' font-family='Helvetica' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='40%25' y='40%25' font-size='110' font-family='Courier' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='60%25' y='45%25' font-size='95' font-family='Trebuchet MS' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='80%25' y='50%25' font-size='130' font-family='Palatino' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='15%25' y='55%25' font-size='70' font-family='Arial Black' fill='rgba(255,255,255,0.05)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='35%25' y='60%25' font-size='140' font-family='Garamond' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='55%25' y='65%25' font-size='80' font-family='Century Gothic' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='75%25' y='70%25' font-size='115' font-family='Bookman' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='95%25' y='75%25' font-size='125' font-family='Tahoma' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='25%25' y='80%25' font-size='105' font-family='Arial' font-weight='bold' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='45%25' y='85%25' font-size='65' font-family='Verdana' fill='rgba(255,255,255,0.05)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='65%25' y='90%25' font-size='135' font-family='Impact' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='85%25' y='95%25' font-size='95' font-family='Times New Roman' font-style='italic' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg width='200%25' height='200%25' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10%25' y='10%25' font-size='60' font-family='Arial' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='50%25' y='50%25' font-size='120' font-family='Impact' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='90%25' y='90%25' font-size='90' font-family='Georgia' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3C/svg%3E");
     background-size: 100% 100%;
     background-repeat: repeat;
     opacity: 0.7;
@@ -29,12 +31,8 @@
 }
 
 @keyframes backgroundMove {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 100% 100%;
-    }
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
 }
 
 .registro-container {
@@ -51,7 +49,7 @@
     z-index: 1;
 }
 
-h2 {
+.registro-container h2 {
     text-align: center;
     color: #4a3f8c;
     font-weight: 700;
@@ -59,20 +57,20 @@ h2 {
     font-size: 28px;
 }
 
-form {
+.registro-container form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-label {
+.registro-container label {
     font-weight: 600;
     color: #666;
     margin-bottom: 5px;
     font-size: 15px;
 }
 
-input {
+.registro-container input {
     padding: 12px;
     border: 1px solid #dcdcdc;
     border-radius: 8px;
@@ -80,16 +78,18 @@ input {
     color: #333;
     background-color: #f8f8f8;
     transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-input:focus {
-    border-color: #4CAF50;
+.registro-container input:focus {
+    border-color: #4a3f8c;
     background-color: #ffffff;
-    box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 0 6px rgba(74, 63, 140, 0.3);
     outline: none;
 }
 
-button {
+.registro-container button {
     margin-top: 15px;
     padding: 14px;
     border: none;
@@ -102,19 +102,19 @@ button {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-button:hover {
+.registro-container button:hover {
     background-color: #3d3575;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
-button:active {
+.registro-container button:active {
     background-color: #3b2e6e;
     transform: translateY(0);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-p {
+.registro-container p {
     color: #ff4d4d;
     font-size: 14px;
     font-weight: bold;
@@ -122,29 +122,14 @@ p {
     margin-top: -10px;
 }
 
-p.info {
+.registro-container p.info {
     color: #666;
     font-size: 13px;
     text-align: center;
     margin-top: 20px;
 }
 
-.back-button {
-    margin-bottom: 10px;
-    background-color: #f0f0f0;
-    color: #4a3f8c;
-    border: 1px solid #4a3f8c;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover {
-    background-color: #e0e0e0;
-}
-
-.back-button {
+.registro-container .back-button {
     background: none;
     border: none;
     color: #4a3f8c;
@@ -154,8 +139,15 @@ p.info {
     top: 20px;
     left: 20px;
     transition: color 0.3s;
+    padding: 0;
+    margin: 0;
+    transform: none;
+    box-shadow: none;
 }
 
-.back-button:hover {
+.registro-container .back-button:hover {
     color: #3d3575;
+    background: none;
+    box-shadow: none;
+    transform: none;
 }

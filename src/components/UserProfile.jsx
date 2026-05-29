@@ -1,50 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/UserProfile.css';
-import { FaEnvelope, FaPhone, FaStar, FaBriefcase, FaFileAlt, FaUser, FaBuilding, FaEdit } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaStar, FaBriefcase, FaFileAlt, FaUser, FaEdit, FaMapMarkerAlt } from 'react-icons/fa';
+import { getToken } from '../services/authService';
+import axios from 'axios';
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [postulaciones, setPostulaciones] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Estos datos vendrían de tu backend
-  const userProfile = {
-    name: "Juan Pérez",
-    photo: "/path/to/photo.jpg",
-    email: "juan.perez@email.com",
-    phone: "+51 999 888 777",
-    description: "Desarrollador Full Stack con 5 años de experiencia...",
-    employerRating: 4.5,
-    employeeRating: 4.8,
-    jobHistory: [
-      {
-        company: "Tech Corp",
-        position: "Senior Developer",
-        period: "2021 - Presente"
-      },
-      // ... más trabajos
-    ],
-    jobPostings: [
-      {
-        title: "Se busca desarrollador Frontend",
-        status: "Activo",
-        applicants: 12
-      },
-      // ... más ofertas
-    ]
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = getToken();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const [userRes, postulacionesRes] = await Promise.all([
+          axios.get('http://localhost:5000/Usuarios/perfil', { headers }),
+          axios.get('http://localhost:5000/Postulaciones/mis-postulaciones', { headers }),
+        ]);
+
+        setUser(userRes.data);
+        setPostulaciones(postulacionesRes.data);
+      } catch (err) {
+        setError('Error al cargar el perfil.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) return <div className="profile-loading">Cargando perfil...</div>;
+  if (error)   return <div className="profile-error">{error}</div>;
+  if (!user)   return null;
 
   return (
     <div className="profile-container">
       <div className="profile-left">
         <div className="profile-photo-section">
           <div className="profile-photo">
-            <img src={userProfile.photo} alt={userProfile.name} />
+            {user.foto ? (
+              <img src={`http://localhost:5000/${user.foto}`} alt={user.name} />
+            ) : (
+              <FaUser className="default-avatar-icon" />
+            )}
           </div>
-          <h2>{userProfile.name}</h2>
-          <button 
-            className="edit-profile-btn"
-            onClick={() => navigate('/editprofile')}
-          >
+          <h2>{user.name} {user.apellido}</h2>
+          {user.ubicacion && (
+            <p className="user-location"><FaMapMarkerAlt /> {user.ubicacion}</p>
+          )}
+          <button className="edit-profile-btn" onClick={() => navigate('/EditProfile')}>
             <FaEdit /> Editar Perfil
           </button>
         </div>
@@ -52,11 +62,21 @@ const UserProfile = () => {
         <div className="resume-section">
           <h3><FaFileAlt /> Hoja de Vida</h3>
           <div className="resume-preview">
-            <p>CV_JuanPerez.pdf</p>
-            <div className="resume-actions">
-              <button className="view-btn">Ver</button>
-              <button className="update-btn">Actualizar</button>
-            </div>
+            {user.cv ? (
+              <>
+                <p>{user.cv}</p>
+                <div className="resume-actions">
+                  <a href={`http://localhost:5000/${user.cv}`} target="_blank" rel="noreferrer">
+                    <button className="view-btn">Ver</button>
+                  </a>
+                  <button className="update-btn" onClick={() => navigate('/EditProfile')}>
+                    Actualizar
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p>No has subido tu hoja de vida aún.</p>
+            )}
           </div>
         </div>
       </div>
@@ -65,11 +85,11 @@ const UserProfile = () => {
         <div className="contact-info">
           <div className="info-item">
             <FaEnvelope />
-            <span>{userProfile.email}</span>
+            <span>{user.email}</span>
           </div>
           <div className="info-item">
             <FaPhone />
-            <span>{userProfile.phone}</span>
+            <span>{user.telefono || 'No especificado'}</span>
           </div>
         </div>
 
@@ -77,66 +97,51 @@ const UserProfile = () => {
           <div className="rating-card">
             <h4>Como Empleador</h4>
             <div className="stars">
-              {[...Array(5)].map((_, index) => (
-                <FaStar
-                  key={index}
-                  className={index < Math.floor(userProfile.employerRating) ? 'star-filled' : 'star-empty'}
-                />
+              {[...Array(5)].map((_, i) => (
+                <FaStar key={i}
+                  className={i < Math.floor(user.rating_empleador || 0) ? 'star-filled' : 'star-empty'} />
               ))}
             </div>
-            <span className="rating-value">{userProfile.employerRating}/5</span>
+            <span className="rating-value">{user.rating_empleador || 0}/5</span>
           </div>
-
           <div className="rating-card">
             <h4>Como Empleado</h4>
             <div className="stars">
-              {[...Array(5)].map((_, index) => (
-                <FaStar
-                  key={index}
-                  className={index < Math.floor(userProfile.employeeRating) ? 'star-filled' : 'star-empty'}
-                />
+              {[...Array(5)].map((_, i) => (
+                <FaStar key={i}
+                  className={i < Math.floor(user.rating_empleado || 0) ? 'star-filled' : 'star-empty'} />
               ))}
             </div>
-            <span className="rating-value">{userProfile.employeeRating}/5</span>
+            <span className="rating-value">{user.rating_empleado || 0}/5</span>
           </div>
         </div>
 
-        <div className="description-section">
-          <h3>Sobre mí</h3>
-          <p>{userProfile.description}</p>
-        </div>
-
-        <div className="history-section">
-          <h3><FaBriefcase /> Historial Laboral</h3>
-          {userProfile.jobHistory.map((job, index) => (
-            <div key={index} className="history-item">
-              <FaBuilding className="company-icon" />
-              <div className="history-details">
-                <h4>{job.position}</h4>
-                <p>{job.company}</p>
-                <span>{job.period}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {user.descripcion && (
+          <div className="description-section">
+            <h3>Sobre mí</h3>
+            <p>{user.descripcion}</p>
+          </div>
+        )}
 
         <div className="job-postings-section">
-          <h3>Mis Ofertas de Empleo</h3>
-          {userProfile.jobPostings.map((posting, index) => (
-            <div key={index} className="posting-item">
-              <div className="posting-header">
-                <h4>{posting.title}</h4>
-                <span className={`status ${posting.status.toLowerCase()}`}>
-                  {posting.status}
-                </span>
+          <h3><FaBriefcase /> Mis postulaciones</h3>
+          {postulaciones.length === 0 ? (
+            <p>No te has postulado a ninguna oferta aún.</p>
+          ) : (
+            postulaciones.map((p) => (
+              <div key={p.id} className="posting-item">
+                <div className="posting-header">
+                  <h4>{p.oferta?.titulo || 'Oferta eliminada'}</h4>
+                  <span className={`status ${p.estado}`}>{p.estado}</span>
+                </div>
+                <p>{p.oferta?.localizacion}</p>
               </div>
-              <p>{posting.applicants} postulantes</p>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default UserProfile; 
+export default UserProfile;

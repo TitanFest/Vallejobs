@@ -2,30 +2,39 @@ import React from 'react';
 import '../styles/JobModal.css';
 import { FaTimes, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave, FaClock } from 'react-icons/fa';
 import axios from 'axios';
+import { getToken } from '../services/authService';
 
 const JobModal = ({ job, onClose }) => {
   if (!job) return null;
 
-  // ID temporal del postulante (debería venir del usuario logueado)
-  const postulanteId = 1;
-
   const aplicar = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/Trabajos/agpostulante', {
-        trabajoId: job.id,
-        postulanteId: postulanteId,
-      });
-
+      const token = getToken();
+      const response = await axios.post(
+        'http://localhost:5000/Postulaciones/postular',
+        { ofertaId: job.id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       alert(response.data.message);
     } catch (error) {
+      if (error.response?.data?.error) {
+        alert(error.response.data.error);
+      } else {
+        alert('Ocurrió un error al intentar postularse.');
+      }
       console.error('Error al postularse:', error);
-      alert('Ocurrió un error al intentar postularse.');
     }
   };
 
+  const requerimientos = Array.isArray(job.requerimientos)
+    ? job.requerimientos
+    : typeof job.requerimientos === 'string'
+    ? JSON.parse(job.requerimientos)
+    : [];
+
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="close-button" onClick={onClose}>
           <FaTimes />
         </button>
@@ -43,7 +52,7 @@ const JobModal = ({ job, onClose }) => {
 
           <div className="job-detail">
             <FaMoneyBillWave className="detail-icon" />
-            <span>{job.salario || 'Salario no especificado'}</span>
+            <span>{job.salario ? `$${job.salario.toLocaleString()}` : 'Salario no especificado'}</span>
           </div>
 
           <div className="job-detail">
@@ -59,7 +68,9 @@ const JobModal = ({ job, onClose }) => {
           <div className="job-requirements">
             <h3>Requisitos</h3>
             <ul>
-              {job.requerimientos}
+              {requerimientos.map((req, index) => (
+                <li key={index}>{req}</li>
+              ))}
             </ul>
           </div>
         </div>

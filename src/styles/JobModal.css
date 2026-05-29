@@ -12,6 +12,7 @@
 }
 
 .modal-content {
+  position: relative;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -23,9 +24,9 @@
 }
 
 .close-button {
-  position: relative;
-  top: -10px;
-  right: -550px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
   background: none;
   border: none;
   font-size: 16px;
@@ -37,8 +38,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
 }
 
 .close-button:hover {
