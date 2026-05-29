@@ -4,22 +4,33 @@ const express = require('express');
 const router = express.Router();
 const OfertasController = require('../controllers/OfertasController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const OfertaTrabajo = require('../models/OfertasTrabajo');
 
-// FIX: createWork requiere auth para que solo usuarios logueados publiquen ofertas
 router.post('/registrar', authMiddleware, OfertasController.createWork);
 
 router.get('/obtener', OfertasController.getAllWorks);
 
-// FIX: ruta separada para buscar por categoría (evita conflicto con /:id)
+// Rutas específicas antes que las dinámicas
+router.get('/mis-ofertas', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const ofertas = await OfertaTrabajo.findAll({
+            where: { userId },
+            include: [{
+                model: require('../models/Postulacion'),
+                as: 'postulaciones'
+            }]
+        });
+        res.json(ofertas);
+    } catch (error) {
+        console.error('Error al obtener mis ofertas:', error);
+        res.status(500).json({ error: 'Error al obtener mis ofertas' });
+    }
+});
+
 router.get('/categoria/:categoria', OfertasController.findWorkByCategory);
-
-// FIX: addPostulante cambiado de GET a POST (recibe body)
-router.post('/postular', authMiddleware, OfertasController.addPostulante);
-
 router.get('/obtener/:id', OfertasController.getWorkById);
-
 router.put('/actualizar/:id', authMiddleware, OfertasController.updateWork);
-
 router.delete('/eliminar/:id', authMiddleware, OfertasController.deleteWork);
 
-module.exports = router;
+module.exports = router;    

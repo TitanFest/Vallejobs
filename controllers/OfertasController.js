@@ -5,7 +5,19 @@ const OfertaTrabajo = require('../models/OfertasTrabajo');
 const createWork = async (req, res) => {
     try {
         const { titulo, categoria, localizacion, horario, salario, estado, descripcion, requerimientos } = req.body;
-        const newJob = await OfertaTrabajo.create({ titulo, categoria, localizacion, horario, salario, estado, descripcion, requerimientos });
+        const userId = req.user.userId;
+
+        const newJob = await OfertaTrabajo.create({ 
+            titulo, 
+            categoria, 
+            localizacion, 
+            horario, 
+            salario, 
+            estado, 
+            descripcion, 
+            requerimientos,
+            userId // agregarlo al crear
+        });
         res.status(201).json(newJob);
     } catch (error) {
         console.error('Error al crear oferta de trabajo:', error);
