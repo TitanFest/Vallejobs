@@ -23,6 +23,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/CreateJob" element={<ProtectedRoute><CreateJob /></ProtectedRoute>} />
         <Route path="/UserProfile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+        <Route path="/UserProfile/:id" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path="/EditProfile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         <Route path="/EditJob/:id" element={<ProtectedRoute><EditJob /></ProtectedRoute>} />
         <Route path="/JobApplicants/:id" element={<ProtectedRoute><JobApplicants /></ProtectedRoute>} />

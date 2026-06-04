@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../styles/UserProfile.css';
 import { FaEnvelope, FaPhone, FaStar, FaBriefcase, FaFileAlt, FaUser, FaEdit, FaMapMarkerAlt } from 'react-icons/fa';
@@ -8,10 +8,12 @@ import axios from 'axios';
 
 const UserProfile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [postulaciones, setPostulaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const isOwnProfile = !id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,13 +21,17 @@ const UserProfile = () => {
         const token = getToken();
         const headers = { Authorization: `Bearer ${token}` };
 
-        const [userRes, postulacionesRes] = await Promise.all([
-          axios.get('http://localhost:5000/Usuarios/perfil', { headers }),
-          axios.get('http://localhost:5000/Postulaciones/mis-postulaciones', { headers }),
-        ]);
-
-        setUser(userRes.data);
-        setPostulaciones(postulacionesRes.data);
+        if (id) {
+          const res = await axios.get(`http://localhost:5000/Usuarios/obtener/${id}`, { headers });
+          setUser(res.data);
+        } else {
+          const [userRes, postulacionesRes] = await Promise.all([
+            axios.get('http://localhost:5000/Usuarios/perfil', { headers }),
+            axios.get('http://localhost:5000/Postulaciones/mis-postulaciones', { headers }),
+          ]);
+          setUser(userRes.data);
+          setPostulaciones(postulacionesRes.data);
+        }
       } catch (err) {
         setError('Error al cargar el perfil.');
         console.error(err);
@@ -34,7 +40,7 @@ const UserProfile = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   if (loading) return <div className="profile-loading">Cargando perfil...</div>;
   if (error)   return <div className="profile-error">{error}</div>;
@@ -57,9 +63,11 @@ const UserProfile = () => {
           {user.ubicacion && (
             <p className="user-location"><FaMapMarkerAlt /> {user.ubicacion}</p>
           )}
-          <button className="edit-profile-btn" onClick={() => navigate('/EditProfile')}>
-            <FaEdit /> Editar Perfil
-          </button>
+          {isOwnProfile && (
+            <button className="edit-profile-btn" onClick={() => navigate('/EditProfile')}>
+              <FaEdit /> Editar Perfil
+            </button>
+          )}
         </div>
 
         <div className="resume-section">
@@ -126,6 +134,7 @@ const UserProfile = () => {
           </div>
         )}
 
+        {isOwnProfile && (
         <div className="job-postings-section">
           <h3><FaBriefcase /> Mis postulaciones</h3>
           {postulaciones.length === 0 ? (
@@ -142,6 +151,7 @@ const UserProfile = () => {
             ))
           )}
         </div>
+        )}
       </div>
       </div>
     </div>

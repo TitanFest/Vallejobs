@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaFileAlt,
-} from "react-icons/fa";
+import { FaUser, FaEnvelope, FaPhone, FaFileAlt } from "react-icons/fa";
 import { getToken } from "../services/authService";
 import "../styles/JobApplicants.css";
 import axios from "axios";
@@ -70,62 +65,99 @@ const JobApplicants = () => {
     <div>
       <Navbar />
       <div className="applicants-wrapper">
-      <h2>Postulantes{jobTitle ? ` — ${jobTitle}` : ""}</h2>
-      {applicants.length === 0 ? (
-        <p className="applicants-empty">No hay postulantes para esta oferta aún.</p>
-      ) : (
-        <table className="applicants-table">
-          <thead>
-            <tr>
-              <th>Postulante</th>
-              <th>Contacto</th>
-              <th>CV</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {applicants.map((p) => (
-              <tr key={p.id}>
-                <td>
-                  <span className="applicant-name">
-                    <FaUser /> {p.postulante?.name} {p.postulante?.apellido}
-                  </span>
-                </td>
-                <td>
-                  <div className="applicant-contact">
-                    <div><FaEnvelope /> {p.postulante?.email}</div>
-                    <div><FaPhone /> {p.postulante?.telefono || "—"}</div>
-                  </div>
-                </td>
-                <td>
-                  {p.postulante?.cv ? (
-                    <a href={`http://localhost:5000/${p.postulante.cv}`} target="_blank" rel="noreferrer">
-                      <FaFileAlt /> Ver CV
-                    </a>
-                  ) : "—"}
-                </td>
-                <td>
-                  <span className={`estado-badge ${p.estado}`}>{p.estado}</span>
-                </td>
-                <td>
-                  {p.estado === "pendiente" && (
-                    <>
-                      <button className="accept-btn" onClick={() => handleEstado(p.id, "aceptado")}>
-                        Aceptar
-                      </button>
-                      <button className="reject-btn" onClick={() => handleEstado(p.id, "rechazado")}>
-                        Rechazar
-                      </button>
-                    </>
-                  )}
-                </td>
+        <h2>Postulantes{jobTitle ? ` — ${jobTitle}` : ""}</h2>
+        {applicants.length === 0 ? (
+          <p className="applicants-empty">
+            No hay postulantes para esta oferta aún.
+          </p>
+        ) : (
+          <table className="applicants-table">
+            <thead>
+              <tr>
+                <th>Postulante</th>
+                <th>Contacto</th>
+                <th>CV</th>
+                <th>Estado</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+            </thead>
+            <tbody>
+              {applicants.map((p) => (
+                <tr key={p.id}>
+                  <td>
+                    <span
+                      className="applicant-name"
+                      onClick={() =>
+                        navigate(
+                          `/UserProfile/${p.postulante?.id || p.usuarioId}`,
+                        )
+                      }
+                      style={{ cursor: "pointer" }}
+                    >
+                      {p.postulante?.foto ? (
+                        <img
+                          src={`http://localhost:5000/${p.postulante.foto}`}
+                          alt=""
+                          className="applicant-photo"
+                        />
+                      ) : (
+                        <FaUser />
+                      )}
+                      {p.postulante?.name} {p.postulante?.apellido}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="applicant-contact">
+                      <div>
+                        <FaEnvelope /> {p.postulante?.email}
+                      </div>
+                      <div>
+                        <FaPhone /> {p.postulante?.telefono || "—"}
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    {p.postulante?.cv ? (
+                      <a
+                        href={`http://localhost:5000/${p.postulante.cv}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <FaFileAlt /> Ver CV
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td>
+                    <span className={`estado-badge ${p.estado}`}>
+                      {p.estado}
+                    </span>
+                  </td>
+                  <td>
+                    {p.estado === "pendiente" && (
+                      <>
+                        <button
+                          className="accept-btn"
+                          onClick={() => handleEstado(p.id, "aceptado")}
+                        >
+                          Aceptar
+                        </button>
+                        <button
+                          className="reject-btn"
+                          onClick={() => handleEstado(p.id, "rechazado")}
+                        >
+                          Rechazar
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
