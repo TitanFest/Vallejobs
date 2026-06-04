@@ -1,28 +1,27 @@
-/* src/styles/home.css */
 .home {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .content {
-    display: flex;
-    flex: 1;
-  }
-  
-  .menu-button {
-    background: none;
-    border: none;
-    color: #4a3f8c;
-    font-size: 24px;
-    cursor: pointer;
-    position: absolute; /* Posiciona el botón en la parte superior */
-    top: 20px; /* Ajusta la posición vertical */
-    right: 20px; /* Ajusta la posición horizontal */
-    transition: color 0.3s;
-  }
-  
-  .menu-button:hover {
-    color: #3d3575; /* Cambia el color al pasar el mouse */
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 24px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: color 0.2s;
+}
+
+.menu-button:hover {
+  color: var(--primary-dark);
+}
   

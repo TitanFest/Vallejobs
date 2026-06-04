@@ -1,153 +1,159 @@
-/* registro.css */
-
 .registro-wrapper {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .registro-wrapper::after {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: 
-        linear-gradient(45deg, transparent 0%, transparent 100%),
-        url("data:image/svg+xml,%3Csvg width='200%25' height='200%25' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10%25' y='10%25' font-size='60' font-family='Arial' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='50%25' y='50%25' font-size='120' font-family='Impact' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='90%25' y='90%25' font-size='90' font-family='Georgia' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3C/svg%3E");
-    background-size: 100% 100%;
-    background-repeat: repeat;
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: 0;
-    transform: rotate(-5deg) scale(1.2);
-    animation: backgroundMove 60s linear infinite;
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background:
+    linear-gradient(45deg, transparent 0%, transparent 100%),
+    url("data:image/svg+xml,%3Csvg width='200%25' height='200%25' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='10%25' y='10%25' font-size='60' font-family='Arial' fill='rgba(255,255,255,0.06)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='50%25' y='50%25' font-size='120' font-family='Impact' fill='rgba(255,255,255,0.08)' text-anchor='middle'%3EValleJobs%3C/text%3E%3Ctext x='90%25' y='90%25' font-size='90' font-family='Georgia' fill='rgba(255,255,255,0.07)' text-anchor='middle'%3EValleJobs%3C/text%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-repeat: repeat;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(-5deg) scale(1.2);
+  animation: backgroundMove 60s linear infinite;
 }
 
 @keyframes backgroundMove {
-    0% { background-position: 0 0; }
-    100% { background-position: 100% 100%; }
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
 }
 
 .registro-container {
-    width: 450px;
-    margin: 0 auto;
-    padding: 40px;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 1px solid #ffffff;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-    font-family: Arial, sans-serif;
-    color: #333;
-    position: relative;
-    z-index: 1;
+  width: 480px;
+  max-width: 100%;
+  padding: 40px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 .registro-container h2 {
-    text-align: center;
-    color: #4a3f8c;
-    font-weight: 700;
-    margin-bottom: 20px;
-    font-size: 28px;
+  text-align: center;
+  color: var(--text-primary);
+  font-weight: 800;
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.registro-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 28px;
 }
 
 .registro-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .registro-container label {
-    font-weight: 600;
-    color: #666;
-    margin-bottom: 5px;
-    font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .registro-container input {
-    padding: 12px;
-    border: 1px solid #dcdcdc;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #333;
-    background-color: #f8f8f8;
-    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  color: var(--text-primary);
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .registro-container input:focus {
-    border-color: #4a3f8c;
-    background-color: #ffffff;
-    box-shadow: 0 0 6px rgba(74, 63, 140, 0.3);
-    outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(74, 63, 140, 0.1);
+  outline: none;
 }
 
-.registro-container button {
-    margin-top: 15px;
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    background-color: #4a3f8c;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
+.registro-container button[type="submit"] {
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.registro-container button:hover {
-    background-color: #3d3575;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.registro-container button:active {
-    background-color: #3b2e6e;
-    transform: translateY(0);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+.registro-container button[type="submit"]:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(74, 63, 140, 0.3);
 }
 
 .registro-container p {
-    color: #ff4d4d;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: -10px;
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  margin: 4px 0 0;
+  background: var(--danger-bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
 }
 
-.registro-container p.info {
-    color: #666;
-    font-size: 13px;
-    text-align: center;
-    margin-top: 20px;
+.registro-container .info {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  margin: 8px 0 0;
+  background: none;
+  padding: 0;
+  font-weight: 400;
 }
 
 .registro-container .back-button {
-    background: none;
-    border: none;
-    color: #4a3f8c;
-    font-size: 24px;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    transition: color 0.3s;
-    padding: 0;
-    margin: 0;
-    transform: none;
-    box-shadow: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
 }
 
 .registro-container .back-button:hover {
-    color: #3d3575;
-    background: none;
-    box-shadow: none;
-    transform: none;
+  background: var(--primary-bg);
+}
+
+@media (max-width: 768px) {
+  .registro-container {
+    padding: 28px 20px;
+  }
 }

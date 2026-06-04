@@ -1,8 +1,14 @@
-import React from 'react';
-import '../styles/JobModal.css';
-import { FaTimes, FaBriefcase, FaMapMarkerAlt, FaMoneyBillWave, FaClock } from 'react-icons/fa';
-import axios from 'axios';
-import { getToken } from '../services/authService';
+import React from "react";
+import "../styles/JobModal.css";
+import {
+  FaTimes,
+  FaBriefcase,
+  FaMapMarkerAlt,
+  FaMoneyBillWave,
+  FaClock,
+} from "react-icons/fa";
+import axios from "axios";
+import { getToken } from "../services/authService";
 
 const JobModal = ({ job, onClose }) => {
   if (!job) return null;
@@ -11,26 +17,26 @@ const JobModal = ({ job, onClose }) => {
     try {
       const token = getToken();
       const response = await axios.post(
-        'http://localhost:5000/Postulaciones/postular',
+        "http://localhost:5000/Postulaciones/postular",
         { ofertaId: job.id },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(response.data.message);
     } catch (error) {
       if (error.response?.data?.error) {
         alert(error.response.data.error);
       } else {
-        alert('Ocurrió un error al intentar postularse.');
+        alert("Ocurrió un error al intentar postularse.");
       }
-      console.error('Error al postularse:', error);
+      console.error("Error al postularse:", error);
     }
   };
 
   const requerimientos = Array.isArray(job.requerimientos)
     ? job.requerimientos
-    : typeof job.requerimientos === 'string'
-    ? JSON.parse(job.requerimientos)
-    : [];
+    : typeof job.requerimientos === "string"
+      ? JSON.parse(job.requerimientos)
+      : [];
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -47,22 +53,26 @@ const JobModal = ({ job, onClose }) => {
         <div className="modal-body">
           <div className="job-detail">
             <FaMapMarkerAlt className="detail-icon" />
-            <span>{job.localizacion || 'Ubicación no especificada'}</span>
+            <span>{job.localizacion || "Ubicación no especificada"}</span>
           </div>
 
           <div className="job-detail">
             <FaMoneyBillWave className="detail-icon" />
-            <span>{job.salario ? `$${job.salario.toLocaleString()}` : 'Salario no especificado'}</span>
+            <span>
+              {job.salario
+                ? `$${job.salario.toLocaleString()}`
+                : "Salario no especificado"}
+            </span>
           </div>
 
           <div className="job-detail">
             <FaClock className="detail-icon" />
-            <span>{job.horario || 'Tiempo completo'}</span>
+            <span>{job.horario || "Tiempo completo"}</span>
           </div>
 
           <div className="job-description">
             <h3>Descripción del puesto</h3>
-            <p>{job.descripcion || 'No hay descripción disponible'}</p>
+            <p>{job.descripcion || "No hay descripción disponible"}</p>
           </div>
 
           <div className="job-requirements">

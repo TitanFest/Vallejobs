@@ -78,7 +78,7 @@ const Login = () => {
           </div>
           <button type="submit" className="login-btn">Entrar</button>
         </form>
-        <a href="#" className="forgot-password-link" onClick={handleForgotPassword}>¿Olvidaste tu contraseña?</a>
+        <button type="button" className="forgot-password-link" onClick={handleForgotPassword}>¿Olvidaste tu contraseña?</button>
       </div>
 
       {modalOpen && (

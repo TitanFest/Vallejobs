@@ -30,6 +30,17 @@ export const logout = () => {
     localStorage.removeItem('token');
 };
 
+export const logoutUser = async () => {
+    try {
+        const token = getToken();
+        await axios.post('http://localhost:5000/Usuarios/logout', {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+    } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+    }
+};
+
 export const getAllUsers = async () => {
     const token = getToken();
     const response = await axios.get(`${API_URL}/obtener`, {

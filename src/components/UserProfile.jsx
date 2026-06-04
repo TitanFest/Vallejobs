@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import '../styles/UserProfile.css';
 import { FaEnvelope, FaPhone, FaStar, FaBriefcase, FaFileAlt, FaUser, FaEdit, FaMapMarkerAlt } from 'react-icons/fa';
 import { getToken } from '../services/authService';
@@ -40,7 +41,9 @@ const UserProfile = () => {
   if (!user)   return null;
 
   return (
-    <div className="profile-container">
+    <div className="profile-wrapper">
+      <Navbar />
+      <div className="profile-container">
       <div className="profile-left">
         <div className="profile-photo-section">
           <div className="profile-photo">
@@ -139,6 +142,7 @@ const UserProfile = () => {
             ))
           )}
         </div>
+      </div>
       </div>
     </div>
   );

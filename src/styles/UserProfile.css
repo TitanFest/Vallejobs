@@ -1,10 +1,15 @@
+.profile-wrapper {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
 .profile-container {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 30px;
   max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 32px 20px;
 }
 
 .profile-left {
@@ -15,95 +20,127 @@
 
 .profile-photo-section {
   text-align: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
 }
 
-.profile-photo {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 15px;
+.profile-photo-section .profile-photo {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 14px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid #4a3f8c;
+  border: 3px solid var(--primary);
 }
 
-.profile-photo img {
+.profile-photo-section .profile-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.edit-photo-btn {
-  background-color: #4a3f8c;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
+.default-avatar-icon {
+  font-size: 72px;
+  color: var(--primary);
+}
+
+.user-location {
+  color: var(--text-muted);
+  font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 10px auto;
+  justify-content: center;
+  gap: 6px;
 }
 
 .resume-section {
-  background-color: white;
+  background: var(--bg-card);
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.resume-section h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--text-primary);
 }
 
 .resume-preview {
-  background-color: #f5f5f5;
-  padding: 15px;
-  border-radius: 4px;
-  margin-top: 10px;
+  background: var(--bg);
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  margin: 10px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .resume-actions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
 }
 
 .view-btn, .update-btn {
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
   flex: 1;
+  text-align: center;
 }
 
 .view-btn {
-  background-color: transparent;
-  border: 1px solid #4a3f8c;
-  color: #4a3f8c;
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.view-btn:hover {
+  background: var(--primary-bg);
 }
 
 .update-btn {
-  background-color: #4a3f8c;
-  border: none;
+  background: var(--primary);
+  border: 2px solid var(--primary);
   color: white;
+}
+
+.update-btn:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
 .profile-right {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 24px;
 }
 
 .contact-info {
   display: flex;
-  gap: 20px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  gap: 24px;
+  background: var(--bg-card);
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
 }
 
 .info-item {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #666;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.info-item svg {
+  color: var(--primary);
 }
 
 .ratings-section {
@@ -113,55 +150,87 @@
 
 .rating-card {
   flex: 1;
-  background-color: white;
+  background: var(--bg-card);
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   text-align: center;
 }
 
+.rating-card h3 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
 .stars {
-  color: #ffd700;
-  margin: 10px 0;
+  color: #f9a825;
+  margin: 8px 0;
+  font-size: 18px;
 }
 
-.star-filled {
-  color: #ffd700;
-}
-
-.star-empty {
-  color: #ddd;
+.rating-value {
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .description-section,
 .history-section,
 .job-postings-section {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: var(--bg-card);
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.description-section h3,
+.history-section h3,
+.job-postings-section h3 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.description-section p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 .history-item {
   display: flex;
-  gap: 15px;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.history-item:last-child {
+  border-bottom: none;
 }
 
 .history-details h4 {
-  margin: 0;
-  color: #333;
+  margin: 0 0 4px;
+  color: var(--text-primary);
+  font-size: 15px;
 }
 
 .history-details p {
-  margin: 5px 0;
-  color: #666;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 .posting-item {
-  padding: 15px;
-  border-bottom: 1px solid #eee;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.posting-item:last-child {
+  border-bottom: none;
 }
 
 .posting-header {
@@ -170,76 +239,73 @@
   align-items: center;
 }
 
+.posting-header h4 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
 .status {
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 12px;
+  font-weight: 600;
 }
 
 .status.activo {
-  background-color: #e6f4ea;
-  color: #1e7e34;
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.status.pendiente {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.status.aceptado {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.status.rechazado {
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .edit-profile-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background-color: #4a3f8c;
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  margin: 15px auto;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s;
+  margin: 0 auto;
 }
 
 .edit-profile-btn:hover {
-  background-color: #3d3575;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 63, 140, 0.2);
-}
-
-.edit-profile-btn:active {
-  transform: translateY(0);
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 63, 140, 0.25);
 }
 
 @media (max-width: 768px) {
   .profile-container {
     grid-template-columns: 1fr;
   }
-  
+
   .ratings-section {
     flex-direction: column;
   }
-} 
 
-.default-avatar-icon {
-  font-size: 80px;
-  color: #4a3f8c;
+  .contact-info {
+    flex-direction: column;
+    gap: 12px;
+  }
 }
-
-.user-location {
-  color: #666;
-  font-size: 14px;
-  margin: 5px 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.profile-loading,
-.profile-error {
-  text-align: center;
-  padding: 60px;
-  font-size: 16px;
-  color: #666;
-}
-
-.status.pendiente  { background-color: #fff3cd; color: #856404; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
-.status.aceptado   { background-color: #e6f4ea; color: #1e7e34; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
-.status.rechazado  { background-color: #fde8e8; color: #c62828; padding: 3px 8px; border-radius: 4px; font-size: 12px; }

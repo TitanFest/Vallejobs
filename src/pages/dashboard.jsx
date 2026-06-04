@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { getToken } from '../services/authService';
-import { FaBriefcase, FaUsers, FaPlus, FaUser, FaCheckCircle, FaClock, FaTimesCircle, FaToggleOn, FaToggleOff, FaTrash } from 'react-icons/fa';
+import { FaBriefcase, FaUsers, FaPlus, FaUser, FaCheckCircle, FaClock, FaTimesCircle, FaToggleOn, FaToggleOff, FaTrash, FaEdit, FaEye, FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 import '../styles/Dashboard.css';
 
@@ -77,6 +77,9 @@ const Dashboard = () => {
     <div className="dashboard-wrapper">
       <Navbar />
       <div className="dashboard-container">
+        <button className="dashboard-back-btn" onClick={() => navigate(-1)}>
+          <FaArrowLeft /> Volver
+        </button>
 
         <div className="dashboard-header">
           <div>
@@ -190,6 +193,14 @@ const Dashboard = () => {
                           </span>
                         </td>
                         <td className="acciones-cell">
+                          <button className="edit-btn" onClick={() => navigate(`/EditJob/${o.id}`)}
+                            title="Editar">
+                            <FaEdit />
+                          </button>
+                          <button className="view-app-btn" onClick={() => navigate(`/JobApplicants/${o.id}`)}
+                            title="Ver postulantes">
+                            <FaEye />
+                          </button>
                           <button className="toggle-btn" onClick={() => handleToggleEstado(o)}
                             title={o.estado ? 'Desactivar' : 'Activar'}>
                             {o.estado ? <FaToggleOn /> : <FaToggleOff />}

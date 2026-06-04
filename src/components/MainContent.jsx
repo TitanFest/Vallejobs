@@ -4,7 +4,7 @@ import { FaBriefcase } from 'react-icons/fa';
 import JobModal from './JobModal';
 import axios from 'axios';
 
-const MainContent = ({ categoriaSeleccionada }) => {
+const MainContent = ({ categoriaSeleccionada, searchTerm }) => {
   const [jobOffers, setJobOffers] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -23,32 +23,32 @@ const MainContent = ({ categoriaSeleccionada }) => {
     fetchJobOffers();
   }, [categoriaSeleccionada]);
 
+  const filteredOffers = searchTerm
+    ? jobOffers.filter(job =>
+        job.titulo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.descripcion?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        job.localizacion?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : jobOffers;
+
   return (
     <div className="main-content">
       <div className="quick-jobs">
         {categoriaSeleccionada ? `Empleos — ${categoriaSeleccionada}` : 'EMPLEOS RÁPIDOS'}
       </div>
-      {jobOffers.length === 0 ? (
-        <p className="no-jobs">No hay empleos disponibles en esta categoría.</p>
+      {filteredOffers.length === 0 ? (
+        <p className="no-jobs">No hay empleos disponibles{searchTerm ? ` para "${searchTerm}"` : ' en esta categoría.'}</p>
       ) : (
-        jobOffers.map((job) => (
-          <div
-            key={job.id}
-            className="job-card"
-            onClick={() => setSelectedJob(job)}
-          >
-            <FaBriefcase className="job-icon" />
-            <span className="job-title">{job.titulo}</span>
-          </div>
-        ))
+        <div className="jobs-grid">
+          {filteredOffers.map((job) => (
+            <div key={job.id} className="job-card" onClick={() => setSelectedJob(job)}>
+              <FaBriefcase className="job-icon" />
+              <span className="job-title">{job.titulo}</span>
+            </div>
+          ))}
+        </div>
       )}
-
-      {selectedJob && (
-        <JobModal
-          job={selectedJob}
-          onClose={() => setSelectedJob(null)}
-        />
-      )}
+      {selectedJob && <JobModal job={selectedJob} onClose={() => setSelectedJob(null)} />}
     </div>
   );
 };

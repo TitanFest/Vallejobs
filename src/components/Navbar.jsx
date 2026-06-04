@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { isLoggedIn, logout } from '../services/authService';
+import { isLoggedIn, logout, logoutUser } from '../services/authService';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const loggedIn = isLoggedIn();
   const menuRef = useRef(null);
 
@@ -19,9 +20,17 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logoutUser();
     logout();
     window.location.href = '/';
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/?search=${encodeURIComponent(searchQuery.trim())}`;
+    }
   };
 
   return (
@@ -31,12 +40,17 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center">
-        <div className="search-bar">
-          <input type="text" placeholder="Buscar empleos..." />
-          <button className="search-btn">
+        <form className="search-bar" onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="Buscar empleos..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="search-btn">
             <FontAwesomeIcon icon={faSearch} />
           </button>
-        </div>
+        </form>
       </div>
 
       <div className="navbar-right">

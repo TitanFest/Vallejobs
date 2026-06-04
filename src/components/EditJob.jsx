@@ -1,18 +1,20 @@
-// components/CreateJob.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import "../styles/CreateJob.css";
 import {
   FaBriefcase,
   FaMapMarkerAlt,
   FaMoneyBillWave,
   FaClock,
   FaTag,
-  FaUsers,
 } from "react-icons/fa";
 import { getToken } from "../services/authService";
+import "../styles/CreateJob.css";
+import axios from "axios";
 
-const CreateJob = () => {
+const EditJob = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [jobData, setJobData] = useState({
     titulo: "",
     localizacion: "",
@@ -25,65 +27,70 @@ const CreateJob = () => {
   });
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [vacancies, setVacancies] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const token = getToken();
+        const res = await axios.get(
+          `http://localhost:5000/Trabajos/obtener/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+        const job = res.data;
+        setJobData({
+          titulo: job.titulo || "",
+          localizacion: job.localizacion || "",
+          salario: job.salario || "",
+          horario: job.horario || "Tiempo completo",
+          categoria: job.categoria || "",
+          descripcion: job.descripcion || "",
+          requerimientos: Array.isArray(job.requerimientos)
+            ? job.requerimientos.join("\n")
+            : job.requerimientos || "",
+          estado: job.estado,
+        });
+      } catch (err) {
+        setError("Error al cargar la oferta.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJob();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setJobData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setJobData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // FIX: handleSubmit ahora envía los datos al backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
-
     try {
       const token = getToken();
-      const response = await fetch("http://localhost:5000/Trabajos/registrar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...jobData,
-          salario: parseInt(jobData.salario) || null,
-        }),
+      const body = {
+        ...jobData,
+        salario: parseInt(jobData.salario) || null,
+        requerimientos: jobData.requerimientos
+          .split("\n")
+          .filter((r) => r.trim()),
+      };
+      await axios.put(`http://localhost:5000/Trabajos/actualizar/${id}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!response.ok) {
-        throw new Error("Error al publicar la oferta");
-      }
-
-      setSuccessMessage("¡Oferta publicada exitosamente!");
-      setJobData({
-        titulo: "",
-        localizacion: "",
-        salario: "",
-        horario: "Tiempo completo",
-        categoria: "",
-        descripcion: "",
-        requerimientos: "",
-        estado: true,
-      });
-      setVacancies(1);
+      setSuccessMessage("Oferta actualizada correctamente.");
     } catch (err) {
-      setError("No se pudo publicar la oferta. Intenta de nuevo.");
+      setError("Error al actualizar la oferta.");
       console.error(err);
     }
   };
 
-  const handleVacanciesChange = (operation) => {
-    setVacancies((prev) =>
-      operation === "increment"
-        ? Math.min(prev + 1, 99)
-        : Math.max(prev - 1, 1),
-    );
-  };
+  if (loading) return <div className="profile-loading">Cargando oferta...</div>;
 
   const jobCategories = [
     "Tecnología",
@@ -106,13 +113,10 @@ const CreateJob = () => {
       <div className="create-job-container">
         <div className="create-job-header">
           <FaBriefcase className="header-icon" />
-          <h2>Crear Nueva Oferta de Empleo</h2>
-          <span className="required-legend">* Campos requeridos</span>
+          <h2>Editar Oferta de Empleo</h2>
         </div>
-
         {error && <p style={{ color: "red" }}>{error}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-
         <form onSubmit={handleSubmit} className="create-job-form">
           <div className="form-group">
             <label>
@@ -123,11 +127,9 @@ const CreateJob = () => {
               name="titulo"
               value={jobData.titulo}
               onChange={handleChange}
-              placeholder="ej. Desarrollador Frontend Senior"
               required
             />
           </div>
-
           <div className="form-row">
             <div className="form-group">
               <label>
@@ -138,11 +140,9 @@ const CreateJob = () => {
                 name="localizacion"
                 value={jobData.localizacion}
                 onChange={handleChange}
-                placeholder="ej. Valledupar, Colombia"
                 required
               />
             </div>
-
             <div className="form-group">
               <label>
                 <FaMoneyBillWave className="input-icon" /> Salario
@@ -152,11 +152,9 @@ const CreateJob = () => {
                 name="salario"
                 value={jobData.salario}
                 onChange={handleChange}
-                placeholder="ej. 2000000"
               />
             </div>
           </div>
-
           <div className="form-row">
             <div className="form-group">
               <label>
@@ -167,17 +165,15 @@ const CreateJob = () => {
                 value={jobData.categoria}
                 onChange={handleChange}
                 required
-                className="category-select"
               >
                 <option value="">Selecciona una categoría</option>
-                {jobCategories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                {jobCategories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
                   </option>
                 ))}
               </select>
             </div>
-
             <div className="form-group">
               <label>
                 <FaClock className="input-icon" /> Tipo de empleo
@@ -194,79 +190,35 @@ const CreateJob = () => {
               </select>
             </div>
           </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>
-                <FaUsers className="input-icon" /> Número de Vacantes
-              </label>
-              <div className="vacancies-input">
-                <button
-                  type="button"
-                  className="vacancy-btn"
-                  onClick={() => handleVacanciesChange("decrement")}
-                  disabled={vacancies <= 1}
-                >
-                  -
-                </button>
-                <input
-                  type="number"
-                  value={vacancies}
-                  onChange={(e) =>
-                    setVacancies(
-                      Math.max(1, Math.min(99, parseInt(e.target.value) || 1)),
-                    )
-                  }
-                  min="1"
-                  max="99"
-                  className="vacancy-number"
-                />
-                <button
-                  type="button"
-                  className="vacancy-btn"
-                  onClick={() => handleVacanciesChange("increment")}
-                  disabled={vacancies >= 99}
-                >
-                  +
-                </button>
-              </div>
-            </div>
-          </div>
-
           <div className="form-group">
             <label>Descripción del puesto *</label>
             <textarea
               name="descripcion"
               value={jobData.descripcion}
               onChange={handleChange}
-              placeholder="Describe las responsabilidades y el rol..."
               required
               rows="4"
             />
           </div>
-
           <div className="form-group">
-            <label>Requisitos *</label>
+            <label>Requisitos (uno por línea)</label>
             <textarea
               name="requerimientos"
               value={jobData.requerimientos}
               onChange={handleChange}
-              placeholder="Lista los requisitos principales..."
-              required
               rows="4"
             />
           </div>
-
           <div className="form-actions">
             <button
               type="button"
               className="cancel-btn"
-              onClick={() => window.history.back()}
+              onClick={() => navigate(-1)}
             >
               Cancelar
             </button>
             <button type="submit" className="submit-btn">
-              Publicar empleo
+              Guardar cambios
             </button>
           </div>
         </form>
@@ -275,4 +227,4 @@ const CreateJob = () => {
   );
 };
 
-export default CreateJob;
+export default EditJob;

@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #f5f8fc;
+  background: var(--bg-card);
   padding: 0 24px;
   height: 64px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -20,9 +20,14 @@
 .logo {
   font-weight: 800;
   font-size: 22px;
-  color: #1a2a5a;
+  color: var(--text-primary);
   letter-spacing: 1px;
   cursor: pointer;
+  transition: color 0.2s;
+}
+
+.logo:hover {
+  color: var(--primary);
 }
 
 .navbar-center {
@@ -37,45 +42,47 @@
   width: 100%;
   max-width: 600px;
   height: 40px;
-  align-items: stretch;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  background: white;
+}
+
+.search-bar:focus-within {
+  border-color: var(--primary);
 }
 
 .search-bar input {
   flex-grow: 1;
-  padding: 0 16px;
-  border: 2px solid #ddd;
-  border-right: none;
-  border-radius: 8px 0 0 8px;
-  font-size: 15px;
+  padding: 0 14px;
+  border: none;
+  font-size: 14px;
   outline: none;
-  transition: border-color 0.2s;
-  height: 40px;
+  height: 100%;
   box-sizing: border-box;
-}
-
-.search-bar input:focus {
-  border-color: #4a3f8c;
+  background: transparent;
 }
 
 .search-btn {
-  background-color: #4a3f8c;
+  background: var(--primary);
   border: none;
-  padding: 0 20px;
+  padding: 0;
+  margin: 0;
   color: white;
   cursor: pointer;
-  border-radius: 0 8px 8px 0;
-  font-size: 16px;
-  height: 40px;
-  width: 52px;
-  box-sizing: border-box;
-  transition: background-color 0.2s;
+  font-size: 15px;
+  width: 44px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.2s;
 }
 
 .search-btn:hover {
-  background-color: #3d3575;
+  background: var(--primary-dark);
 }
 
 .navbar-right {
@@ -83,42 +90,45 @@
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .register-btn,
 .login-btn {
-  height: 38px;
-  padding: 0 18px;
-  border-radius: 6px;
+  height: 40px;
+  padding: 0 22px;
+  border-radius: var(--radius-md);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 2px solid var(--primary);
 }
 
 .register-btn {
-  background-color: #4a3f8c;
+  background: var(--primary);
   color: white;
-  border: 2px solid #4a3f8c;
 }
 
 .register-btn:hover {
-  background-color: #3d3575;
-  border-color: #3d3575;
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
 .login-btn {
-  background-color: transparent;
-  color: #4a3f8c;
-  border: 2px solid #4a3f8c;
+  background: transparent;
+  color: var(--primary);
 }
 
 .login-btn:hover {
-  background-color: #4a3f8c;
+  background: var(--primary);
   color: white;
 }
 
-/* Perfil dropdown */
 .profile-menu-wrapper {
   position: relative;
 }
@@ -128,32 +138,35 @@
   align-items: center;
   gap: 8px;
   background: transparent;
-  border: 2px solid #4a3f8c;
+  border: 2px solid var(--primary);
   border-radius: 50px;
-  padding: 4px 12px 4px 4px;
+  padding: 3px 14px 3px 4px;
   cursor: pointer;
   transition: all 0.2s;
+  height: 42px;
+  box-sizing: border-box;
 }
 
 .profile-btn:hover {
-  background-color: #f0eeff;
+  background: var(--primary-bg);
 }
 
 .profile-avatar {
   width: 32px;
   height: 32px;
-  background-color: #4a3f8c;
+  background: var(--primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .profile-arrow {
   font-size: 10px;
-  color: #4a3f8c;
+  color: var(--primary);
 }
 
 .profile-dropdown {
@@ -161,9 +174,9 @@
   top: calc(100% + 8px);
   right: 0;
   background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
   min-width: 180px;
   overflow: hidden;
   z-index: 200;
@@ -176,7 +189,7 @@
   background: transparent;
   border: none;
   font-size: 14px;
-  color: #333;
+  color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -185,21 +198,21 @@
 }
 
 .profile-dropdown button:hover {
-  background-color: #f5f0ff;
-  color: #4a3f8c;
+  background: var(--primary-bg);
+  color: var(--primary);
 }
 
 .dropdown-divider {
   height: 1px;
-  background-color: #eee;
+  background: var(--border-light);
   margin: 4px 0;
 }
 
 .logout-btn {
-  color: #e53935 !important;
+  color: var(--danger) !important;
 }
 
 .logout-btn:hover {
-  background-color: #fff0f0 !important;
-  color: #e53935 !important;
+  background: var(--danger-bg) !important;
+  color: var(--danger) !important;
 }
