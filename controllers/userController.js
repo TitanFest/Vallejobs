@@ -20,9 +20,11 @@ const createUser = async (req, res) => {
   }
 };
 
+const safeAttrs = { attributes: { exclude: ["password"] } };
+
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll(safeAttrs);
     res.json(users);
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
@@ -33,7 +35,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, safeAttrs);
     if (user) {
       res.json(user);
     } else {

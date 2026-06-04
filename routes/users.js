@@ -7,8 +7,24 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const authMiddleware = require("../middlewares/authMiddleware");
 const User = require("../models/User");
+const path = require("path");
+const fs = require("fs");
 const multer = require("multer");
-const upload = multer({ storage: multer.memoryStorage() });
+
+const uploadDir = path.join(__dirname, "..", "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${req.user.userId}-${Date.now()}`;
+    const ext = path.extname(file.originalname);
+    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+  },
+});
+const upload = multer({ storage });
 
 router.post("/registrar", userController.createUser);
 
@@ -61,10 +77,26 @@ router.put(
         descripcion,
       } = req.body;
 
-      const [updated] = await User.update(
-        { name, apellido, documento, email, telefono, ubicacion, descripcion },
-        { where: { id: userId } },
-      );
+      const updateData = {
+        name,
+        apellido,
+        documento,
+        email,
+        telefono,
+        ubicacion,
+        descripcion,
+      };
+
+      if (req.files?.foto) {
+        updateData.foto = `uploads/${req.files.foto[0].filename}`;
+      }
+      if (req.files?.cv) {
+        updateData.cv = `uploads/${req.files.cv[0].filename}`;
+      }
+
+      const [updated] = await User.update(updateData, {
+        where: { id: userId },
+      });
 
       if (updated) {
         const updatedUser = await User.findByPk(userId, {

@@ -1,10 +1,19 @@
 // server.js
 
+process.env.NODE_NO_WARNINGS = "1";
+{
+  const origWarn = console.warn;
+  console.warn = (...args) => {
+    if (typeof args[0] === "string" && args[0].includes("[SEQUELIZE0006]")) return;
+    origWarn.apply(console, args);
+  };
+}
+
 const express = require("express");
+const path = require("path");
 const { testConnection, sequelize } = require("./database");
 require("dotenv").config();
 
-// Cargar asociaciones (esto importa todos los modelos internamente)
 require("./models/associations");
 
 const app = express();
@@ -19,6 +28,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("¡Bienvenido a la API Vallejobs!");
