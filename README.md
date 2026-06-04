@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# Vallejobs — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Cliente React para la plataforma de empleos Vallejobs. Consume la API REST del backend y proporciona una interfaz moderna para gestión de empleos y perfiles.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Tecnologías
 
-### `npm start`
+- **Framework:** React 18
+- **Routing:** React Router v6
+- **HTTP:** Axios
+- **Iconos:** FontAwesome 7, react-icons 5
+- **Build:** react-scripts 5 (Create React App)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Requisitos
 
-### `npm test`
+- Node.js 18+
+- Backend de Vallejobs corriendo en `http://localhost:5000`
+- pnpm
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Instalación
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd Frontend
+pnpm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Ejecución
 
-### `npm run eject`
+```bash
+pnpm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+La aplicación inicia en `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Para build de producción:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+pnpm run build
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Estructura
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+Frontend/
+├── public/
+│   └── index.html
+├── src/
+│   ├── components/        # Componentes React
+│   │   ├── Navbar.jsx         # Barra de navegación con búsqueda
+│   │   ├── Login.jsx          # Inicio de sesión
+│   │   ├── registro.jsx       # Registro de usuario
+│   │   ├── MainContent.jsx    # Grid de ofertas
+│   │   ├── JobModal.jsx       # Modal con detalle de oferta
+│   │   ├── Sidebar.jsx        # Categorías
+│   │   ├── CreateJob.jsx      # Publicar oferta
+│   │   ├── EditJob.jsx        # Editar oferta
+│   │   ├── UserProfile.jsx    # Perfil de usuario (propio o por ID)
+│   │   ├── EditProfile.jsx    # Editar perfil con foto/CV
+│   │   ├── JobApplicants.jsx  # Postulantes de una oferta
+│   │   └── ProtectedRoute.jsx # Ruta protegida (requiere auth)
+│   ├── pages/
+│   │   ├── home.jsx           # Página principal
+│   │   ├── dashboard.jsx      # Panel de control
+│   │   └── UserList.jsx       # Lista de usuarios
+│   ├── services/
+│   │   └── authService.js     # Token, logout, helpers
+│   ├── styles/                # Archivos CSS
+│   │   ├── index.css          # Variables globales y reset
+│   │   ├── Navbar.css
+│   │   ├── MainContent.css
+│   │   ├── Sidebar.css
+│   │   ├── Home.css
+│   │   ├── Login.css
+│   │   ├── registro.css
+│   │   ├── CreateJob.css
+│   │   ├── EditProfile.css
+│   │   ├── UserProfile.css
+│   │   ├── Dashboard.css
+│   │   ├── JobApplicants.css
+│   │   ├── JobModal.css
+│   │   └── App.css
+│   ├── App.jsx             # Router principal
+│   ├── index.js            # Entry point
+│   └── index.css           # Variables CSS globales
+└── package.json
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Rutas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Ruta                 | Componente    | Auth | Descripción                  |
+| -------------------- | ------------- | ---- | ---------------------------- |
+| `/`                  | Home          | No   | Página principal con ofertas |
+| `/Home`              | Home          | No   | Alias de `/`                 |
+| `/login`             | Login         | No   | Inicio de sesión             |
+| `/registro`          | Registro      | No   | Crear cuenta                 |
+| `/dashboard`         | Dashboard     | Sí   | Panel de control             |
+| `/CreateJob`         | CreateJob     | Sí   | Publicar oferta              |
+| `/EditJob/:id`       | EditJob       | Sí   | Editar oferta                |
+| `/UserProfile`       | UserProfile   | Sí   | Perfil propio                |
+| `/UserProfile/:id`   | UserProfile   | Sí   | Perfil de otro usuario       |
+| `/EditProfile`       | EditProfile   | Sí   | Editar perfil                |
+| `/JobApplicants/:id` | JobApplicants | Sí   | Postulantes de una oferta    |
+| `/UserList`          | UserList      | Sí   | Lista de usuarios            |
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Funcionalidades
 
-### Making a Progressive Web App
+- **Autenticación:** Login/registro con JWT, ruta protegida
+- **Navegación:** Navbar con logo, barra de búsqueda y menú de perfil
+- **Ofertas:** Grid de tarjetas, modal con detalle, filtro por categoría, búsqueda por texto
+- **Dashboard:** Estadísticas, gestión de ofertas (crear, editar, eliminar, activar/desactivar)
+- **Postulaciones:** Postularse a ofertas, ver postulantes con foto, aceptar/rechazar
+- **Perfil:** Vista pública (`/UserProfile/:id`) con foto, datos, calificaciones
+- **Edición de perfil:** Subir foto de perfil y CV con vista previa
+- **Diseño:** Variables CSS, diseño responsive, colores consistentes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Notas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- La API base está configurada en `http://localhost:5000` (hardcodeada en los componentes)
+- Las imágenes se muestran desde `http://localhost:5000/uploads/{path}`
+- El ESLint config (`react-app`) fue removido de `package.json` porque el paquete `eslint-config-react-app` no estaba instalado y bloqueaba el build
