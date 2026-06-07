@@ -104,10 +104,22 @@
   flex-shrink: 0;
 }
 
-.card-icon.purple { background: var(--primary-bg); color: var(--primary); }
-.card-icon.yellow { background: #fff8e1; color: #f9a825; }
-.card-icon.green  { background: var(--success-bg); color: var(--success); }
-.card-icon.red    { background: var(--danger-bg); color: var(--danger); }
+.card-icon.purple {
+  background: var(--primary-bg);
+  color: var(--primary);
+}
+.card-icon.yellow {
+  background: #fff8e1;
+  color: #f9a825;
+}
+.card-icon.green {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.card-icon.red {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
 
 .card-info {
   display: flex;
@@ -184,9 +196,18 @@
   font-weight: 600;
 }
 
-.estado-badge.pendiente  { background: var(--warning-bg); color: var(--warning); }
-.estado-badge.aceptado   { background: var(--success-bg); color: var(--success); }
-.estado-badge.rechazado  { background: var(--danger-bg); color: var(--danger); }
+.estado-badge.pendiente {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.estado-badge.aceptado {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.estado-badge.rechazado {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
 
 .dashboard-quick-actions {
   background: var(--bg-card);

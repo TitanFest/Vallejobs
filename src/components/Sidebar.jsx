@@ -1,7 +1,7 @@
 // src/components/Sidebar.js
-import React, { useEffect, useState } from 'react';
-import '../styles/Sidebar.css';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import "../styles/Sidebar.css";
+import axios from "axios";
 
 const Sidebar = ({ onCategoriaSelect, categoriaActiva }) => {
   const [jobCategory, setJobCategory] = useState([]);
@@ -9,10 +9,12 @@ const Sidebar = ({ onCategoriaSelect, categoriaActiva }) => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/Categoria/obtener');
+        const response = await axios.get(
+          "http://localhost:5000/Categoria/obtener",
+        );
         setJobCategory(response.data);
       } catch (error) {
-        console.error('Error al obtener categorías:', error);
+        console.error("Error al obtener categorías:", error);
       }
     };
     fetchCategory();
@@ -21,7 +23,7 @@ const Sidebar = ({ onCategoriaSelect, categoriaActiva }) => {
   return (
     <div className="sidebar">
       <button
-        className={`sidebar-btn ${categoriaActiva === null ? 'active' : ''}`}
+        className={`sidebar-btn ${categoriaActiva === null ? "active" : ""}`}
         onClick={() => onCategoriaSelect(null)}
       >
         Todos
@@ -29,7 +31,7 @@ const Sidebar = ({ onCategoriaSelect, categoriaActiva }) => {
       {jobCategory.map((category) => (
         <button
           key={category.id}
-          className={`sidebar-btn ${categoriaActiva === category.nombre ? 'active' : ''}`}
+          className={`sidebar-btn ${categoriaActiva === category.nombre ? "active" : ""}`}
           onClick={() => onCategoriaSelect(category.nombre)}
         >
           {category.nombre}

@@ -1,12 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { isLoggedIn, logout, logoutUser } from '../services/authService';
-import '../styles/Navbar.css';
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSearch,
+  faUser,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { isLoggedIn, logout, logoutUser } from "../services/authService";
+import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const loggedIn = isLoggedIn();
   const menuRef = useRef(null);
 
@@ -16,14 +20,14 @@ const Navbar = () => {
         setMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
     await logoutUser();
     logout();
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const handleSearch = (e) => {
@@ -36,7 +40,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <span className="logo" onClick={() => window.location.href = '/'}>VALLEJOBS</span>
+        <span className="logo" onClick={() => (window.location.href = "/")}>
+          VALLEJOBS
+        </span>
       </div>
 
       <div className="navbar-center">
@@ -56,19 +62,22 @@ const Navbar = () => {
       <div className="navbar-right">
         {loggedIn ? (
           <div className="profile-menu-wrapper" ref={menuRef}>
-            <button className="profile-btn" onClick={() => setMenuOpen(!menuOpen)}>
+            <button
+              className="profile-btn"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
               <div className="profile-avatar">
                 <FontAwesomeIcon icon={faUser} />
               </div>
-              <span className="profile-arrow">{menuOpen ? '▲' : '▼'}</span>
+              <span className="profile-arrow">{menuOpen ? "▲" : "▼"}</span>
             </button>
 
             {menuOpen && (
               <div className="profile-dropdown">
-                <button onClick={() => window.location.href = '/UserProfile'}>
+                <button onClick={() => (window.location.href = "/UserProfile")}>
                   <FontAwesomeIcon icon={faUser} /> Mi perfil
                 </button>
-                <button onClick={() => window.location.href = '/dashboard'}>
+                <button onClick={() => (window.location.href = "/dashboard")}>
                   <FontAwesomeIcon icon={faUser} /> Dashboard
                 </button>
                 <div className="dropdown-divider" />
@@ -80,10 +89,16 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <button className="register-btn" onClick={() => window.location.href = '/registro'}>
+            <button
+              className="register-btn"
+              onClick={() => (window.location.href = "/registro")}
+            >
               Registrar
             </button>
-            <button className="login-btn" onClick={() => window.location.href = '/login'}>
+            <button
+              className="login-btn"
+              onClick={() => (window.location.href = "/login")}
+            >
               Login
             </button>
           </>

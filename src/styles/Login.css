@@ -28,8 +28,12 @@
 }
 
 @keyframes backgroundMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 .login-container {
@@ -91,7 +95,9 @@
   border: 2px solid var(--border);
   border-radius: var(--radius-md);
   font-size: 15px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
   background: white;
   box-sizing: border-box;
 }

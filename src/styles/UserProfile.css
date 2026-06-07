@@ -83,7 +83,8 @@
   gap: 10px;
 }
 
-.view-btn, .update-btn {
+.view-btn,
+.update-btn {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   cursor: pointer;
