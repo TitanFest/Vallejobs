@@ -4,7 +4,8 @@ process.env.NODE_NO_WARNINGS = "1";
 {
   const origWarn = console.warn;
   console.warn = (...args) => {
-    if (typeof args[0] === "string" && args[0].includes("[SEQUELIZE0006]")) return;
+    if (typeof args[0] === "string" && args[0].includes("[SEQUELIZE0006]"))
+      return;
     origWarn.apply(console, args);
   };
 }
