@@ -15,7 +15,7 @@ export const loginUser = async (credentials) => {
     throw new Error("Login failed");
   }
 
-  return response.data.token;
+  return response.data;
 };
 
 export const saveToken = (token) => {
@@ -26,8 +26,23 @@ export const getToken = () => {
   return localStorage.getItem("token");
 };
 
+export const saveUser = (user) => {
+  localStorage.setItem("user", JSON.stringify(user));
+};
+
+export const getUser = () => {
+  const user = localStorage.getItem("user");
+  return user ? JSON.parse(user) : null;
+};
+
+export const isAdmin = () => {
+  const user = getUser();
+  return user?.rol === "admin";
+};
+
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export const logoutUser = async () => {

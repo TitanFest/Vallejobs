@@ -1,5 +1,5 @@
 // components/CreateJob.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import "../styles/CreateJob.css";
 import {
@@ -11,6 +11,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { getToken } from "../services/authService";
+import axios from "axios";
 
 const CreateJob = () => {
   const [jobData, setJobData] = useState({
@@ -33,6 +34,10 @@ const CreateJob = () => {
       ...prevState,
       [name]: value,
     }));
+    if (name === "categoria") {
+      const found = jobCategories.find((c) => c.nombre === value);
+      setCategoriaId(found ? found.id : "");
+    }
   };
 
   // FIX: handleSubmit ahora envía los datos al backend
@@ -51,6 +56,7 @@ const CreateJob = () => {
         },
         body: JSON.stringify({
           ...jobData,
+          categoriaId: categoriaId || undefined,
           salario: parseInt(jobData.salario) || null,
         }),
       });
@@ -77,6 +83,21 @@ const CreateJob = () => {
     }
   };
 
+  const [jobCategories, setJobCategories] = useState([]);
+  const [categoriaId, setCategoriaId] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/Categoria/obtener");
+        setJobCategories(res.data);
+      } catch (err) {
+        console.error("Error al obtener categorías:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const handleVacanciesChange = (operation) => {
     setVacancies((prev) =>
       operation === "increment"
@@ -84,21 +105,6 @@ const CreateJob = () => {
         : Math.max(prev - 1, 1),
     );
   };
-
-  const jobCategories = [
-    "Tecnología",
-    "Marketing",
-    "Diseño",
-    "Ventas",
-    "Administración",
-    "Recursos Humanos",
-    "Finanzas",
-    "Educación",
-    "Salud",
-    "Ingeniería",
-    "Servicio al Cliente",
-    "Otros",
-  ];
 
   return (
     <div className="create-job-wrapper">
@@ -170,9 +176,9 @@ const CreateJob = () => {
                 className="category-select"
               >
                 <option value="">Selecciona una categoría</option>
-                {jobCategories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                {jobCategories.map((cat) => (
+                  <option key={cat.id} value={cat.nombre}>
+                    {cat.nombre}
                   </option>
                 ))}
               </select>

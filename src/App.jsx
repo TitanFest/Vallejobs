@@ -12,6 +12,7 @@ import UserProfile from "./components/UserProfile";
 import EditProfile from "./components/EditProfile";
 import EditJob from "./components/EditJob";
 import JobApplicants from "./components/JobApplicants";
+import AdminCategories from "./pages/AdminCategories";
 
 function App() {
   return (
@@ -82,6 +83,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UserList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminCategories"
+          element={
+            <ProtectedRoute>
+              <AdminCategories />
             </ProtectedRoute>
           }
         />

@@ -4,8 +4,9 @@ import {
   faSearch,
   faUser,
   faRightFromBracket,
+  faShieldHalved,
 } from "@fortawesome/free-solid-svg-icons";
-import { isLoggedIn, logout, logoutUser } from "../services/authService";
+import { isLoggedIn, logout, logoutUser, isAdmin } from "../services/authService";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -80,6 +81,14 @@ const Navbar = () => {
                 <button onClick={() => (window.location.href = "/dashboard")}>
                   <FontAwesomeIcon icon={faUser} /> Dashboard
                 </button>
+                {isAdmin() && (
+                  <>
+                    <div className="dropdown-divider" />
+                    <button onClick={() => (window.location.href = "/AdminCategories")}>
+                      <FontAwesomeIcon icon={faShieldHalved} /> Categorías
+                    </button>
+                  </>
+                )}
                 <div className="dropdown-divider" />
                 <button className="logout-btn" onClick={handleLogout}>
                   <FontAwesomeIcon icon={faRightFromBracket} /> Cerrar sesión

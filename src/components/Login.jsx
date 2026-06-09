@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { loginUser, saveToken } from "../services/authService";
+import { loginUser, saveToken, saveUser } from "../services/authService";
 import { FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import "../styles/Login.css";
 
@@ -17,10 +17,11 @@ const Login = () => {
     setError(null);
 
     try {
-      const token = await loginUser({ email, password });
-      saveToken(token);
+      const data = await loginUser({ email, password });
+      saveToken(data.token);
+      saveUser(data.user);
 
-      console.log("Login successful. JWT:", token);
+      console.log("Login successful. JWT:", data.token);
       window.location.href = "/dashboard";
     } catch (error) {
       setError("Login failed. Please check your credentials.");

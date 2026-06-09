@@ -28,6 +28,8 @@ const EditJob = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [jobCategories, setJobCategories] = useState([]);
+  const [categoriaId, setCategoriaId] = useState("");
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -45,13 +47,14 @@ const EditJob = () => {
           localizacion: job.localizacion || "",
           salario: job.salario || "",
           horario: job.horario || "Tiempo completo",
-          categoria: job.categoria || "",
+          categoria: job.categoria?.nombre || "",
           descripcion: job.descripcion || "",
           requerimientos: Array.isArray(job.requerimientos)
             ? job.requerimientos.join("\n")
             : job.requerimientos || "",
           estado: job.estado,
         });
+        if (job.categoria?.id) setCategoriaId(job.categoria.id);
       } catch (err) {
         setError("Error al cargar la oferta.");
         console.error(err);
@@ -60,11 +63,19 @@ const EditJob = () => {
       }
     };
     fetchJob();
+    axios
+      .get("http://localhost:5000/Categoria/obtener")
+      .then((res) => setJobCategories(res.data))
+      .catch(() => {});
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setJobData((prev) => ({ ...prev, [name]: value }));
+    if (name === "categoria") {
+      const found = jobCategories.find((c) => c.nombre === value);
+      setCategoriaId(found ? found.id : "");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -75,6 +86,7 @@ const EditJob = () => {
       const token = getToken();
       const body = {
         ...jobData,
+        categoriaId: categoriaId || undefined,
         salario: parseInt(jobData.salario) || null,
         requerimientos: jobData.requerimientos
           .split("\n")
@@ -91,21 +103,6 @@ const EditJob = () => {
   };
 
   if (loading) return <div className="profile-loading">Cargando oferta...</div>;
-
-  const jobCategories = [
-    "Tecnología",
-    "Marketing",
-    "Diseño",
-    "Ventas",
-    "Administración",
-    "Recursos Humanos",
-    "Finanzas",
-    "Educación",
-    "Salud",
-    "Ingeniería",
-    "Servicio al Cliente",
-    "Otros",
-  ];
 
   return (
     <div className="create-job-wrapper">
@@ -168,8 +165,8 @@ const EditJob = () => {
               >
                 <option value="">Selecciona una categoría</option>
                 {jobCategories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
+                  <option key={cat.id} value={cat.nombre}>
+                    {cat.nombre}
                   </option>
                 ))}
               </select>
