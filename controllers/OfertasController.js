@@ -1,12 +1,14 @@
 // controllers/OfertasController.js
 
 const OfertaTrabajo = require("../models/OfertasTrabajo");
+const Categoria = require("../models/Categoria");
 
 const createWork = async (req, res) => {
   try {
     const {
       titulo,
       categoria,
+      categoriaId,
       localizacion,
       horario,
       salario,
@@ -16,18 +18,27 @@ const createWork = async (req, res) => {
     } = req.body;
     const userId = req.user.userId;
 
+    let catId = categoriaId;
+    if (!catId && categoria) {
+      const found = await Categoria.findOne({ where: { nombre: categoria } });
+      if (found) catId = found.id;
+    }
+
     const newJob = await OfertaTrabajo.create({
       titulo,
-      categoria,
+      categoriaId: catId,
       localizacion,
       horario,
       salario,
       estado,
       descripcion,
       requerimientos,
-      userId, // agregarlo al crear
+      userId,
     });
-    res.status(201).json(newJob);
+    const jobConCategoria = await OfertaTrabajo.findByPk(newJob.id, {
+      include: [{ model: Categoria, as: "categoria" }],
+    });
+    res.status(201).json(jobConCategoria);
   } catch (error) {
     console.error("Error al crear oferta de trabajo:", error);
     res.status(500).json({ error: "Error al crear oferta de trabajo" });
@@ -65,7 +76,9 @@ const addPostulante = async (req, res) => {
 
 const getAllWorks = async (req, res) => {
   try {
-    const Jobs = await OfertaTrabajo.findAll();
+    const Jobs = await OfertaTrabajo.findAll({
+      include: [{ model: Categoria, as: "categoria" }],
+    });
     res.json(Jobs);
   } catch (error) {
     console.error("Error al obtener ofertas trabajos:", error);
@@ -73,11 +86,12 @@ const getAllWorks = async (req, res) => {
   }
 };
 
-// FIX: usaba User.findByPk en vez de OfertaTrabajo.findByPk
 const getWorkById = async (req, res) => {
   try {
     const { id } = req.params;
-    const Job = await OfertaTrabajo.findByPk(id);
+    const Job = await OfertaTrabajo.findByPk(id, {
+      include: [{ model: Categoria, as: "categoria" }],
+    });
     if (Job) {
       res.json(Job);
     } else {
@@ -124,11 +138,15 @@ const deleteWork = async (req, res) => {
   }
 };
 
-// FIX: findOne devuelve solo 1 resultado; si quieres todas las de esa categoría usa findAll
 const findWorkByCategory = async (req, res) => {
   try {
     const { categoria } = req.params;
-    const ofertas = await OfertaTrabajo.findAll({ where: { categoria } });
+    const cat = await Categoria.findOne({ where: { nombre: categoria } });
+    if (!cat) return res.json([]);
+    const ofertas = await OfertaTrabajo.findAll({
+      where: { categoriaId: cat.id },
+      include: [{ model: Categoria, as: "categoria" }],
+    });
     res.json(ofertas);
   } catch (error) {
     console.error("Error al buscar ofertas por categoría:", error);

@@ -5,7 +5,7 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const authMiddleware = require("../middlewares/authMiddleware");
+const { authMiddleware } = require("../middlewares/authMiddleware");
 const User = require("../models/User");
 const path = require("path");
 const fs = require("fs");
@@ -40,10 +40,12 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Contraseña incorrecta" });
   }
 
-  const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ userId: user.id, rol: user.rol }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
-  res.json({ token, user });
+  const userData = { ...user.toJSON() };
+  delete userData.password;
+  res.json({ token, user: userData });
 });
 
 // Rutas específicas antes que las dinámicas (:id)

@@ -13,6 +13,7 @@ process.env.NODE_NO_WARNINGS = "1";
 const express = require("express");
 const path = require("path");
 const { testConnection, sequelize } = require("./database");
+const User = require("./models/User");
 require("dotenv").config();
 
 require("./models/associations");
@@ -45,11 +46,37 @@ app.use((err, req, res, next) => {
   res.status(500).send("¡Algo salió mal!");
 });
 
+const seedAdminUser = async () => {
+  try {
+    const adminEmail = "admin@vallejobs.com";
+    const existingAdmin = await User.findOne({ where: { email: adminEmail } });
+    if (!existingAdmin) {
+      await User.create({
+        name: "Admin",
+        apellido: "Vallejobs",
+        documento: "0000000000",
+        telefono: "0000000000",
+        email: adminEmail,
+        password: "Admin123!",
+        rol: "admin",
+      });
+      console.log("Usuario administrador creado: admin@vallejobs.com / Admin123!");
+    } else if (existingAdmin.rol !== "admin") {
+      existingAdmin.rol = "admin";
+      await existingAdmin.save();
+      console.log("Usuario admin@vallejobs.com actualizado a rol admin");
+    }
+  } catch (error) {
+    console.error("Error al crear usuario administrador:", error);
+  }
+};
+
 const startServer = async () => {
   try {
     await testConnection();
     await sequelize.sync({ alter: true });
     console.log("Modelos sincronizados con la base de datos.");
+    await seedAdminUser();
 
     app.listen(PORT, () => {
       console.log(`Servidor escuchando en http://localhost:${PORT}`);

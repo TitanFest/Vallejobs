@@ -1,6 +1,7 @@
 // middlewares/authMiddleware.js
 
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
@@ -20,4 +21,16 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+const isAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.userId);
+    if (!user || user.rol !== "admin") {
+      return res.status(403).json({ message: "Acceso denegado, se requieren permisos de administrador" });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({ message: "Error al verificar permisos" });
+  }
+};
+
+module.exports = { authMiddleware, isAdmin };

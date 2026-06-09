@@ -3,8 +3,9 @@
 const express = require("express");
 const router = express.Router();
 const OfertasController = require("../controllers/OfertasController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const { authMiddleware } = require("../middlewares/authMiddleware");
 const OfertaTrabajo = require("../models/OfertasTrabajo");
+const Categoria = require("../models/Categoria");
 
 router.post("/registrar", authMiddleware, OfertasController.createWork);
 
@@ -21,6 +22,7 @@ router.get("/mis-ofertas", authMiddleware, async (req, res) => {
           model: require("../models/Postulacion"),
           as: "postulaciones",
         },
+        { model: Categoria, as: "categoria" },
       ],
     });
     res.json(ofertas);
