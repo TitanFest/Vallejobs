@@ -32,11 +32,18 @@ const JobModal = ({ job, onClose }) => {
     }
   };
 
-  const requerimientos = Array.isArray(job.requerimientos)
-    ? job.requerimientos
-    : typeof job.requerimientos === "string"
-      ? JSON.parse(job.requerimientos)
-      : [];
+const requerimientos = Array.isArray(job.requerimientos)
+  ? job.requerimientos
+  : typeof job.requerimientos === "string"
+    ? (() => {
+        try {
+          const parsed = JSON.parse(job.requerimientos);
+          return Array.isArray(parsed) ? parsed : [job.requerimientos];
+        } catch {
+          return [job.requerimientos];
+        }
+      })()
+    : [];
 
   return (
     <div className="modal-overlay" onClick={onClose}>
