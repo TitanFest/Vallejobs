@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+    <context>
+        <name>Vallejobs</name>
+        <desc>Contexto de seguridad para la aplicacion Vallejobs - Bolsa de trabajo</desc>
+        <inscope>true</inscope>
+        <includedUrls>
+            <url>http://localhost:5000</url>
+            <url>http://localhost:3000</url>
+        </includedUrls>
+        <tech>
+            <include>Language.JavaScript</include>
+            <include>Language.Node.js</include>
+            <include>Framework.React</include>
+            <include>Db.PostgreSQL</include>
+            <include>WS.Express</include>
+            <include>OS.Windows</include>
+            <include>SCM.Git</include>
+        </tech>
+        <urlparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </urlparser>
+        <postparser>
+            <class>org.zaproxy.zap.model.StandardParameterParser</class>
+            <config>{"kvps":"&amp;","kvs":"=","struct":[]}</config>
+        </postparser>
+        <authentication>
+            <type>1</type>
+            <strategy>EACH_RESP</strategy>
+            <pollfreq>60</pollfreq>
+            <pollunits>REQUESTS</pollunits>
+            <method>
+                <name>script</name>
+                <script>
+                    <name>Vallejobs Auth.js</name>
+                    <type>authentication</type>
+                    <enabled>true</enabled>
+                </script>
+                <param name="Script">Vallejobs Auth</param>
+            </method>
+            <loggedinindicator>
+                <type>body</type>
+                <pattern>token</pattern>
+            </loggedinindicator>
+            <loggedoutindicator>
+                <type>body</type>
+                <pattern>Acceso denegado</pattern>
+            </loggedoutindicator>
+        </authentication>
+        <forceduser>-1</forceduser>
+        <session>
+            <type>0</type>
+        </session>
+        <authorization>
+            <type>0</type>
+            <basic>
+                <header/>
+                <body/>
+                <logic>AND</logic>
+                <code>-1</code>
+            </basic>
+        </authorization>
+        <users>
+            <user name="usuario_prueba" id="0">usuario@vallejobs.com:Test1234!</user>
+        </users>
+    </context>
+</configuration>

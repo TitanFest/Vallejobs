@@ -1,0 +1,173 @@
+env:
+  contexts:
+    - name: Vallejobs
+      urls:
+        - http://localhost:5000
+        - http://localhost:3000
+      includePaths:
+        - http://localhost:5000/.*
+        - http://localhost:3000/.*
+      excludePaths: []
+      authentication:
+        method: browser
+        parameters:
+          loginPageUrl: http://localhost:3000/login
+          loginPageWait: 2000
+          browserId: firefox
+      sessionManagement:
+        method: cookie
+      users:
+        - name: usuario_prueba
+          credentials:
+            username: usuario@vallejobs.com
+            password: Test1234!
+  vars: {}
+
+jobs:
+  # 1. Spider the backend API
+  - type: spider
+    parameters:
+      context: Vallejobs
+      user: usuario_prueba
+      maxChildren: 10
+      maxDuration: 5
+      url: http://localhost:5000
+
+  # 2. Spider the frontend
+  - type: spider
+    parameters:
+      context: Vallejobs
+      user: usuario_prueba
+      maxChildren: 10
+      maxDuration: 5
+      url: http://localhost:3000
+
+  # 3. OpenAPI scan if available
+  # - type: openapi
+  #   parameters:
+  #     context: Vallejobs
+  #     targetUrl: http://localhost:5000
+  #     apiUrl: http://localhost:5000/api-docs
+
+  # 4. Passive scan - runs automatically during spidering
+  - type: passiveScan-config
+    parameters:
+      enableTags: true
+      maxAlertsPerRule: 50
+
+  # 5. Active scan - comprehensive security testing
+  - type: activeScan
+    parameters:
+      context: Vallejobs
+      user: usuario_prueba
+      maxDuration: 30
+      maxRuleDurationInMins: 5
+      scanHeaders: all
+      policyDefinition:
+        defaultStrength: medium
+        defaultThreshold: medium
+        rules:
+          - id: 40012  # Cross Site Scripting (Reflected)
+            strength: high
+            threshold: medium
+          - id: 40014  # Cross Site Scripting (Persistent)
+            strength: high
+            threshold: medium
+          - id: 40018  # SQL Injection
+            strength: high
+            threshold: medium
+          - id: 90018  # SQL Injection (SQLMAP)
+            strength: high
+            threshold: medium
+          - id: 40020  # SQL Injection (Hypersonic)
+            strength: high
+            threshold: medium
+          - id: 40024  # SQL Injection (MsSQL)
+            strength: high
+            threshold: medium
+          - id: 40022  # SQL Injection (MySQL)
+            strength: high
+            threshold: medium
+          - id: 40019  # SQL Injection (Oracle)
+            strength: high
+            threshold: medium
+          - id: 40021  # SQL Injection (PostgreSQL)
+            strength: high
+            threshold: medium
+          - id: 40023  # SQL Injection (SQLite)
+            strength: high
+            threshold: medium
+          - id: 40009  # Server Side Include
+            strength: medium
+            threshold: medium
+          - id: 40008  # Parameter Tampering
+            strength: medium
+            threshold: medium
+          - id: 40013  # Session Fixation
+            strength: medium
+            threshold: medium
+          - id: 40016  # Heartbleed
+            strength: medium
+            threshold: medium
+          - id: 40017  # Persistent XSS (via AntiSamy)
+            strength: high
+            threshold: medium
+          - id: 40026  # Cross Site Scripting (DOM)
+            strength: high
+            threshold: medium
+          - id: 40027  # Cross Site Scripting (via JSONP)
+            strength: medium
+            threshold: medium
+          - id: 40028  # ELMAH Information Leak
+            strength: medium
+            threshold: medium
+          - id: 40029  # Trace.axd Information Leak
+            strength: medium
+            threshold: medium
+          - id: 40030  # Backslash Powered XSS
+            strength: high
+            threshold: medium
+          - id: 40031  # SQL Injection (Advanced)
+            strength: high
+            threshold: medium
+          - id: 90020  # Remote Code Execution - Shell Shock
+            strength: medium
+            threshold: medium
+          - id: 90021  # Remote Code Execution - Command Injection
+            strength: high
+            threshold: medium
+          - id: 90022  # Remote Code Execution - Code Injection
+            strength: high
+            threshold: medium
+          - id: 90025  # Remote Code Execution - Python
+            strength: medium
+            threshold: medium
+          - id: 20015  # Heartbleed OpenSSL Vulnerability
+            strength: medium
+            threshold: medium
+          - id: 10055  # CORS - Insecure Configuration
+            strength: medium
+            threshold: medium
+          - id: 10104  # User Agent Fuzzer
+            strength: medium
+            threshold: medium
+          - id: 10105  # Weak Authentication Method
+            strength: high
+            threshold: medium
+          - id: 10106  # Http Only Site
+            strength: medium
+            threshold: medium
+          - id: 10107  # HTTP Parameter Pollution
+            strength: medium
+            threshold: medium
+          - id: 10108  # Anti-CSRF Tokens Check
+            strength: medium
+            threshold: medium
+
+  # 5. Generate report
+  - type: report
+    parameters:
+      template: traditional-html
+      reportDir: "{{ workspace }}/reports"
+      reportFileName: "vallejobs-security-report-{{ date }}"
+      display: true

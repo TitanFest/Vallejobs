@@ -1,0 +1,1127 @@
+{
+  "@programName": "ZAP",
+  "@version": "2.17.0",
+  "@generated": "mar, 9 jun 2026 22:47:07",
+  "created": "2026-06-10T03:47:07.121121700Z",
+  "insights": [
+    {
+      "level": "Bajo",
+      "reason": "Advertencia",
+      "site": "",
+      "key": "insight.log.error",
+      "description": "ZAP errors logged - see the zap.log file for details",
+      "statistic": "1"
+    },
+    {
+      "level": "Bajo",
+      "reason": "Advertencia",
+      "site": "",
+      "key": "insight.log.warn",
+      "description": "ZAP warnings logged - see the zap.log file for details",
+      "statistic": "5"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.code.2xx",
+      "description": "Percentage of responses with status code 2xx",
+      "statistic": "81"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.code.4xx",
+      "description": "Percentage of responses with status code 4xx",
+      "statistic": "18"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.application/javascript",
+      "description": "Percentage of endpoints with content type application/javascript",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.application/json",
+      "description": "Percentage of endpoints with content type application/json",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.image/png",
+      "description": "Percentage of endpoints with content type image/png",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.image/x-icon",
+      "description": "Percentage of endpoints with content type image/x-icon",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.text/html",
+      "description": "Percentage of endpoints with content type text/html",
+      "statistic": "37"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.ctype.text/plain",
+      "description": "Percentage of endpoints with content type text/plain",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.method.GET",
+      "description": "Percentage of endpoints with method GET",
+      "statistic": "100"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:3000",
+      "key": "insight.endpoint.total",
+      "description": "Count of total endpoints",
+      "statistic": "8"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.code.2xx",
+      "description": "Percentage of responses with status code 2xx",
+      "statistic": "56"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.code.4xx",
+      "description": "Percentage of responses with status code 4xx",
+      "statistic": "43"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.endpoint.ctype.application/json",
+      "description": "Percentage of endpoints with content type application/json",
+      "statistic": "43"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.endpoint.ctype.text/html",
+      "description": "Percentage of endpoints with content type text/html",
+      "statistic": "56"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.endpoint.method.GET",
+      "description": "Percentage of endpoints with method GET",
+      "statistic": "87"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.endpoint.method.POST",
+      "description": "Percentage of endpoints with method POST",
+      "statistic": "12"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.endpoint.total",
+      "description": "Count of total endpoints",
+      "statistic": "16"
+    },
+    {
+      "level": "Información",
+      "reason": "Informativo",
+      "site": "http://localhost:5000",
+      "key": "insight.response.slow",
+      "description": "Percentage of slow responses",
+      "statistic": "51"
+    }
+  ],
+  "site": [
+    {
+      "@name": "http://localhost:3000",
+      "@host": "localhost",
+      "@port": "3000",
+      "@ssl": "false",
+      "alerts": [
+        {
+          "pluginid": "10055",
+          "alertRef": "10055-13",
+          "alert": "CSP: Failure to Define Directive with No Fallback",
+          "name": "CSP: Failure to Define Directive with No Fallback",
+          "riskcode": "2",
+          "confidence": "3",
+          "riskdesc": "Medio (Alta)",
+          "desc": "<p>The Content Security Policy fails to define one of the directives that has no fallback. Missing/excluding them is the same as allowing anything.</p>",
+          "instances": [
+            {
+              "id": "59",
+              "uri": "http://localhost:3000/sitemap.xml",
+              "nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            },
+            {
+              "id": "148",
+              "uri": "http://localhost:3000/static/js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            }
+          ],
+          "count": "2",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaci\u00F3n, balanceador de carga, etc. est\u00E1 configurado apropiadamente para establecer la cabecera de Pol\u00EDtica de Seguridad de Contenido.</p>",
+          "otherinfo": "<p>The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src.</p>",
+          "reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://web.dev/articles/csp#resource-options</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "54"
+        },
+        {
+          "pluginid": "10038",
+          "alertRef": "10038-1",
+          "alert": "Cabecera Content Security Policy (CSP) no configurada",
+          "name": "Cabecera Content Security Policy (CSP) no configurada",
+          "riskcode": "2",
+          "confidence": "3",
+          "riskdesc": "Medio (Alta)",
+          "desc": "<p>La Pol\u00EDtica de seguridad de contenido (CSP) es una capa adicional de seguridad que ayuda a detectar y mitigar ciertos tipos de ataques, incluidos Cross Site Scripting (XSS) y ataques de inyecci\u00F3n de datos. Estos ataques se utilizan para todo, desde el robo de datos hasta la desfiguraci\u00F3n del sitio o la distribuci\u00F3n de malware. CSP proporciona un conjunto de encabezados HTTP est\u00E1ndar que permiten a los propietarios de sitios web declarar fuentes de contenido aprobadas que los navegadores deber\u00EDan poder cargar en esa p\u00E1gina; los tipos cubiertos son JavaScript, CSS, marcos HTML, fuentes, im\u00E1genes y objetos incrustados como applets de Java, ActiveX, archivos de audio y video.</p>",
+          "instances": [
+            {
+              "id": "79",
+              "uri": "http://localhost:3000",
+              "nodeName": "http:\/\/localhost:3000",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            },
+            {
+              "id": "19",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. est\u00E9 configurado para establecer la cabecera Content-Security-Policy.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "53"
+        },
+        {
+          "pluginid": "10098",
+          "alertRef": "10098",
+          "alert": "Configuraci\u00F3n Incorrecta Cross-Domain",
+          "name": "Configuraci\u00F3n Incorrecta Cross-Domain",
+          "riskcode": "2",
+          "confidence": "2",
+          "riskdesc": "Medio (Media)",
+          "desc": "<p>La carga de datos del navegador web puede ser posible, debido a una mala configuraci\u00F3n de Cross Origin Resource Sharing (CORS) en el servidor web.</p>",
+          "instances": [
+            {
+              "id": "20",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "Access-Control-Allow-Origin: *",
+              "otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+            },
+            {
+              "id": "61",
+              "uri": "http://localhost:3000/favicon.ico",
+              "nodeName": "http:\/\/localhost:3000\/favicon.ico",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "Access-Control-Allow-Origin: *",
+              "otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+            },
+            {
+              "id": "62",
+              "uri": "http://localhost:3000/logo192.png",
+              "nodeName": "http:\/\/localhost:3000\/logo192.png",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "Access-Control-Allow-Origin: *",
+              "otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+            },
+            {
+              "id": "63",
+              "uri": "http://localhost:3000/robots.txt",
+              "nodeName": "http:\/\/localhost:3000\/robots.txt",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "Access-Control-Allow-Origin: *",
+              "otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+            },
+            {
+              "id": "60",
+              "uri": "http://localhost:3000/sitemap.xml",
+              "nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "Access-Control-Allow-Origin: *",
+              "otherinfo": "La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP."
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que los datos confidenciales no est\u00E9n disponibles de forma no autenticada (por ejemplo, mediante listas blancas de direcciones IP).</p><p>Configure el encabezado HTTP \"Access-Control-Allow-Origin\" a un conjunto m\u00E1s restrictivo de dominios, o elimine todos los encabezados CORS por completo, para permitir que el navegador web aplique la Pol\u00EDtica del Mismo Origen (SOP) de una manera m\u00E1s restrictiva.</p>",
+          "otherinfo": "<p>La configuraci\u00F3n incorrecta de CORS en el servidor web permite solicitudes de lectura entre dominios de terceros arbitrarios, utilizando API no autenticadas en este dominio. Sin embargo, las implementaciones de los navegadores web no permiten que terceros arbitrarios lean la respuesta de las API autenticadas. Esto reduce un poco el riesgo. Esta configuraci\u00F3n err\u00F3nea podr\u00EDa ser utilizada por un atacante para acceder a datos que est\u00E1n disponibles de forma no autenticada, pero que utilizan alguna otra forma de seguridad, como la lista blanca de direcciones IP.</p>",
+          "reference": "<p>https://vulncat.fortify.com/en/detail?category=HTML5&subcategory=Overly%20Permissive%20CORS%20Policy</p>",
+          "cweid": "264",
+          "wascid": "14",
+          "sourceid": "16"
+        },
+        {
+          "pluginid": "10020",
+          "alertRef": "10020-1",
+          "alert": "Falta de cabecera Anti-Clickjacking",
+          "name": "Falta de cabecera Anti-Clickjacking",
+          "riskcode": "2",
+          "confidence": "2",
+          "riskdesc": "Medio (Media)",
+          "desc": "<p>La respuesta no protege contra ataques de \"ClickJacking\". Debes incluir Content-Security-Policy con la directiva \"frame-ancestors\" o X-Frame-Options.</p>",
+          "instances": [
+            {
+              "id": "68",
+              "uri": "http://localhost:3000",
+              "nodeName": "http:\/\/localhost:3000",
+              "method": "GET",
+              "param": "x-frame-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            },
+            {
+              "id": "18",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "x-frame-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Los navegadores web modernos admiten las cabeceras HTTP Content-Security-Policy y X-Frame-Options. Aseg\u00FArese de que una de ellas est\u00E1 configurada en todas las p\u00E1ginas web devueltas por su sitio/aplicaci\u00F3n.</p><p>Si espera que la p\u00E1gina est\u00E9 enmarcada solo por p\u00E1ginas en su servidor (por ejemplo, si forma parte de un FRAMESET), utilice SAMEORIGIN; de lo contrario, si no espera que la p\u00E1gina est\u00E9 enmarcada, utilice DENY. Alternativamente, considere implementar la directiva \"frame-ancestors\" de la Pol\u00EDtica de Seguridad de Contenidos.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+          "cweid": "1021",
+          "wascid": "15",
+          "sourceid": "53"
+        },
+        {
+          "pluginid": "10096",
+          "alertRef": "10096",
+          "alert": "Divulgaci\u00F3n de Marcas de Tiempo - Unix",
+          "name": "Divulgaci\u00F3n de Marcas de Tiempo - Unix",
+          "riskcode": "1",
+          "confidence": "1",
+          "riskdesc": "Bajo (Baja)",
+          "desc": "<p>Una marca de tiempo fue revelada por la aplicaci\u00F3n/servidor web. - Unix</p>",
+          "instances": [
+            {
+              "id": "104",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "1836589329",
+              "otherinfo": "1836589329, que se eval\u00FAa como: 2028-03-13 14:42:09."
+            }
+          ],
+          "count": "1",
+          "systemic": false,
+          "solution": "<p>Confirmar que los datos encontrados de informaci\u00F3n sobre la marca de tiempo no son sensibles, ni se pueden usar en patrones explotables de divulgaci\u00F3n.</p>",
+          "otherinfo": "<p>1836589329, que se eval\u00FAa como: 2028-03-13 14:42:09.</p>",
+          "reference": "<p>https://cwe.mitre.org/data/definitions/200.html</p>",
+          "cweid": "497",
+          "wascid": "13",
+          "sourceid": "63"
+        },
+        {
+          "pluginid": "10037",
+          "alertRef": "10037",
+          "alert": "El servidor divulga informaci\u00F3n mediante un campo(s) de encabezado de respuesta HTTP ''''X-Powered-By''''",
+          "name": "El servidor divulga informaci\u00F3n mediante un campo(s) de encabezado de respuesta HTTP ''''X-Powered-By''''",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Bajo (Media)",
+          "desc": "<p>El servidor de la web/aplicaci\u00F3n est\u00E1 divulgando informaci\u00F3n mediante uno o m\u00E1s encabezados de respuesta HTTP ''''X-Powered-By''''. El acceso a tal informaci\u00F3n podr\u00EDa facilitarle a los atacantes la identificaci\u00F3n de otros marcos/componentes de los que su aplicaci\u00F3n web depende y las vulnerabilidades a las que pueden estar sujetos tales componentes.</p>",
+          "instances": [
+            {
+              "id": "25",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "70",
+              "uri": "http://localhost:3000/favicon.ico",
+              "nodeName": "http:\/\/localhost:3000\/favicon.ico",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "73",
+              "uri": "http://localhost:3000/logo192.png",
+              "nodeName": "http:\/\/localhost:3000\/logo192.png",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "72",
+              "uri": "http://localhost:3000/robots.txt",
+              "nodeName": "http:\/\/localhost:3000\/robots.txt",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "66",
+              "uri": "http://localhost:3000/sitemap.xml",
+              "nodeName": "http:\/\/localhost:3000\/sitemap.xml",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. est\u00E1 configurado para suprimir las cabeceras \"X-Powered-By\".</p>",
+          "otherinfo": "",
+          "reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+          "cweid": "497",
+          "wascid": "13",
+          "sourceid": "16"
+        },
+        {
+          "pluginid": "10021",
+          "alertRef": "10021",
+          "alert": "Falta encabezado X-Content-Type-Options",
+          "name": "Falta encabezado X-Content-Type-Options",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Bajo (Media)",
+          "desc": "<p>La cabecera Anti-MIME-Sniffing X-Content-Type-Options no se ha establecido en 'nosniff'. Esto permite que las versiones anteriores de Internet Explorer y Chrome realicen MIME-sniffing en el cuerpo de la respuesta, lo que puede provocar que el cuerpo d\u00E9 la respuesta se interprete y se muestre como un tipo de contenido distinto del tipo de contenido declarado. Las versiones actuales (principios de 2014) y heredadas de Firefox utilizar\u00E1n el tipo de contenido declarado (si se establece uno), en lugar de realizar MIME-sniffing.</p>",
+          "instances": [
+            {
+              "id": "24",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "67",
+              "uri": "http://localhost:3000/favicon.ico",
+              "nodeName": "http:\/\/localhost:3000\/favicon.ico",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "65",
+              "uri": "http://localhost:3000/logo192.png",
+              "nodeName": "http:\/\/localhost:3000\/logo192.png",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "76",
+              "uri": "http://localhost:3000/manifest.json",
+              "nodeName": "http:\/\/localhost:3000\/manifest.json",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "71",
+              "uri": "http://localhost:3000/robots.txt",
+              "nodeName": "http:\/\/localhost:3000\/robots.txt",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que la aplicaci\u00F3n/servidor web establece el encabezado Content-Type adecuadamente, y que establece el encabezado X-Content-Type-Options a 'nosniff' para todas las p\u00E1ginas web.</p><p>Si es posible, aseg\u00FArese de que el usuario final utiliza un navegador web moderno y compatible con los est\u00E1ndares que no realiza MIME-sniffing en absoluto, o que puede ser dirigido por la aplicaci\u00F3n web/servidor web para que no realice MIME-sniffing.</p>",
+          "otherinfo": "<p>Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.</p><p>En el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor.</p>",
+          "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "16"
+        },
+        {
+          "pluginid": "2",
+          "alertRef": "2",
+          "alert": "Revelaci\u00F3n de IP privada",
+          "name": "Revelaci\u00F3n de IP privada",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Bajo (Media)",
+          "desc": "<p>Se ha encontrado una IP privada (como 10.x.x.x, 172.x.x.x, 192.168.x.x) o un nombre de host privado de Amazon EC2 (por ejemplo, ip-10-0-56-78) en el cuerpo de la respuesta HTTP. Esta informaci\u00F3n podr\u00EDa ser \u00FAtil para futuros ataques dirigidos a sistemas internos.</p>",
+          "instances": [
+            {
+              "id": "91",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "10.8.1.1",
+              "otherinfo": "10.8.1.1\n10.8.1.1\n10.1.9.34\n"
+            }
+          ],
+          "count": "1",
+          "systemic": false,
+          "solution": "<p>Eliminar la direcci\u00F3n IP privada del cuerpo de la respuesta HTTP. Para los comentarios, utilice comentarios JSP/ASP/PHP en lugar de comentarios HTML/JavaScript que pueden ser vistos por los navegadores de los clientes.</p>",
+          "otherinfo": "<p>10.8.1.1</p><p>10.8.1.1</p><p>10.1.9.34</p><p></p>",
+          "reference": "<p>https://datatracker.ietf.org/doc/html/rfc1918</p>",
+          "cweid": "497",
+          "wascid": "13",
+          "sourceid": "63"
+        },
+        {
+          "pluginid": "10109",
+          "alertRef": "10109",
+          "alert": "Aplicaci\u00F3n Web Moderna",
+          "name": "Aplicaci\u00F3n Web Moderna",
+          "riskcode": "0",
+          "confidence": "2",
+          "riskdesc": "Informativo (Media)",
+          "desc": "<p>La aplicaci\u00F3n parece ser una aplicaci\u00F3n web moderna. Si necesita explorarla autom\u00E1ticamente, el Ajax Spider puede ser m\u00E1s eficaz que el est\u00E1ndar.</p>",
+          "instances": [
+            {
+              "id": "87",
+              "uri": "http://localhost:3000",
+              "nodeName": "http:\/\/localhost:3000",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "<script defer src=\"/static/js/bundle.js\"></script>",
+              "otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+            },
+            {
+              "id": "23",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "<script defer src=\"/static/js/bundle.js\"></script>",
+              "otherinfo": "No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna."
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Se trata de una alerta informativa, por lo que no es necesario realizar ning\u00FAn cambio.</p>",
+          "otherinfo": "<p>No se han encontrado enlaces aunque s\u00ED scripts, lo que indica que se trata de una aplicaci\u00F3n web moderna.</p>",
+          "reference": "",
+          "cweid": "-1",
+          "wascid": "-1",
+          "sourceid": "53"
+        },
+        {
+          "pluginid": "10027",
+          "alertRef": "10027",
+          "alert": "Divulgaci\u00F3n de informaci\u00F3n - Comentarios sospechosos",
+          "name": "Divulgaci\u00F3n de informaci\u00F3n - Comentarios sospechosos",
+          "riskcode": "0",
+          "confidence": "2",
+          "riskdesc": "Informativo (Media)",
+          "desc": "<p>The response appears to contain suspicious comments which may help an attacker.</p>",
+          "instances": [
+            {
+              "id": "86",
+              "uri": "http://localhost:3000",
+              "nodeName": "http:\/\/localhost:3000",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "r can be referenced from the HTML.\r\n\r\n      ",
+              "otherinfo": "The following pattern was used: \\bFROM\\b and was detected in likely comment: \"<!--\r\n      Notice the use of  in the tags above.\r\n      It will be replaced with the URL of the `public` folder during the buil\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "85",
+              "uri": "http://localhost:3000",
+              "nodeName": "http:\/\/localhost:3000",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "stalled on a\r\n      user's mobile device or ",
+              "otherinfo": "The following pattern was used: \\bUSER\\b and was detected in likely comment: \"<!--\r\n      manifest.json provides metadata used when your web app is installed on a\r\n      user's mobile device or desktop. See\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "22",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "r can be referenced from the HTML.\r\n\r\n      ",
+              "otherinfo": "The following pattern was used: \\bFROM\\b and was detected in likely comment: \"<!--\r\n      Notice the use of  in the tags above.\r\n      It will be replaced with the URL of the `public` folder during the buil\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "21",
+              "uri": "http://localhost:3000/",
+              "nodeName": "http:\/\/localhost:3000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "stalled on a\r\n      user's mobile device or ",
+              "otherinfo": "The following pattern was used: \\bUSER\\b and was detected in likely comment: \"<!--\r\n      manifest.json provides metadata used when your web app is installed on a\r\n      user's mobile device or desktop. See\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "101",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": " * Extracts exports from a webpack module ob",
+              "otherinfo": "The following pattern was used: \\bFROM\\b and was detected 257 times, the first in likely comment: \"/**\n * Extracts exports from a webpack module object.\n * @param {string} moduleId A Webpack module ID.\n * @returns {*} An export\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "99",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": " is not updated if `select.multiple` is",
+              "otherinfo": "The following pattern was used: \\bSELECT\\b and was detected 17 times, the first in likely comment: \"// Note: `option.selected` is not updated if `select.multiple` is\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "94",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "/ but it triggers a bug in IE11 and Edge 14",
+              "otherinfo": "The following pattern was used: \\bBUG\\b and was detected 20 times, the first in likely comment: \"// but it triggers a bug in IE11 and Edge 14/15.\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "98",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "/**\n   * The query() method is intende",
+              "otherinfo": "The following pattern was used: \\bQUERY\\b and was detected 6 times, the first in likely comment: \"/**\n   * The query() method is intended for document requests, in which we want to\n   * call an optional action and potentially \", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "92",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "// FIXME: This feels gross. ",
+              "otherinfo": "The following pattern was used: \\bFIXME\\b and was detected 2 times, the first in likely comment: \"// FIXME: This feels gross.  How can we cleanup the lines between\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "102",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "// TODO: This could be clea",
+              "otherinfo": "The following pattern was used: \\bTODO\\b and was detected 228 times, the first in likely comment: \"// TODO: This could be cleaned up.  push/replace should probably just take\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "100",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "// We will warn the user (as this is likely ",
+              "otherinfo": "The following pattern was used: \\bUSER\\b and was detected 74 times, the first in likely comment: \"// We will warn the user (as this is likely a mistake) and assume they cannot be refreshed.\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "96",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "d,\n     * easier-to-debug exception with a cl",
+              "otherinfo": "The following pattern was used: \\bDEBUG\\b and was detected 12 times, the first in likely comment: \"/*\n     * The `'' + value` pattern (used in in perf-sensitive code) throws for Symbol\n     * and Temporal.* types. See https://g\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "93",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "f using params[\"*\"] later because it will be ",
+              "otherinfo": "The following pattern was used: \\bLATER\\b and was detected 38 times, the first in likely comment: \"// instead of using params[\"*\"] later because it will be decoded then\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "103",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "l\n * for situations where you don't want to s",
+              "otherinfo": "The following pattern was used: \\bWHERE\\b and was detected 71 times, the first in likely comment: \"/**\n * Hash history stores the location in window.location.hash. This makes it ideal\n * for situations where you don't want to s\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "97",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "oes not allow empty username,",
+              "otherinfo": "The following pattern was used: \\bUSERNAME\\b and was detected 4 times, the first in likely comment: \"// Since HTTP basic authentication does not allow empty username,\", see evidence field for the suspicious comment/snippet."
+            },
+            {
+              "id": "95",
+              "uri": "http://localhost:3000/static/js/bundle.js",
+              "nodeName": "http:\/\/localhost:3000\/static\/js\/bundle.js",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "s it will result in bugs.",
+              "otherinfo": "The following pattern was used: \\bBUGS\\b and was detected 9 times, the first in likely comment: \"// case we should log a warning as it will result in bugs.\", see evidence field for the suspicious comment/snippet."
+            }
+          ],
+          "count": "16",
+          "systemic": false,
+          "solution": "<p>Eliminar todos los comentarios que muestren informaci\u00F3n que pueda ayudar a un atacante y solucionar el problema al que se refieren.</p>",
+          "otherinfo": "<p>The following pattern was used: \\bFROM\\b and was detected in likely comment: \"<!--</p><p>      Notice the use of  in the tags above.</p><p>      It will be replaced with the URL of the `public` folder during the buil\", see evidence field for the suspicious comment/snippet.</p>",
+          "reference": "",
+          "cweid": "615",
+          "wascid": "13",
+          "sourceid": "53"
+        }
+      ]
+    },
+    {
+      "@name": "http://localhost:5000",
+      "@host": "localhost",
+      "@port": "5000",
+      "@ssl": "false",
+      "alerts": [
+        {
+          "pluginid": "10055",
+          "alertRef": "10055-13",
+          "alert": "CSP: Failure to Define Directive with No Fallback",
+          "name": "CSP: Failure to Define Directive with No Fallback",
+          "riskcode": "2",
+          "confidence": "3",
+          "riskdesc": "Medio (Alta)",
+          "desc": "<p>The Content Security Policy fails to define one of the directives that has no fallback. Missing/excluding them is the same as allowing anything.</p>",
+          "instances": [
+            {
+              "id": "30",
+              "uri": "http://localhost:5000/Categoria",
+              "nodeName": "http:\/\/localhost:5000\/Categoria",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            },
+            {
+              "id": "31",
+              "uri": "http://localhost:5000/Trabajos",
+              "nodeName": "http:\/\/localhost:5000\/Trabajos",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            },
+            {
+              "id": "41",
+              "uri": "http://localhost:5000/Usuarios",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            },
+            {
+              "id": "27",
+              "uri": "http://localhost:5000/robots.txt",
+              "nodeName": "http:\/\/localhost:5000\/robots.txt",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            },
+            {
+              "id": "29",
+              "uri": "http://localhost:5000/sitemap.xml",
+              "nodeName": "http:\/\/localhost:5000\/sitemap.xml",
+              "method": "GET",
+              "param": "Content-Security-Policy",
+              "attack": "",
+              "evidence": "default-src 'none'",
+              "otherinfo": "The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src."
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaci\u00F3n, balanceador de carga, etc. est\u00E1 configurado apropiadamente para establecer la cabecera de Pol\u00EDtica de Seguridad de Contenido.</p>",
+          "otherinfo": "<p>The directive(s): frame-ancestors, form-action is/are among the directives that do not fallback to default-src.</p>",
+          "reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://web.dev/articles/csp#resource-options</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "39"
+        },
+        {
+          "pluginid": "10038",
+          "alertRef": "10038-1",
+          "alert": "Cabecera Content Security Policy (CSP) no configurada",
+          "name": "Cabecera Content Security Policy (CSP) no configurada",
+          "riskcode": "2",
+          "confidence": "3",
+          "riskdesc": "Medio (Alta)",
+          "desc": "<p>La Pol\u00EDtica de seguridad de contenido (CSP) es una capa adicional de seguridad que ayuda a detectar y mitigar ciertos tipos de ataques, incluidos Cross Site Scripting (XSS) y ataques de inyecci\u00F3n de datos. Estos ataques se utilizan para todo, desde el robo de datos hasta la desfiguraci\u00F3n del sitio o la distribuci\u00F3n de malware. CSP proporciona un conjunto de encabezados HTTP est\u00E1ndar que permiten a los propietarios de sitios web declarar fuentes de contenido aprobadas que los navegadores deber\u00EDan poder cargar en esa p\u00E1gina; los tipos cubiertos son JavaScript, CSS, marcos HTML, fuentes, im\u00E1genes y objetos incrustados como applets de Java, ActiveX, archivos de audio y video.</p>",
+          "instances": [
+            {
+              "id": "36",
+              "uri": "http://localhost:5000",
+              "nodeName": "http:\/\/localhost:5000",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            },
+            {
+              "id": "2",
+              "uri": "http://localhost:5000/",
+              "nodeName": "http:\/\/localhost:5000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. est\u00E9 configurado para establecer la cabecera Content-Security-Policy.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "32"
+        },
+        {
+          "pluginid": "10020",
+          "alertRef": "10020-1",
+          "alert": "Falta de cabecera Anti-Clickjacking",
+          "name": "Falta de cabecera Anti-Clickjacking",
+          "riskcode": "2",
+          "confidence": "2",
+          "riskdesc": "Medio (Media)",
+          "desc": "<p>La respuesta no protege contra ataques de \"ClickJacking\". Debes incluir Content-Security-Policy con la directiva \"frame-ancestors\" o X-Frame-Options.</p>",
+          "instances": [
+            {
+              "id": "34",
+              "uri": "http://localhost:5000",
+              "nodeName": "http:\/\/localhost:5000",
+              "method": "GET",
+              "param": "x-frame-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            },
+            {
+              "id": "1",
+              "uri": "http://localhost:5000/",
+              "nodeName": "http:\/\/localhost:5000\/",
+              "method": "GET",
+              "param": "x-frame-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": ""
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Los navegadores web modernos admiten las cabeceras HTTP Content-Security-Policy y X-Frame-Options. Aseg\u00FArese de que una de ellas est\u00E1 configurada en todas las p\u00E1ginas web devueltas por su sitio/aplicaci\u00F3n.</p><p>Si espera que la p\u00E1gina est\u00E9 enmarcada solo por p\u00E1ginas en su servidor (por ejemplo, si forma parte de un FRAMESET), utilice SAMEORIGIN; de lo contrario, si no espera que la p\u00E1gina est\u00E9 enmarcada, utilice DENY. Alternativamente, considere implementar la directiva \"frame-ancestors\" de la Pol\u00EDtica de Seguridad de Contenidos.</p>",
+          "otherinfo": "",
+          "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options</p>",
+          "cweid": "1021",
+          "wascid": "15",
+          "sourceid": "32"
+        },
+        {
+          "pluginid": "10037",
+          "alertRef": "10037",
+          "alert": "El servidor divulga informaci\u00F3n mediante un campo(s) de encabezado de respuesta HTTP ''''X-Powered-By''''",
+          "name": "El servidor divulga informaci\u00F3n mediante un campo(s) de encabezado de respuesta HTTP ''''X-Powered-By''''",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Bajo (Media)",
+          "desc": "<p>El servidor de la web/aplicaci\u00F3n est\u00E1 divulgando informaci\u00F3n mediante uno o m\u00E1s encabezados de respuesta HTTP ''''X-Powered-By''''. El acceso a tal informaci\u00F3n podr\u00EDa facilitarle a los atacantes la identificaci\u00F3n de otros marcos/componentes de los que su aplicaci\u00F3n web depende y las vulnerabilidades a las que pueden estar sujetos tales componentes.</p>",
+          "instances": [
+            {
+              "id": "5",
+              "uri": "http://localhost:5000/",
+              "nodeName": "http:\/\/localhost:5000\/",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "11",
+              "uri": "http://localhost:5000/Categoria/obtener",
+              "nodeName": "http:\/\/localhost:5000\/Categoria\/obtener",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "12",
+              "uri": "http://localhost:5000/Trabajos/obtener",
+              "nodeName": "http:\/\/localhost:5000\/Trabajos\/obtener",
+              "method": "GET",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "4",
+              "uri": "http://localhost:5000/Usuarios/login",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios\/login ()({email,password})",
+              "method": "POST",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            },
+            {
+              "id": "10",
+              "uri": "http://localhost:5000/Usuarios/registrar",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios\/registrar ()({name,apellido,documento,telefono,email,password})",
+              "method": "POST",
+              "param": "",
+              "attack": "",
+              "evidence": "X-Powered-By: Express",
+              "otherinfo": ""
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que su servidor web, servidor de aplicaciones, balanceador de carga, etc. est\u00E1 configurado para suprimir las cabeceras \"X-Powered-By\".</p>",
+          "otherinfo": "",
+          "reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/08-Fingerprint_Web_Application_Framework</p><p>https://www.troyhunt.com/shhh-dont-let-your-response-headers/</p>",
+          "cweid": "497",
+          "wascid": "13",
+          "sourceid": "4"
+        },
+        {
+          "pluginid": "10021",
+          "alertRef": "10021",
+          "alert": "Falta encabezado X-Content-Type-Options",
+          "name": "Falta encabezado X-Content-Type-Options",
+          "riskcode": "1",
+          "confidence": "2",
+          "riskdesc": "Bajo (Media)",
+          "desc": "<p>La cabecera Anti-MIME-Sniffing X-Content-Type-Options no se ha establecido en 'nosniff'. Esto permite que las versiones anteriores de Internet Explorer y Chrome realicen MIME-sniffing en el cuerpo de la respuesta, lo que puede provocar que el cuerpo d\u00E9 la respuesta se interprete y se muestre como un tipo de contenido distinto del tipo de contenido declarado. Las versiones actuales (principios de 2014) y heredadas de Firefox utilizar\u00E1n el tipo de contenido declarado (si se establece uno), en lugar de realizar MIME-sniffing.</p>",
+          "instances": [
+            {
+              "id": "3",
+              "uri": "http://localhost:5000/",
+              "nodeName": "http:\/\/localhost:5000\/",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "8",
+              "uri": "http://localhost:5000/Categoria/obtener",
+              "nodeName": "http:\/\/localhost:5000\/Categoria\/obtener",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "13",
+              "uri": "http://localhost:5000/Trabajos/categoria/Tecnologia",
+              "nodeName": "http:\/\/localhost:5000\/Trabajos\/categoria\/Tecnologia",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "9",
+              "uri": "http://localhost:5000/Trabajos/obtener",
+              "nodeName": "http:\/\/localhost:5000\/Trabajos\/obtener",
+              "method": "GET",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            },
+            {
+              "id": "7",
+              "uri": "http://localhost:5000/Usuarios/registrar",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios\/registrar ()({name,apellido,documento,telefono,email,password})",
+              "method": "POST",
+              "param": "x-content-type-options",
+              "attack": "",
+              "evidence": "",
+              "otherinfo": "Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.\nEn el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor."
+            }
+          ],
+          "count": "5",
+          "systemic": true,
+          "solution": "<p>Aseg\u00FArese de que la aplicaci\u00F3n/servidor web establece el encabezado Content-Type adecuadamente, y que establece el encabezado X-Content-Type-Options a 'nosniff' para todas las p\u00E1ginas web.</p><p>Si es posible, aseg\u00FArese de que el usuario final utiliza un navegador web moderno y compatible con los est\u00E1ndares que no realiza MIME-sniffing en absoluto, o que puede ser dirigido por la aplicaci\u00F3n web/servidor web para que no realice MIME-sniffing.</p>",
+          "otherinfo": "<p>Este problema a\u00FAn se aplica a las p\u00E1ginas de tipo error (401, 403, 500, etc.), ya que esas p\u00E1ginas a menudo se ven afectadas por problemas de inyecci\u00F3n, en cuyo caso a\u00FAn existe la preocupaci\u00F3n de que los navegadores husmeen las p\u00E1ginas lejos de su tipo de contenido real.</p><p>En el umbral \u00ABAlto\u00BB esta regla de an\u00E1lisis no alertar\u00E1 sobre respuestas de error del cliente o servidor.</p>",
+          "reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
+          "cweid": "693",
+          "wascid": "15",
+          "sourceid": "4"
+        },
+        {
+          "pluginid": "10111",
+          "alertRef": "10111",
+          "alert": "Petici\u00F3n de Autenticaci\u00F3n Identificada",
+          "name": "Petici\u00F3n de Autenticaci\u00F3n Identificada",
+          "riskcode": "0",
+          "confidence": "1",
+          "riskdesc": "Informativo (Baja)",
+          "desc": "<p>La petici\u00F3n en cuesti\u00F3n se ha identificado como una petici\u00F3n de autenticaci\u00F3n. El campo \"Otra informaci\u00F3n\" contiene un conjunto de l\u00EDneas key=vvalue que identifican cualquier campo relevante. Si la solicitud est\u00E1 en un contexto que tiene un m\u00E9todo de autenticaci\u00F3n configurado como \"Detecci\u00F3n autom\u00E1tica\", esta regla cambiar\u00E1 la autenticaci\u00F3n para que coincida con la petici\u00F3n identificada.</p>",
+          "instances": [
+            {
+              "id": "6",
+              "uri": "http://localhost:5000/Usuarios/registrar",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios\/registrar ()({name,apellido,documento,telefono,email,password})",
+              "method": "POST",
+              "param": "email",
+              "attack": "",
+              "evidence": "password",
+              "otherinfo": "userParam=email\nuserValue=zaptest1781063083@vallejobs.com\npasswordParam=password"
+            },
+            {
+              "id": "0",
+              "uri": "http://localhost:5000/Usuarios/login",
+              "nodeName": "http:\/\/localhost:5000\/Usuarios\/login ()({email,password})",
+              "method": "POST",
+              "param": "email",
+              "attack": "",
+              "evidence": "password",
+              "otherinfo": "userParam=email\nuserValue=usuario@vallejobs.com\npasswordParam=password"
+            }
+          ],
+          "count": "2",
+          "systemic": false,
+          "solution": "<p>Se trata de una alerta informativa y no de una vulnerabilidad, por lo que no hay nada que corregir.</p>",
+          "otherinfo": "<p>userParam=email</p><p>userValue=zaptest1781063083@vallejobs.com</p><p>passwordParam=password</p>",
+          "reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
+          "cweid": "-1",
+          "wascid": "-1",
+          "sourceid": "5"
+        }
+      ]
+    }
+  ],
+  "sequences": []
+}

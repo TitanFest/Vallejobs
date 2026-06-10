@@ -277,7 +277,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Usuarios/login">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Usuarios/login" enabled="true">
           <stringProp name="HTTPSampler.path">/Usuarios/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -320,7 +320,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Categoria/registrar">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Categoria/registrar" enabled="true">
           <stringProp name="HTTPSampler.path">/Categoria/registrar</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -367,7 +367,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Trabajos/registrar">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Trabajos/registrar" enabled="true">
           <stringProp name="HTTPSampler.path">/Trabajos/registrar</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -445,7 +445,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver resultados">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="Ver resultados" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -483,7 +483,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Gráfico de resultados">
+      <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Gráfico de resultados" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
