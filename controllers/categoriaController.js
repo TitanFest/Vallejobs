@@ -1,11 +1,9 @@
-// controllers/categoriaController.js
-
-const Categoria = require("../models/Categoria");
+const db = require("../db");
 
 const createCategory = async (req, res) => {
   try {
     const { nombre, descripcion } = req.body;
-    const newCategory = await Categoria.create({ nombre, descripcion });
+    const newCategory = await db.createCategoria({ nombre, descripcion });
     res.status(201).json(newCategory);
   } catch (error) {
     console.error("Error al crear categoria:", error);
@@ -15,7 +13,7 @@ const createCategory = async (req, res) => {
 
 const getAllCategorys = async (req, res) => {
   try {
-    const Categorys = await Categoria.findAll();
+    const Categorys = await db.findAllCategorias();
     res.json(Categorys);
   } catch (error) {
     console.error("Error al obtener categorias:", error);
@@ -23,11 +21,10 @@ const getAllCategorys = async (req, res) => {
   }
 };
 
-// FIX: usaba User.findByPk en vez de Categoria.findByPk
 const getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
-    const Category = await Categoria.findByPk(id);
+    const Category = await db.findCategoriaByPk(id);
     if (Category) {
       res.json(Category);
     } else {
@@ -42,11 +39,8 @@ const getCategoryById = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const [updated] = await Categoria.update(req.body, {
-      where: { id },
-    });
-    if (updated) {
-      const updatedCategory = await Categoria.findByPk(id);
+    const updatedCategory = await db.updateCategoria(id, req.body);
+    if (updatedCategory) {
       res.json(updatedCategory);
     } else {
       res.status(404).json({ error: "Categoria no encontrada" });
@@ -60,14 +54,8 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await Categoria.destroy({
-      where: { id },
-    });
-    if (deleted) {
-      res.json({ message: "Categoria eliminada correctamente" });
-    } else {
-      res.status(404).json({ error: "Categoria no encontrada" });
-    }
+    await db.deleteCategoria(id);
+    res.json({ message: "Categoria eliminada correctamente" });
   } catch (error) {
     console.error("Error al eliminar categoria:", error);
     res.status(500).json({ error: "Error al eliminar categoria" });

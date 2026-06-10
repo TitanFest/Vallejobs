@@ -1,41 +1,31 @@
-// routes/postulaciones.js
-
 const express = require("express");
 const router = express.Router();
 const { authMiddleware } = require("../middlewares/authMiddleware");
-const { Postulacion, OfertasTrabajo, User } = require("../models/associations");
+const db = require("../db");
 
-// Postularse a una oferta
 router.post("/postular", authMiddleware, async (req, res) => {
   try {
     const { ofertaId } = req.body;
     const userId = req.user.userId;
 
-    const oferta = await OfertasTrabajo.findByPk(ofertaId);
-    if (!oferta) return res.status(404).json({ error: "Oferta no encontrada" });
+    const existing = await db.findPostulacionesByUserId(userId);
+    const yaPostulado = existing.find((p) => p.ofertaId === ofertaId);
+    if (yaPostulado) {
+      return res.status(400).json({ error: "Ya te has postulado a esta oferta" });
+    }
 
-    const yaPostulado = await Postulacion.findOne({
-      where: { userId, ofertaId },
-    });
-    if (yaPostulado)
-      return res.status(400).json({ error: "Ya te postulaste a esta oferta" });
-
-    const postulacion = await Postulacion.create({ userId, ofertaId });
-    res.status(201).json({ message: "Postulación registrada", postulacion });
+    const postulacion = await db.createPostulacion({ userId, ofertaId });
+    res.status(201).json({ message: "Postulación exitosa", postulacion });
   } catch (error) {
-    console.error("Error al postularse:", error);
-    res.status(500).json({ error: "Error al postularse" });
+    console.error("Error al postular:", error);
+    res.status(500).json({ error: "Error al postular" });
   }
 });
 
-// Obtener postulaciones del usuario logueado
 router.get("/mis-postulaciones", authMiddleware, async (req, res) => {
   try {
     const userId = req.user.userId;
-    const postulaciones = await Postulacion.findAll({
-      where: { userId },
-      include: [{ model: OfertasTrabajo, as: "oferta" }],
-    });
+    const postulaciones = await db.findPostulacionesByUserId(userId);
     res.json(postulaciones);
   } catch (error) {
     console.error("Error al obtener postulaciones:", error);
@@ -43,54 +33,43 @@ router.get("/mis-postulaciones", authMiddleware, async (req, res) => {
   }
 });
 
-// Obtener postulantes de una oferta (solo el dueño de la oferta)
 router.get("/oferta/:ofertaId", authMiddleware, async (req, res) => {
   try {
     const { ofertaId } = req.params;
-    const userId = req.user.userId;
-
-    const oferta = await OfertasTrabajo.findByPk(ofertaId);
+    const oferta = await db.findOfertaByPk(ofertaId);
     if (!oferta) return res.status(404).json({ error: "Oferta no encontrada" });
-    if (oferta.userId !== userId)
-      return res.status(403).json({ error: "No autorizado" });
-
-    const postulaciones = await Postulacion.findAll({
-      where: { ofertaId },
-      include: [
-        {
-          model: User,
-          as: "postulante",
-          attributes: ["id", "name", "apellido", "email", "telefono", "cv"],
-        },
-      ],
-    });
+    if (oferta.userId !== req.user.userId) {
+      return res.status(403).json({ error: "No tienes permiso para ver estas postulaciones" });
+    }
+    const postulaciones = await db.findPostulacionesByOfertaId(ofertaId);
     res.json(postulaciones);
   } catch (error) {
-    console.error("Error al obtener postulantes:", error);
-    res.status(500).json({ error: "Error al obtener postulantes" });
+    console.error("Error al obtener postulaciones de la oferta:", error);
+    res.status(500).json({ error: "Error al obtener postulaciones" });
   }
 });
 
-// Actualizar estado de una postulación (aceptar/rechazar)
 router.put("/:id/estado", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado } = req.body; // 'aceptado' | 'rechazado'
+    const { estado } = req.body;
 
-    const postulacion = await Postulacion.findByPk(id, {
-      include: [{ model: OfertasTrabajo, as: "oferta" }],
-    });
-    if (!postulacion)
-      return res.status(404).json({ error: "Postulación no encontrada" });
-    if (postulacion.oferta.userId !== req.user.userId)
-      return res.status(403).json({ error: "No autorizado" });
+    const supabase = require("../supabaseClient");
+    const { data: postData, error: findError } = await supabase
+      .from("postulaciones")
+      .select("*, oferta:ofertaId(userId)")
+      .eq("id", id)
+      .single();
+    if (findError || !postData) return res.status(404).json({ error: "Postulación no encontrada" });
+    if (postData.oferta?.userId !== req.user.userId) {
+      return res.status(403).json({ error: "No tienes permiso para cambiar el estado" });
+    }
 
-    postulacion.estado = estado;
-    await postulacion.save();
-    res.json({ message: "Estado actualizado", postulacion });
+    const updated = await db.updatePostulacionEstado(id, estado);
+    res.json(updated);
   } catch (error) {
-    console.error("Error al actualizar postulación:", error);
-    res.status(500).json({ error: "Error al actualizar postulación" });
+    console.error("Error al actualizar estado:", error);
+    res.status(500).json({ error: "Error al actualizar el estado" });
   }
 });
 

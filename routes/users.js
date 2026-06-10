@@ -1,36 +1,21 @@
-// routes/users.js
-
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { authMiddleware } = require("../middlewares/authMiddleware");
-const User = require("../models/User");
-const path = require("path");
-const fs = require("fs");
+const db = require("../db");
 const multer = require("multer");
+const supabase = require("../supabaseClient");
 
-const uploadDir = path.join(__dirname, "..", "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${req.user.userId}-${Date.now()}`;
-    const ext = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
-  },
-});
-const upload = multer({ storage });
+const upload = multer({ storage: multer.memoryStorage() });
+const BUCKET = "vallejobs-files";
 
 router.post("/registrar", userController.createUser);
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await userController.findUserByEmail(email);
+  const user = await db.findUserByEmail(email);
   if (!user) {
     return res.status(401).json({ message: "Usuario no encontrado" });
   }
@@ -40,27 +25,44 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Contraseña incorrecta" });
   }
 
-  const token = jwt.sign({ userId: user.id, rol: user.rol }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
-  const userData = { ...user.toJSON() };
-  delete userData.password;
+  const token = jwt.sign(
+    { userId: user.id, rol: user.rol },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "7d",
+    },
+  );
+  const { password: _, ...userData } = user;
   res.json({ token, user: userData });
 });
 
-// Rutas específicas antes que las dinámicas (:id)
 router.get("/perfil", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findByPk(req.user.userId, {
-      attributes: { exclude: ["password"] },
-    });
+    const user = await db.findUserByPk(req.user.userId);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
-    res.json(user);
+    const { password, ...safeUser } = user;
+    res.json(safeUser);
   } catch (error) {
     console.error("Error al obtener perfil:", error);
     res.status(500).json({ error: "Error al obtener perfil" });
   }
 });
+
+const uploadToSupabase = async (file, userId, fieldName) => {
+  const ext = file.originalname.split(".").pop();
+  const fileName = `${fieldName}-${userId}-${Date.now()}.${ext}`;
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .upload(fileName, file.buffer, {
+      contentType: file.mimetype,
+      upsert: false,
+    });
+  if (error) throw error;
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from(BUCKET).getPublicUrl(fileName);
+  return publicUrl;
+};
 
 router.put(
   "/actualizar",
@@ -90,20 +92,18 @@ router.put(
       };
 
       if (req.files?.foto) {
-        updateData.foto = `uploads/${req.files.foto[0].filename}`;
+        updateData.foto = await uploadToSupabase(
+          req.files.foto[0],
+          userId,
+          "foto",
+        );
       }
       if (req.files?.cv) {
-        updateData.cv = `uploads/${req.files.cv[0].filename}`;
+        updateData.cv = await uploadToSupabase(req.files.cv[0], userId, "cv");
       }
 
-      const [updated] = await User.update(updateData, {
-        where: { id: userId },
-      });
-
-      if (updated) {
-        const updatedUser = await User.findByPk(userId, {
-          attributes: { exclude: ["password"] },
-        });
+      const updatedUser = await db.updateUser(userId, updateData);
+      if (updatedUser) {
         res.json(updatedUser);
       } else {
         res.status(404).json({ error: "Usuario no encontrado" });

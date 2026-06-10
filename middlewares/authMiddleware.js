@@ -1,15 +1,11 @@
-// middlewares/authMiddleware.js
-
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const db = require("../db");
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
 
   if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Acceso denegado, token no proporcionado" });
+    return res.status(401).json({ message: "Acceso denegado, token no proporcionado" });
   }
 
   try {
@@ -23,7 +19,7 @@ const authMiddleware = (req, res, next) => {
 
 const isAdmin = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.user.userId);
+    const user = await db.findUserByPk(req.user.userId);
     if (!user || user.rol !== "admin") {
       return res.status(403).json({ message: "Acceso denegado, se requieren permisos de administrador" });
     }

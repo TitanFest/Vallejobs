@@ -1,22 +1,5 @@
-// server.js
-
-process.env.NODE_NO_WARNINGS = "1";
-{
-  const origWarn = console.warn;
-  console.warn = (...args) => {
-    if (typeof args[0] === "string" && args[0].includes("[SEQUELIZE0006]"))
-      return;
-    origWarn.apply(console, args);
-  };
-}
-
 const express = require("express");
-const path = require("path");
-const { testConnection, sequelize } = require("./database");
-const User = require("./models/User");
 require("dotenv").config();
-
-require("./models/associations");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,7 +13,6 @@ app.use(
 );
 
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
   res.send("¡Bienvenido a la API Vallejobs!");
@@ -46,12 +28,14 @@ app.use((err, req, res, next) => {
   res.status(500).send("¡Algo salió mal!");
 });
 
+const db = require("./db");
+
 const seedAdminUser = async () => {
   try {
     const adminEmail = "admin@vallejobs.com";
-    const existingAdmin = await User.findOne({ where: { email: adminEmail } });
-    if (!existingAdmin) {
-      await User.create({
+    const existing = await db.findUserByEmail(adminEmail);
+    if (!existing) {
+      await db.createUser({
         name: "Admin",
         apellido: "Vallejobs",
         documento: "0000000000",
@@ -60,10 +44,11 @@ const seedAdminUser = async () => {
         password: "Admin123!",
         rol: "admin",
       });
-      console.log("Usuario administrador creado: admin@vallejobs.com / Admin123!");
-    } else if (existingAdmin.rol !== "admin") {
-      existingAdmin.rol = "admin";
-      await existingAdmin.save();
+      console.log(
+        "Usuario administrador creado: admin@vallejobs.com / Admin123!",
+      );
+    } else if (existing.rol !== "admin") {
+      await db.updateUser(existing.id, { rol: "admin" });
       console.log("Usuario admin@vallejobs.com actualizado a rol admin");
     }
   } catch (error) {
@@ -73,10 +58,9 @@ const seedAdminUser = async () => {
 
 const startServer = async () => {
   try {
-    await testConnection();
-    await sequelize.sync({ alter: true });
-    console.log("Modelos sincronizados con la base de datos.");
+    console.log("Conectando a Supabase...");
     await seedAdminUser();
+    console.log("Base de datos lista.");
 
     app.listen(PORT, () => {
       console.log(`Servidor escuchando en http://localhost:${PORT}`);

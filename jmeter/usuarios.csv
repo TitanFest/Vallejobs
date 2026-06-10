@@ -1,0 +1,11 @@
+name,apellido,documento,telefono,email,password
+Juan,Pérez,1000000001,3001110001,juan.perez.jmeter@test.com,Pass1234!
+María,García,1000000002,3001110002,maria.garcia.jmeter@test.com,Pass1234!
+Carlos,López,1000000003,3001110003,carlos.lopez.jmeter@test.com,Pass1234!
+Ana,Martínez,1000000004,3001110004,ana.martinez.jmeter@test.com,Pass1234!
+Pedro,Rodríguez,1000000005,3001110005,pedro.rodriguez.jmeter@test.com,Pass1234!
+Luisa,Fernández,1000000006,3001110006,luisa.fernandez.jmeter@test.com,Pass1234!
+José,González,1000000007,3001110007,jose.gonzalez.jmeter@test.com,Pass1234!
+Sofía,Ramírez,1000000008,3001110008,sofia.ramirez.jmeter@test.com,Pass1234!
+Diego,Torres,1000000009,3001110009,diego.torres.jmeter@test.com,Pass1234!
+Valentina,Morales,1000000010,3001110010,valentina.morales.jmeter@test.com,Pass1234!

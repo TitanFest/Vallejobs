@@ -1,18 +1,9 @@
-// controllers/userController.js
-
-const User = require("../models/User");
+const db = require("../db");
 
 const createUser = async (req, res) => {
   try {
     const { name, email, password, apellido, documento, telefono } = req.body;
-    const newUser = await User.create({
-      name,
-      email,
-      password,
-      apellido,
-      documento,
-      telefono,
-    });
+    const newUser = await db.createUser({ name: name || "", email, password, apellido: apellido || "", documento: documento || "", telefono: telefono || "" });
     res.status(201).json(newUser);
   } catch (error) {
     console.error("Error al crear el usuario:", error);
@@ -20,11 +11,9 @@ const createUser = async (req, res) => {
   }
 };
 
-const safeAttrs = { attributes: { exclude: ["password"] } };
-
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll(safeAttrs);
+    const users = await db.findAllUsers();
     res.json(users);
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
@@ -35,9 +24,10 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id, safeAttrs);
+    const user = await db.findUserByPk(id);
     if (user) {
-      res.json(user);
+      const { password, ...safeUser } = user;
+      res.json(safeUser);
     } else {
       res.status(404).json({ error: "Usuario no encontrado" });
     }
@@ -50,11 +40,8 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const [updated] = await User.update(req.body, {
-      where: { id },
-    });
-    if (updated) {
-      const updatedUser = await User.findByPk(id);
+    const updatedUser = await db.updateUser(id, req.body);
+    if (updatedUser) {
       res.json(updatedUser);
     } else {
       res.status(404).json({ error: "Usuario no encontrado" });
@@ -68,14 +55,8 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = await User.destroy({
-      where: { id },
-    });
-    if (deleted) {
-      res.json({ message: "Usuario eliminado correctamente" });
-    } else {
-      res.status(404).json({ error: "Usuario no encontrado" });
-    }
+    await db.deleteUser(id);
+    res.json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
     console.error("Error al eliminar el usuario:", error);
     res.status(500).json({ error: "Error al eliminar el usuario" });
@@ -84,8 +65,7 @@ const deleteUser = async (req, res) => {
 
 const findUserByEmail = async (email) => {
   try {
-    const user = await User.findOne({ where: { email } });
-    return user;
+    return await db.findUserByEmail(email);
   } catch (error) {
     console.error("Error al buscar el usuario por email:", error);
     throw error;

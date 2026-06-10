@@ -36,3 +36,10 @@ coverage/
 
 pnpm-lock.yaml
 pnpm-workspace.yaml
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
