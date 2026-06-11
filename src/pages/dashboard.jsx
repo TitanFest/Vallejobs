@@ -35,11 +35,11 @@ const Dashboard = () => {
         const headers = { Authorization: `Bearer ${token}` };
 
         const [userRes, postulacionesRes, ofertasRes] = await Promise.all([
-          axios.get("http://localhost:5000/Usuarios/perfil", { headers }),
-          axios.get("http://localhost:5000/Postulaciones/mis-postulaciones", {
+          axios.get("/Usuarios/perfil", { headers }),
+          axios.get("/Postulaciones/mis-postulaciones", {
             headers,
           }),
-          axios.get("http://localhost:5000/Trabajos/mis-ofertas", { headers }),
+          axios.get("/Trabajos/mis-ofertas", { headers }),
         ]);
 
         setUser(userRes.data);
@@ -58,7 +58,7 @@ const Dashboard = () => {
     if (!window.confirm("¿Estás seguro de eliminar esta oferta?")) return;
     try {
       const token = getToken();
-      await axios.delete(`http://localhost:5000/Trabajos/eliminar/${id}`, {
+      await axios.delete(`/Trabajos/eliminar/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMisOfertas((prev) => prev.filter((o) => o.id !== id));
@@ -72,7 +72,7 @@ const Dashboard = () => {
     try {
       const token = getToken();
       const res = await axios.put(
-        `http://localhost:5000/Trabajos/actualizar/${oferta.id}`,
+        `/Trabajos/actualizar/${oferta.id}`,
         { estado: !oferta.estado },
         { headers: { Authorization: `Bearer ${token}` } },
       );

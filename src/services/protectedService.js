@@ -1,12 +1,11 @@
 // services/protectedService.js
 import { getToken } from "./authService";
+import API_URL from "../config/api";
 
-// FIX: apuntaba a https://localhost:3000/UserList (el frontend, con https)
-// Corregido a la URL correcta del backend
 export const fetchProtectedData = async () => {
   const token = getToken();
 
-  const response = await fetch("http://localhost:5000/Usuarios/obtener", {
+  const response = await fetch(`${API_URL}/Usuarios/obtener`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

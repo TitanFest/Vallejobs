@@ -1,8 +1,8 @@
 // services/authService.js
 import axios from "axios";
+import API_BASE from "../config/api";
 
-// FIX: la URL usaba /usuarios (minúscula) pero el backend registra /Usuarios/ — no conectaba
-const API_URL = "http://localhost:5000/Usuarios";
+const API_URL = API_BASE + "/Usuarios";
 
 export const loginUser = async (credentials) => {
   const response = await axios.post(`${API_URL}/login`, credentials, {
@@ -49,7 +49,7 @@ export const logoutUser = async () => {
   try {
     const token = getToken();
     await axios.post(
-      "http://localhost:5000/Usuarios/logout",
+      API_BASE + "/Usuarios/logout",
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

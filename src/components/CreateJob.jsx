@@ -11,6 +11,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { getToken } from "../services/authService";
+import API_URL from "../config/api";
 import axios from "axios";
 
 const CreateJob = () => {
@@ -48,7 +49,7 @@ const CreateJob = () => {
 
     try {
       const token = getToken();
-      const response = await fetch("http://localhost:5000/Trabajos/registrar", {
+      const response = await fetch(`${API_URL}/Trabajos/registrar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +90,7 @@ const CreateJob = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/Categoria/obtener");
+        const res = await axios.get("/Categoria/obtener");
         setJobCategories(res.data);
       } catch (err) {
         console.error("Error al obtener categorías:", err);

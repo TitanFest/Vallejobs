@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { FaUser, FaEnvelope, FaPhone, FaFileAlt } from "react-icons/fa";
 import { getToken } from "../services/authService";
+import API_URL from "../config/api";
 import "../styles/JobApplicants.css";
 import axios from "axios";
 
@@ -20,12 +21,12 @@ const JobApplicants = () => {
         const token = getToken();
         const headers = { Authorization: `Bearer ${token}` };
         const res = await axios.get(
-          `http://localhost:5000/Postulaciones/oferta/${id}`,
+          `${API_URL}/Postulaciones/oferta/${id}`,
           { headers },
         );
         setApplicants(res.data);
         const jobRes = await axios.get(
-          `http://localhost:5000/Trabajos/obtener/${id}`,
+          `${API_URL}/Trabajos/obtener/${id}`,
           { headers },
         );
         setJobTitle(jobRes.data.titulo);
@@ -43,7 +44,7 @@ const JobApplicants = () => {
     try {
       const token = getToken();
       await axios.put(
-        `http://localhost:5000/Postulaciones/${postulacionId}/estado`,
+        `${API_URL}/Postulaciones/${postulacionId}/estado`,
         { estado: nuevoEstado },
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -96,7 +97,7 @@ const JobApplicants = () => {
                     >
                       {p.postulante?.foto ? (
                         <img
-                          src={`http://localhost:5000/${p.postulante.foto}`}
+                          src={`${API_URL}/${p.postulante.foto}`}
                           alt=""
                           className="applicant-photo"
                         />
@@ -119,7 +120,7 @@ const JobApplicants = () => {
                   <td>
                     {p.postulante?.cv ? (
                       <a
-                        href={`http://localhost:5000/${p.postulante.cv}`}
+                        href={`${API_URL}/${p.postulante.cv}`}
                         target="_blank"
                         rel="noreferrer"
                       >

@@ -13,6 +13,7 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { getToken } from "../services/authService";
+import API_URL from "../config/api";
 import axios from "axios";
 
 const UserProfile = () => {
@@ -32,14 +33,14 @@ const UserProfile = () => {
 
         if (id) {
           const res = await axios.get(
-            `http://localhost:5000/Usuarios/obtener/${id}`,
+            `${API_URL}/Usuarios/obtener/${id}`,
             { headers },
           );
           setUser(res.data);
         } else {
           const [userRes, postulacionesRes] = await Promise.all([
-            axios.get("http://localhost:5000/Usuarios/perfil", { headers }),
-            axios.get("http://localhost:5000/Postulaciones/mis-postulaciones", {
+            axios.get("/Usuarios/perfil", { headers }),
+            axios.get("/Postulaciones/mis-postulaciones", {
               headers,
             }),
           ]);
@@ -69,7 +70,7 @@ const UserProfile = () => {
             <div className="profile-photo">
               {user.foto ? (
                 <img
-                  src={`http://localhost:5000/${user.foto}`}
+                  src={`${API_URL}/${user.foto}`}
                   alt={user.name}
                 />
               ) : (
@@ -104,7 +105,7 @@ const UserProfile = () => {
                   <p>{user.cv}</p>
                   <div className="resume-actions">
                     <a
-                      href={`http://localhost:5000/${user.cv}`}
+                      href={`${API_URL}/${user.cv}`}
                       target="_blank"
                       rel="noreferrer"
                     >

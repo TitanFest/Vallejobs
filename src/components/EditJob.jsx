@@ -36,7 +36,7 @@ const EditJob = () => {
       try {
         const token = getToken();
         const res = await axios.get(
-          `http://localhost:5000/Trabajos/obtener/${id}`,
+          `/Trabajos/obtener/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -64,7 +64,7 @@ const EditJob = () => {
     };
     fetchJob();
     axios
-      .get("http://localhost:5000/Categoria/obtener")
+      .get("/Categoria/obtener")
       .then((res) => setJobCategories(res.data))
       .catch(() => {});
   }, [id]);
@@ -92,7 +92,7 @@ const EditJob = () => {
           .split("\n")
           .filter((r) => r.trim()),
       };
-      await axios.put(`http://localhost:5000/Trabajos/actualizar/${id}`, body, {
+      await axios.put(`/Trabajos/actualizar/${id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccessMessage("Oferta actualizada correctamente.");

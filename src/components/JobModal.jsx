@@ -17,7 +17,7 @@ const JobModal = ({ job, onClose }) => {
     try {
       const token = getToken();
       const response = await axios.post(
-        "http://localhost:5000/Postulaciones/postular",
+        "/Postulaciones/postular",
         { ofertaId: job.id },
         { headers: { Authorization: `Bearer ${token}` } },
       );

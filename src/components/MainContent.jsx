@@ -12,8 +12,8 @@ const MainContent = ({ categoriaSeleccionada, searchTerm }) => {
     const fetchJobOffers = async () => {
       try {
         const url = categoriaSeleccionada
-          ? `http://localhost:5000/Trabajos/categoria/${categoriaSeleccionada}`
-          : "http://localhost:5000/Trabajos/obtener";
+          ? `/Trabajos/categoria/${categoriaSeleccionada}`
+          : "/Trabajos/obtener";
         const response = await axios.get(url);
         setJobOffers(response.data);
       } catch (error) {

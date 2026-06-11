@@ -14,7 +14,7 @@ const AdminCategories = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/Categoria/obtener");
+      const res = await axios.get("/Categoria/obtener");
       setCategories(res.data);
     } catch (err) {
       console.error("Error al obtener categorías:", err);
@@ -44,12 +44,12 @@ const AdminCategories = () => {
     try {
       if (editing) {
         await axios.put(
-          `http://localhost:5000/Categoria/actualizar/${editing.id}`,
+          `/Categoria/actualizar/${editing.id}`,
           form,
           { headers },
         );
       } else {
-        await axios.post("http://localhost:5000/Categoria/registrar", form, {
+        await axios.post("/Categoria/registrar", form, {
           headers,
         });
       }
@@ -65,7 +65,7 @@ const AdminCategories = () => {
     if (!window.confirm("¿Eliminar esta categoría?")) return;
     const token = getToken();
     try {
-      await axios.delete(`http://localhost:5000/Categoria/eliminar/${id}`, {
+      await axios.delete(`/Categoria/eliminar/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchCategories();

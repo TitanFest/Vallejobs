@@ -10,7 +10,7 @@ const Sidebar = ({ onCategoriaSelect, categoriaActiva }) => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/Categoria/obtener",
+          "/Categoria/obtener",
         );
         setJobCategory(response.data);
       } catch (error) {

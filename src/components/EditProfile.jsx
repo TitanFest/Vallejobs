@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import "../styles/EditProfile.css";
 import { getToken } from "../services/authService";
+import API_URL from "../config/api";
 import axios from "axios";
 
 const EditProfile = () => {
@@ -37,7 +38,7 @@ const EditProfile = () => {
     const fetchPerfil = async () => {
       try {
         const token = getToken();
-        const res = await axios.get("http://localhost:5000/Usuarios/perfil", {
+        const res = await axios.get("/Usuarios/perfil", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const u = res.data;
@@ -52,7 +53,7 @@ const EditProfile = () => {
           cv: null,
           foto: null,
         });
-        if (u.foto) setPreviewImage(`http://localhost:5000/${u.foto}`);
+        if (u.foto) setPreviewImage(`${API_URL}/${u.foto}`);
       } catch (err) {
         setError("Error al cargar los datos del perfil.");
         console.error(err);
@@ -97,7 +98,7 @@ const EditProfile = () => {
       if (formData.foto) data.append("foto", formData.foto);
       if (formData.cv) data.append("cv", formData.cv);
 
-      await axios.put("http://localhost:5000/Usuarios/actualizar", data, {
+      await axios.put("/Usuarios/actualizar", data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
