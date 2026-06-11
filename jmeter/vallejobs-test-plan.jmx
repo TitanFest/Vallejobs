@@ -266,7 +266,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Flujo admin (crear categoría + oferta)" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Flujo autenticado (crear oferta)" enabled="true">
         <intProp name="ThreadGroup.num_threads">2</intProp>
         <intProp name="ThreadGroup.ramp_time">2</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
@@ -277,7 +277,19 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Usuarios/login" enabled="true">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Datos de usuarios (usuarios.csv)" enabled="true">
+          <stringProp name="delimiter">,</stringProp>
+          <stringProp name="fileEncoding">UTF-8</stringProp>
+          <stringProp name="filename">usuarios.csv</stringProp>
+          <boolProp name="ignoreFirstLine">true</boolProp>
+          <boolProp name="quotedData">false</boolProp>
+          <boolProp name="recycle">true</boolProp>
+          <boolProp name="stopThread">false</boolProp>
+          <stringProp name="variableNames">USER_NAME,USER_APELLIDO,USER_DOC,USER_TEL,USER_EMAIL,USER_PASS</stringProp>
+          <stringProp name="shareMode">shareMode.all</stringProp>
+        </CSVDataSet>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth - POST /Usuarios/login" enabled="true">
           <stringProp name="HTTPSampler.path">/Usuarios/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -285,7 +297,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;email&quot;:&quot;admin@vallejobs.com&quot;,&quot;password&quot;:&quot;Admin123!&quot;}</stringProp>
+                <stringProp name="Argument.value">{&quot;email&quot;:&quot;${USER_EMAIL}&quot;,&quot;password&quot;:&quot;${USER_PASS}&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -311,8 +323,8 @@
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
           <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extraer adminToken" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">adminToken</stringProp>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extraer authToken" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">authToken</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExpr">$.token</stringProp>
             <stringProp name="JSONPostProcessor.matchNumbers">1</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs"></stringProp>
@@ -320,54 +332,7 @@
           </JSONPostProcessor>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Categoria/registrar" enabled="true">
-          <stringProp name="HTTPSampler.path">/Categoria/registrar</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;nombre&quot;:&quot;JMeter-${__time(MMddHHmmss)}&quot;,&quot;descripcion&quot;:&quot;Categoría creada desde JMeter&quot;}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-        </HTTPSamplerProxy>
-        <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="Content-Type: application/json" enabled="true">
-            <collectionProp name="HeaderManager.headers">
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/json</stringProp>
-              </elementProp>
-              <elementProp name="" elementType="Header">
-                <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${adminToken}</stringProp>
-              </elementProp>
-            </collectionProp>
-          </HeaderManager>
-          <hashTree/>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Respuesta 201" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="49587">201</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">2</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extraer categoriaId" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">categoriaId</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExpr">$.id</stringProp>
-            <stringProp name="JSONPostProcessor.matchNumbers">1</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs"></stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Admin - POST /Trabajos/registrar" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Auth - POST /Trabajos/registrar" enabled="true">
           <stringProp name="HTTPSampler.path">/Trabajos/registrar</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -375,7 +340,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;titulo&quot;:&quot;Oferta JMeter ${__time(MMddHHmmss)}&quot;,&quot;localizacion&quot;:&quot;Valledupar&quot;,&quot;horario&quot;:&quot;Tiempo completo&quot;,&quot;salario&quot;:3000000,&quot;descripcion&quot;:&quot;Oferta creada desde JMeter&quot;,&quot;categoriaId&quot;:${categoriaId}}</stringProp>
+                <stringProp name="Argument.value">{&quot;titulo&quot;:&quot;Oferta JMeter ${__time(MMddHHmmss)}&quot;,&quot;localizacion&quot;:&quot;Valledupar&quot;,&quot;horario&quot;:&quot;Tiempo completo&quot;,&quot;salario&quot;:3000000,&quot;descripcion&quot;:&quot;Oferta creada desde JMeter&quot;}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -390,7 +355,7 @@
               </elementProp>
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Authorization</stringProp>
-                <stringProp name="Header.value">Bearer ${adminToken}</stringProp>
+                <stringProp name="Header.value">Bearer ${authToken}</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -407,7 +372,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Reporte resumen">
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Reporte resumen" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>

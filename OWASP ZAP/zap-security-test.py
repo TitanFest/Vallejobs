@@ -35,21 +35,22 @@ TARGET_FRONTEND = "http://localhost:3000"
 REPORT_DIR = Path(__file__).parent / "reports"
 REPORT_DIR.mkdir(exist_ok=True)
 
-TEST_USER = {
-    "email": "usuario@vallejobs.com",
-    "password": "Test1234!",
-}
+TEST_EMAIL = f"zaptest{int(time.time())}@vallejobs.com"
+TEST_PASS = "TestZAP2024!"
 
-PUBLIC_ENDPOINTS = [
-    ("GET", "/", None),
+REGISTER_ENDPOINTS = [
     ("POST", "/Usuarios/registrar", {
         "name": "Test ZAP",
         "apellido": "Seguridad",
         "documento": "1234567890",
         "telefono": "3001234567",
-        "email": f"zaptest{int(time.time())}@vallejobs.com",
-        "password": "TestZAP2024!",
+        "email": TEST_EMAIL,
+        "password": TEST_PASS,
     }),
+]
+
+PUBLIC_ENDPOINTS = [
+    ("GET", "/", None),
     ("GET", "/Trabajos/obtener", None),
     ("GET", "/Categoria/obtener", None),
 ]
@@ -64,15 +65,10 @@ AUTHENTICATED_ENDPOINTS = [
         "descripcion": "Puesto de prueba para scan de seguridad",
         "localizacion": "Cali, Valle",
         "horario": "Lunes a Viernes 8am-5pm",
-        "salario": "$2,000,000",
-        "categoria": "Tecnologia",
+        "salario": 3000000,
         "requerimientos": "Pruebas automaticas",
     }),
     ("GET", "/Postulaciones/mis-postulaciones", None),
-    ("POST", "/Categoria/registrar", {
-        "nombre": "TestSeguridadZAP",
-        "descripcion": "Categoria creada por scan de seguridad",
-    }),
 ]
 
 FUZZ_ENDPOINTS = [
@@ -220,10 +216,10 @@ def connect_to_zap():
                 exit(1)
 
 
-def authenticate(zap):
-    print(f"\n[+] Autenticando como {TEST_USER['email']}...")
+def authenticate(zap, email=TEST_EMAIL, password=TEST_PASS):
+    print(f"\n[+] Autenticando como {email}...")
     login_url = f"{TARGET_BACKEND}/Usuarios/login"
-    body = json.dumps(TEST_USER)
+    body = json.dumps({"email": email, "password": password})
     request_str = (
         f"POST {login_url} HTTP/1.1\r\n"
         f"Host: localhost:5000\r\n"
@@ -380,7 +376,11 @@ def main():
 
     zap = connect_to_zap()
 
-    token = authenticate(zap)
+    # Primero registrar un usuario de prueba
+    send_requests(zap, REGISTER_ENDPOINTS, token=None, tag="registro")
+
+    # Luego autenticarse con ese usuario
+    token = authenticate(zap, TEST_EMAIL, TEST_PASS)
 
     # Enviar trafico a traves de ZAP
     send_requests(zap, PUBLIC_ENDPOINTS, token=None, tag="publicos")

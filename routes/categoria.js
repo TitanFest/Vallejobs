@@ -5,7 +5,12 @@ const router = express.Router();
 const categoriaController = require("../controllers/categoriaController");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 
-router.post("/registrar", authMiddleware, isAdmin, categoriaController.createCategory);
+router.post(
+  "/registrar",
+  authMiddleware,
+  isAdmin,
+  categoriaController.createCategory,
+);
 
 router.get("/obtener", categoriaController.getAllCategorys);
 

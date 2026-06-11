@@ -271,6 +271,68 @@ const updatePostulacionEstado = async (id, estado) => {
   return data;
 };
 
+// ─── CALIFICACIONES ─────────────────────────────────────
+const createCalificacion = async (data) => {
+  const { data: result, error } = await supabase
+    .from("calificaciones")
+    .insert({ ...data })
+    .select("*")
+    .single();
+  if (error) throw error;
+  return result;
+};
+
+const findCalificacion = async (userId, calificadorId, tipo) => {
+  const { data, error } = await supabase
+    .from("calificaciones")
+    .select("*")
+    .eq("userId", userId)
+    .eq("calificadorId", calificadorId)
+    .eq("tipo", tipo)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
+};
+
+const updateCalificacion = async (id, puntuacion) => {
+  const { data, error } = await supabase
+    .from("calificaciones")
+    .update({ puntuacion, updatedAt: new Date().toISOString() })
+    .eq("id", id)
+    .select("*")
+    .single();
+  if (error) throw error;
+  return data;
+};
+
+const getAverageRating = async (userId, tipo) => {
+  const { data, error } = await supabase
+    .from("calificaciones")
+    .select("puntuacion")
+    .eq("userId", userId)
+    .eq("tipo", tipo);
+  if (error) throw error;
+  if (!data || data.length === 0) return 0;
+  const sum = data.reduce((acc, r) => acc + r.puntuacion, 0);
+  return Math.round((sum / data.length) * 10) / 10;
+};
+
+const updateUserRatingAverage = async (userId, tipo) => {
+  const avg = await getAverageRating(userId, tipo);
+  const field = tipo === "empleador" ? "rating_empleador" : "rating_empleado";
+  const { error } = await supabase
+    .from("users")
+    .update({ [field]: avg, updatedAt: new Date().toISOString() })
+    .eq("id", userId);
+  if (error) throw error;
+  return avg;
+};
+
+const getMyRating = async (userId, calificadorId, tipo) => {
+  const cal = await findCalificacion(userId, calificadorId, tipo);
+  return cal ? cal.puntuacion : 0;
+};
+
 module.exports = {
   findUserByPk,
   findUserByEmail,
@@ -295,4 +357,10 @@ module.exports = {
   findPostulacionesByUserId,
   findPostulacionesByOfertaId,
   updatePostulacionEstado,
+  createCalificacion,
+  findCalificacion,
+  updateCalificacion,
+  getAverageRating,
+  updateUserRatingAverage,
+  getMyRating,
 };

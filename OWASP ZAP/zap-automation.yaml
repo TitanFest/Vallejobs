@@ -9,17 +9,15 @@ env:
         - http://localhost:3000/.*
       excludePaths: []
       authentication:
-        method: browser
+        method: script
         parameters:
-          loginPageUrl: http://localhost:3000/login
-          loginPageWait: 2000
-          browserId: firefox
+          script: Vallejobs Auth.js
       sessionManagement:
         method: cookie
       users:
         - name: usuario_prueba
           credentials:
-            username: usuario@vallejobs.com
+            email: usuario@vallejobs.com
             password: Test1234!
   vars: {}
 
@@ -28,7 +26,6 @@ jobs:
   - type: spider
     parameters:
       context: Vallejobs
-      user: usuario_prueba
       maxChildren: 10
       maxDuration: 5
       url: http://localhost:5000
@@ -37,7 +34,6 @@ jobs:
   - type: spider
     parameters:
       context: Vallejobs
-      user: usuario_prueba
       maxChildren: 10
       maxDuration: 5
       url: http://localhost:3000
@@ -59,10 +55,8 @@ jobs:
   - type: activeScan
     parameters:
       context: Vallejobs
-      user: usuario_prueba
       maxDuration: 30
       maxRuleDurationInMins: 5
-      scanHeaders: all
       policyDefinition:
         defaultStrength: medium
         defaultThreshold: medium

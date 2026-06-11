@@ -8,10 +8,22 @@ router.post("/postular", authMiddleware, async (req, res) => {
     const { ofertaId } = req.body;
     const userId = req.user.userId;
 
+    const oferta = await db.findOfertaByPk(ofertaId);
+    if (!oferta) {
+      return res.status(404).json({ error: "Oferta no encontrada" });
+    }
+    if (oferta.userId === userId) {
+      return res
+        .status(400)
+        .json({ error: "No puedes postularte a tu propia oferta" });
+    }
+
     const existing = await db.findPostulacionesByUserId(userId);
     const yaPostulado = existing.find((p) => p.ofertaId === ofertaId);
     if (yaPostulado) {
-      return res.status(400).json({ error: "Ya te has postulado a esta oferta" });
+      return res
+        .status(400)
+        .json({ error: "Ya te has postulado a esta oferta" });
     }
 
     const postulacion = await db.createPostulacion({ userId, ofertaId });
@@ -39,7 +51,9 @@ router.get("/oferta/:ofertaId", authMiddleware, async (req, res) => {
     const oferta = await db.findOfertaByPk(ofertaId);
     if (!oferta) return res.status(404).json({ error: "Oferta no encontrada" });
     if (oferta.userId !== req.user.userId) {
-      return res.status(403).json({ error: "No tienes permiso para ver estas postulaciones" });
+      return res
+        .status(403)
+        .json({ error: "No tienes permiso para ver estas postulaciones" });
     }
     const postulaciones = await db.findPostulacionesByOfertaId(ofertaId);
     res.json(postulaciones);
@@ -60,9 +74,12 @@ router.put("/:id/estado", authMiddleware, async (req, res) => {
       .select("*, oferta:ofertaId(userId)")
       .eq("id", id)
       .single();
-    if (findError || !postData) return res.status(404).json({ error: "Postulación no encontrada" });
+    if (findError || !postData)
+      return res.status(404).json({ error: "Postulación no encontrada" });
     if (postData.oferta?.userId !== req.user.userId) {
-      return res.status(403).json({ error: "No tienes permiso para cambiar el estado" });
+      return res
+        .status(403)
+        .json({ error: "No tienes permiso para cambiar el estado" });
     }
 
     const updated = await db.updatePostulacionEstado(id, estado);

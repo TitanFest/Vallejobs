@@ -2,7 +2,17 @@ const db = require("../db");
 
 const createWork = async (req, res) => {
   try {
-    const { titulo, categoria, categoriaId, localizacion, horario, salario, estado, descripcion, requerimientos } = req.body;
+    const {
+      titulo,
+      categoria,
+      categoriaId,
+      localizacion,
+      horario,
+      salario,
+      estado,
+      descripcion,
+      requerimientos,
+    } = req.body;
     const userId = req.user.userId;
 
     let catId = categoriaId;
@@ -100,7 +110,9 @@ const addPostulante = async (req, res) => {
     }
     const postulantes = trabajo.postulantes || [];
     if (postulantes.includes(postulanteId)) {
-      return res.status(400).json({ error: "El postulante ya está registrado en este trabajo" });
+      return res
+        .status(400)
+        .json({ error: "El postulante ya está registrado en este trabajo" });
     }
     postulantes.push(postulanteId);
     await db.updateOferta(trabajoId, { postulantes });

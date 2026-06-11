@@ -22,21 +22,16 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  # Ejecutar escaneo usando el plan de automation
+  # Ejecutar escaneo usando el plan de automation (standalone)
   zap-scan:
     image: ghcr.io/zaproxy/zaproxy:stable
     container_name: vallejobs-zap-scan
     command: >
       zap.sh -cmd
       -autorun /zap/automation.yaml
-      -config api.disablekey=true
     volumes:
       - ./zap-automation.yaml:/zap/automation.yaml
       - ./reports:/zap/reports
-    depends_on:
-      - zap
-    networks:
-      - vallejobs-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
     profiles:

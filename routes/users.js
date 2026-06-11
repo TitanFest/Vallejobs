@@ -14,26 +14,31 @@ const BUCKET = "vallejobs-files";
 router.post("/registrar", userController.createUser);
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await db.findUserByEmail(email);
-  if (!user) {
-    return res.status(401).json({ message: "Usuario no encontrado" });
-  }
+  try {
+    const { email, password } = req.body;
+    const user = await db.findUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({ message: "Usuario no encontrado" });
+    }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    return res.status(401).json({ message: "Contraseña incorrecta" });
-  }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
 
-  const token = jwt.sign(
-    { userId: user.id, rol: user.rol },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "7d",
-    },
-  );
-  const { password: _, ...userData } = user;
-  res.json({ token, user: userData });
+    const token = jwt.sign(
+      { userId: user.id, rol: user.rol },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
+    const { password: _, ...userData } = user;
+    res.json({ token, user: userData });
+  } catch (error) {
+    console.error("Error en login:", error);
+    res.status(500).json({ error: "Error interno al iniciar sesión" });
+  }
 });
 
 router.get("/perfil", authMiddleware, async (req, res) => {
@@ -123,5 +128,75 @@ router.get("/obtener", authMiddleware, userController.getAllUsers);
 router.get("/obtener/:id", authMiddleware, userController.getUserById);
 router.put("/actualizar/:id", authMiddleware, userController.updateUser);
 router.delete("/eliminar/:id", authMiddleware, userController.deleteUser);
+
+router.post("/calificar/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const calificadorId = req.user.userId;
+    const { puntuacion, tipo } = req.body;
+
+    if (!puntuacion || puntuacion < 1 || puntuacion > 5) {
+      return res
+        .status(400)
+        .json({ error: "La puntuación debe ser entre 1 y 5" });
+    }
+    if (!["empleador", "empleado"].includes(tipo)) {
+      return res
+        .status(400)
+        .json({ error: "Tipo debe ser 'empleador' o 'empleado'" });
+    }
+    if (parseInt(id) === calificadorId) {
+      return res
+        .status(400)
+        .json({ error: "No puedes calificarte a ti mismo" });
+    }
+
+    const existing = await db.findCalificacion(
+      parseInt(id),
+      calificadorId,
+      tipo,
+    );
+    if (existing) {
+      await db.updateCalificacion(existing.id, puntuacion);
+    } else {
+      await db.createCalificacion({
+        userId: parseInt(id),
+        calificadorId,
+        puntuacion,
+        tipo,
+      });
+    }
+
+    const nuevoPromedio = await db.updateUserRatingAverage(parseInt(id), tipo);
+    res.json({ message: "Calificación guardada", promedio: nuevoPromedio });
+  } catch (error) {
+    if (error.code === "42P01") {
+      return res.status(500).json({
+        error:
+          "La tabla 'calificaciones' no existe. Ejecuta el script SQL de creación.",
+      });
+    }
+    console.error("Error al calificar:", error);
+    res.status(500).json({ error: "Error al calificar" });
+  }
+});
+
+router.get("/mi-calificacion/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const calificadorId = req.user.userId;
+    const { tipo } = req.query;
+    if (!["empleador", "empleado"].includes(tipo)) {
+      return res
+        .status(400)
+        .json({ error: "Tipo debe ser 'empleador' o 'empleado'" });
+    }
+    const puntuacion = await db.getMyRating(parseInt(id), calificadorId, tipo);
+    res.json({ puntuacion });
+  } catch (error) {
+    console.error("Error al obtener calificación:", error);
+    res.status(500).json({ error: "Error al obtener calificación" });
+  }
+});
 
 module.exports = router;

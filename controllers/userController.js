@@ -3,7 +3,14 @@ const db = require("../db");
 const createUser = async (req, res) => {
   try {
     const { name, email, password, apellido, documento, telefono } = req.body;
-    const newUser = await db.createUser({ name: name || "", email, password, apellido: apellido || "", documento: documento || "", telefono: telefono || "" });
+    const newUser = await db.createUser({
+      name: name || "",
+      email,
+      password,
+      apellido: apellido || "",
+      documento: documento || "",
+      telefono: telefono || "",
+    });
     res.status(201).json(newUser);
   } catch (error) {
     console.error("Error al crear el usuario:", error);

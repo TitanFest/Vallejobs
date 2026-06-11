@@ -7,10 +7,10 @@
 
 ## Escenarios incluidos
 
-| Escenario         | Descripción                                                                                                                                              |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Carga general** | 10 usuarios virtuales, 10 iteraciones cada uno. Simula: health check, registro, login, perfil, listar ofertas, listar categorías, búsqueda por categoría |
-| **Flujo admin**   | 2 admins concurrentes: login como admin, crear categoría, crear oferta                                                                                   |
+| Escenario             | Descripción                                                                                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Carga general**     | 10 usuarios virtuales, 10 iteraciones cada uno. Simula: health check, registro, login, perfil, listar ofertas, listar categorías, búsqueda por categoría |
+| **Flujo autenticado** | 2 usuarios autenticados concurrentes: login, crear oferta de trabajo                                                                                     |
 
 ## Datos de prueba
 
