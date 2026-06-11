@@ -7,21 +7,29 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: true,
     credentials: true,
   }),
 );
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("¡Bienvenido a la API Vallejobs!");
-});
+const path = require("path");
+
+// Servir frontend compilado
+app.use(express.static(path.join(__dirname, "../Frontend/build")));
 
 app.use("/Usuarios/", require("./routes/users"));
 app.use("/Trabajos/", require("./routes/ofertas"));
 app.use("/Categoria/", require("./routes/categoria"));
 app.use("/Postulaciones/", require("./routes/postulaciones"));
+
+// Catch-all para SPA (React Router)
+app.get("*", (req, res) => {
+  if (!req.path.startsWith("/Usuarios") && !req.path.startsWith("/Trabajos") && !req.path.startsWith("/Categoria") && !req.path.startsWith("/Postulaciones")) {
+    res.sendFile(path.join(__dirname, "../Frontend/build", "index.html"));
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
