@@ -20,18 +20,18 @@ const JobApplicants = () => {
       try {
         const token = getToken();
         const headers = { Authorization: `Bearer ${token}` };
-        const res = await axios.get(
-          `${API_URL}/Postulaciones/oferta/${id}`,
-          { headers },
-        );
+        const res = await axios.get(`${API_URL}/Postulaciones/oferta/${id}`, {
+          headers,
+        });
         setApplicants(res.data);
-        const jobRes = await axios.get(
-          `${API_URL}/Trabajos/obtener/${id}`,
-          { headers },
-        );
+        const jobRes = await axios.get(`${API_URL}/Trabajos/obtener/${id}`, {
+          headers,
+        });
         setJobTitle(jobRes.data.titulo);
       } catch (err) {
-        setError("Error al cargar los postulantes.");
+        setError(
+          "No se pudieron cargar los postulantes. Verifica que esta oferta te pertenezca o que tengas los permisos necesarios.",
+        );
         console.error(err);
       } finally {
         setLoading(false);

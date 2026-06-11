@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import "../styles/registro.css";
 import axios from "axios";
+import { loginUser, saveToken, saveUser } from "../services/authService";
 const Registro = () => {
   const [name, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -11,42 +12,37 @@ const Registro = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
 
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden");
+      setError(
+        "Las contraseñas ingresadas no coinciden. Por favor, verifica ambos campos.",
+      );
       return;
     }
 
     try {
-      const response = await axios.post(
-        "/Usuarios/registrar",
-        {
-          name,
-          apellido,
-          documento,
-          telefono,
-          email,
-          password,
-        },
-      );
+      await axios.post("/Usuarios/registrar", {
+        name,
+        apellido,
+        documento,
+        telefono,
+        email,
+        password,
+      });
 
-      if (response.status === 201) {
-        setSuccessMessage("Usuario registrado exitosamente");
-        setNombre("");
-        setApellido("");
-        setDocumento("");
-        setTelefono("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-      }
+      const data = await loginUser({ email, password });
+      saveToken(data.token);
+      saveUser(data.user);
+      window.location.href = "/dashboard";
     } catch (error) {
-      setError("Error al registrar el usuario. Intente de nuevo.");
+      setError(
+        error.response?.data?.error ||
+          "No se pudo completar el registro. Es posible que el correo ya esté registrado o que los datos ingresados no sean válidos.",
+      );
     }
   };
 
@@ -58,7 +54,6 @@ const Registro = () => {
         </button>
         <h2>Registro</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         <form onSubmit={handleSubmit}>
           <label>Nombre:</label>
           <input

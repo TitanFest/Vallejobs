@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import UserList from "./pages/UserList";
 import Dashboard from "./pages/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 import Home from "./pages/home";
 import Registro from "./components/registro";
 import CreateJob from "./components/CreateJob";
@@ -19,9 +20,23 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         <Route path="/Home" element={<Home />} />
-        <Route path="/registro" element={<Registro />} />
+        <Route
+          path="/registro"
+          element={
+            <PublicRoute>
+              <Registro />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/CreateJob"
           element={

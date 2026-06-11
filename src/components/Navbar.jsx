@@ -8,13 +8,20 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { isLoggedIn, logout, logoutUser, isAdmin } from "../services/authService";
+import {
+  isLoggedIn,
+  logout,
+  logoutUser,
+  isAdmin,
+  getUser,
+} from "../services/authService";
 import "../styles/Navbar.css";
 
 const Navbar = ({ onMenuToggle, sidebarOpen }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const loggedIn = isLoggedIn();
+  const user = loggedIn ? getUser() : null;
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -73,7 +80,11 @@ const Navbar = ({ onMenuToggle, sidebarOpen }) => {
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <div className="profile-avatar">
-                <FontAwesomeIcon icon={faUser} />
+                {user?.foto ? (
+                  <img src={user.foto} alt="avatar" className="avatar-img" />
+                ) : (
+                  <FontAwesomeIcon icon={faUser} />
+                )}
               </div>
               <span className="profile-arrow">{menuOpen ? "▲" : "▼"}</span>
             </button>
@@ -89,7 +100,11 @@ const Navbar = ({ onMenuToggle, sidebarOpen }) => {
                 {isAdmin() && (
                   <>
                     <div className="dropdown-divider" />
-                    <button onClick={() => (window.location.href = "/AdminCategories")}>
+                    <button
+                      onClick={() =>
+                        (window.location.href = "/AdminCategories")
+                      }
+                    >
                       <FontAwesomeIcon icon={faShieldHalved} /> Categorías
                     </button>
                   </>

@@ -8,10 +8,12 @@ import {
   FaClock,
 } from "react-icons/fa";
 import axios from "axios";
-import { getToken } from "../services/authService";
+import { getToken, getUser } from "../services/authService";
 
 const JobModal = ({ job, onClose }) => {
   if (!job) return null;
+  const currentUser = getUser();
+  const esPropia = currentUser && job.userId === currentUser.id;
 
   const aplicar = async () => {
     try {
@@ -26,24 +28,26 @@ const JobModal = ({ job, onClose }) => {
       if (error.response?.data?.error) {
         alert(error.response.data.error);
       } else {
-        alert("Ocurrió un error al intentar postularse.");
+        alert(
+          "No se pudo completar la postulación. Es posible que ya te hayas postulado a esta oferta o que la oferta ya no esté disponible.",
+        );
       }
       console.error("Error al postularse:", error);
     }
   };
 
-const requerimientos = Array.isArray(job.requerimientos)
-  ? job.requerimientos
-  : typeof job.requerimientos === "string"
-    ? (() => {
-        try {
-          const parsed = JSON.parse(job.requerimientos);
-          return Array.isArray(parsed) ? parsed : [job.requerimientos];
-        } catch {
-          return [job.requerimientos];
-        }
-      })()
-    : [];
+  const requerimientos = Array.isArray(job.requerimientos)
+    ? job.requerimientos
+    : typeof job.requerimientos === "string"
+      ? (() => {
+          try {
+            const parsed = JSON.parse(job.requerimientos);
+            return Array.isArray(parsed) ? parsed : [job.requerimientos];
+          } catch {
+            return [job.requerimientos];
+          }
+        })()
+      : [];
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -93,9 +97,15 @@ const requerimientos = Array.isArray(job.requerimientos)
         </div>
 
         <div className="modal-footer">
-          <button className="apply-button" onClick={aplicar}>
-            Aplicar ahora
-          </button>
+          {esPropia ? (
+            <p className="own-job-message">
+              No puedes postularte a tu propia oferta
+            </p>
+          ) : (
+            <button className="apply-button" onClick={aplicar}>
+              Aplicar ahora
+            </button>
+          )}
         </div>
       </div>
     </div>

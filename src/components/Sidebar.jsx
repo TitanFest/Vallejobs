@@ -9,9 +9,7 @@ const Sidebar = ({ onCategoriaSelect, categoriaActiva, isOpen, onClose }) => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get(
-          "/Categoria/obtener",
-        );
+        const response = await axios.get("/Categoria/obtener");
         setJobCategory(response.data);
       } catch (error) {
         console.error("Error al obtener categorías:", error);

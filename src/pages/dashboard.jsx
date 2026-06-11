@@ -55,7 +55,12 @@ const Dashboard = () => {
   }, []);
 
   const handleEliminarOferta = async (id) => {
-    if (!window.confirm("¿Estás seguro de eliminar esta oferta?")) return;
+    if (
+      !window.confirm(
+        "¿Estás seguro de eliminar esta oferta? Esta acción no se puede deshacer.",
+      )
+    )
+      return;
     try {
       const token = getToken();
       await axios.delete(`/Trabajos/eliminar/${id}`, {
@@ -64,7 +69,9 @@ const Dashboard = () => {
       setMisOfertas((prev) => prev.filter((o) => o.id !== id));
     } catch (err) {
       console.error("Error al eliminar oferta:", err);
-      alert("Error al eliminar la oferta.");
+      alert(
+        "No se pudo eliminar la oferta. Es posible que tenga postulantes asociados o que el permiso haya sido denegado.",
+      );
     }
   };
 
@@ -81,7 +88,9 @@ const Dashboard = () => {
       );
     } catch (err) {
       console.error("Error al cambiar estado:", err);
-      alert("Error al cambiar el estado de la oferta.");
+      alert(
+        "No se pudo cambiar el estado de la oferta. Verifica que tengas permisos para realizar esta acción.",
+      );
     }
   };
 
@@ -105,7 +114,7 @@ const Dashboard = () => {
 
         <div className="dashboard-header">
           <div>
-            <h1>Bienvenido, {user?.name} 👋</h1>
+            <h1>Bienvenido, {user?.name}</h1>
             <p>Aquí tienes un resumen de tu actividad en Vallejobs</p>
           </div>
           <button
@@ -184,6 +193,7 @@ const Dashboard = () => {
                       <tr>
                         <th>Oferta</th>
                         <th>Ubicación</th>
+                        <th>Empleador</th>
                         <th>Estado</th>
                       </tr>
                     </thead>
@@ -192,6 +202,20 @@ const Dashboard = () => {
                         <tr key={p.id}>
                           <td>{p.oferta?.titulo || "Oferta eliminada"}</td>
                           <td>{p.oferta?.localizacion || "—"}</td>
+                          <td>
+                            {p.oferta?.userId ? (
+                              <button
+                                className="link-btn"
+                                onClick={() =>
+                                  navigate(`/UserProfile/${p.oferta.userId}`)
+                                }
+                              >
+                                <FaUser /> Ver empleador
+                              </button>
+                            ) : (
+                              "—"
+                            )}
+                          </td>
                           <td>
                             <span className={`estado-badge ${p.estado}`}>
                               {p.estado}

@@ -14,7 +14,10 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Navbar onMenuToggle={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
+      <Navbar
+        onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+        sidebarOpen={sidebarOpen}
+      />
       <div className="content">
         <Sidebar
           onCategoriaSelect={(cat) => {

@@ -66,7 +66,9 @@ const CreateJob = () => {
         throw new Error("Error al publicar la oferta");
       }
 
-      setSuccessMessage("¡Oferta publicada exitosamente!");
+      setSuccessMessage(
+        "¡Oferta publicada exitosamente! Los postulantes podrán encontrar tu empleo en el buscador.",
+      );
       setJobData({
         titulo: "",
         localizacion: "",
@@ -79,7 +81,9 @@ const CreateJob = () => {
       });
       setVacancies(1);
     } catch (err) {
-      setError("No se pudo publicar la oferta. Intenta de nuevo.");
+      setError(
+        "No se pudo publicar la oferta. Verifica que todos los campos requeridos estén completos e intenta de nuevo.",
+      );
       console.error(err);
     }
   };

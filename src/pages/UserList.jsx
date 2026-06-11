@@ -13,7 +13,9 @@ const UserList = () => {
         const userList = await getAllUsers();
         setUsers(userList);
       } catch (error) {
-        setError("Error al obtener la lista de usuarios");
+        setError(
+          "No se pudo obtener la lista de usuarios. Verifica tu conexión o intenta de nuevo más tarde.",
+        );
         console.error(error);
       }
     };

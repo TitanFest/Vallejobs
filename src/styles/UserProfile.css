@@ -158,16 +158,10 @@
   text-align: center;
 }
 
-.rating-card h3 {
-  margin: 0;
+.rating-card h4 {
+  margin: 0 0 8px 0; /* Un pequeño margen inferior le vendrá bien */
   font-size: 15px;
   color: var(--text-secondary);
-}
-
-.stars {
-  color: #f9a825;
-  margin: 8px 0;
-  font-size: 18px;
 }
 
 .rating-value {
@@ -294,6 +288,24 @@
   background: var(--primary-dark);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(74, 63, 140, 0.25);
+}
+
+.star-filled {
+  color: #ffc107;
+  opacity: 1;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.star-empty {
+  color: #e4e5e9;
+}
+.star-dimmed {
+  opacity: 0.4;
+}
+.stars:hover .star-filled {
+  opacity: 1 !important;
 }
 
 @media (max-width: 768px) {

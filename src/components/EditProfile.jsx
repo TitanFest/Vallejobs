@@ -54,7 +54,9 @@ const EditProfile = () => {
         });
         if (u.foto) setPreviewImage(u.foto);
       } catch (err) {
-        setError("Error al cargar los datos del perfil.");
+        setError(
+          "No se pudieron cargar los datos de tu perfil. Intenta recargar la página.",
+        );
         console.error(err);
       } finally {
         setLoading(false);
@@ -104,10 +106,14 @@ const EditProfile = () => {
         },
       });
 
-      setSuccessMessage("Perfil actualizado correctamente.");
+      setSuccessMessage(
+        "¡Tu perfil se ha actualizado correctamente! Los cambios ya están visibles.",
+      );
       setEditing(false);
     } catch (err) {
-      setError("Error al actualizar el perfil. Intenta de nuevo.");
+      setError(
+        "No se pudo actualizar tu perfil. Verifica los campos e intenta de nuevo. Si el problema persiste, intenta más tarde.",
+      );
       console.error(err);
     } finally {
       setLoading(false);

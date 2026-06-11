@@ -24,7 +24,9 @@ const Login = () => {
       console.log("Login successful. JWT:", data.token);
       window.location.href = "/dashboard";
     } catch (error) {
-      setError("Login failed. Please check your credentials.");
+      setError(
+        "Inicio de sesión fallido. Verifica tu correo electrónico y contraseña.",
+      );
       console.error("Error during login:", error);
     }
   };

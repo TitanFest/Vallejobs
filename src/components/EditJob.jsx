@@ -35,12 +35,9 @@ const EditJob = () => {
     const fetchJob = async () => {
       try {
         const token = getToken();
-        const res = await axios.get(
-          `/Trabajos/obtener/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const res = await axios.get(`/Trabajos/obtener/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         const job = res.data;
         setJobData({
           titulo: job.titulo || "",
@@ -56,7 +53,9 @@ const EditJob = () => {
         });
         if (job.categoria?.id) setCategoriaId(job.categoria.id);
       } catch (err) {
-        setError("Error al cargar la oferta.");
+        setError(
+          "No se pudo cargar la información de la oferta. Es posible que haya sido eliminada o que no tengas permisos para verla.",
+        );
         console.error(err);
       } finally {
         setLoading(false);
@@ -95,9 +94,13 @@ const EditJob = () => {
       await axios.put(`/Trabajos/actualizar/${id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setSuccessMessage("Oferta actualizada correctamente.");
+      setSuccessMessage(
+        "¡La oferta se ha actualizado correctamente! Los cambios ya están visibles para los postulantes.",
+      );
     } catch (err) {
-      setError("Error al actualizar la oferta.");
+      setError(
+        "No se pudo actualizar la oferta. Verifica los datos ingresados e intenta de nuevo.",
+      );
       console.error(err);
     }
   };

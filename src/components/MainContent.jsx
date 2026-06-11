@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/MainContent.css";
-import { FaBriefcase } from "react-icons/fa";
+import { FaBriefcase, FaUser } from "react-icons/fa";
 import JobModal from "./JobModal";
 import axios from "axios";
 
 const MainContent = ({ categoriaSeleccionada, searchTerm }) => {
+  const navigate = useNavigate();
   const [jobOffers, setJobOffers] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -53,7 +55,20 @@ const MainContent = ({ categoriaSeleccionada, searchTerm }) => {
               onClick={() => setSelectedJob(job)}
             >
               <FaBriefcase className="job-icon" />
-              <span className="job-title">{job.titulo}</span>
+              <div className="job-info">
+                <span className="job-title">{job.titulo}</span>
+                {job.userId && (
+                  <button
+                    className="employer-link"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/UserProfile/${job.userId}`);
+                    }}
+                  >
+                    <FaUser /> Ver empleador
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>

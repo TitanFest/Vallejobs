@@ -52,6 +52,30 @@
   line-height: 1.3;
 }
 
+.job-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.employer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  color: var(--primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+}
+
+.employer-link:hover {
+  text-decoration: underline;
+}
+
 .no-jobs {
   text-align: center;
   color: var(--text-muted);

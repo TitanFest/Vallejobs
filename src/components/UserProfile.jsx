@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../styles/UserProfile.css";
@@ -12,9 +12,30 @@ import {
   FaEdit,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import { getToken } from "../services/authService";
+import { getToken, getUser } from "../services/authService";
 import API_URL from "../config/api";
 import axios from "axios";
+
+const StarRating = ({ value, hovered, onHover, onClick, disabled }) => (
+  <div className="stars">
+    {[...Array(5)].map((_, i) => {
+      const starIndex = i + 1;
+      const isFilled = hovered ? starIndex <= hovered : starIndex <= value;
+      const isDimmed = !disabled && !hovered && starIndex <= value;
+
+      return (
+        <FaStar
+          key={i}
+          className={`${isFilled ? "star-filled" : "star-empty"} ${isDimmed ? "star-dimmed" : ""}`}
+          onMouseEnter={() => !disabled && onHover(starIndex)}
+          onMouseLeave={() => !disabled && onHover(0)}
+          onClick={() => !disabled && onClick(starIndex)}
+          style={{ cursor: disabled ? "default" : "pointer" }}
+        />
+      );
+    })}
+  </div>
+);
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -23,7 +44,29 @@ const UserProfile = () => {
   const [postulaciones, setPostulaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hoverEmpleador, setHoverEmpleador] = useState(0);
+  const [hoverEmpleado, setHoverEmpleado] = useState(0);
+  const [miRatingEmpleador, setMiRatingEmpleador] = useState(0);
+  const [miRatingEmpleado, setMiRatingEmpleado] = useState(0);
   const isOwnProfile = !id;
+  const currentUser = getUser();
+
+  const fetchMiCalificacion = useCallback(
+    async (tipo) => {
+      try {
+        const token = getToken();
+        const res = await axios.get(
+          `${API_URL}/Usuarios/mi-calificacion/${id}?tipo=${tipo}`,
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+        if (tipo === "empleador") setMiRatingEmpleador(res.data.puntuacion);
+        else setMiRatingEmpleado(res.data.puntuacion);
+      } catch (err) {
+        console.error(`Error al obtener mi calificación (${tipo}):`, err);
+      }
+    },
+    [id],
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,11 +75,12 @@ const UserProfile = () => {
         const headers = { Authorization: `Bearer ${token}` };
 
         if (id) {
-          const res = await axios.get(
-            `${API_URL}/Usuarios/obtener/${id}`,
-            { headers },
-          );
+          const res = await axios.get(`${API_URL}/Usuarios/obtener/${id}`, {
+            headers,
+          });
           setUser(res.data);
+          fetchMiCalificacion("empleador");
+          fetchMiCalificacion("empleado");
         } else {
           const [userRes, postulacionesRes] = await Promise.all([
             axios.get("/Usuarios/perfil", { headers }),
@@ -48,14 +92,39 @@ const UserProfile = () => {
           setPostulaciones(postulacionesRes.data);
         }
       } catch (err) {
-        setError("Error al cargar el perfil.");
+        setError(
+          "No se pudo cargar la información del perfil. Es posible que el usuario no exista o que haya un problema de conexión.",
+        );
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, fetchMiCalificacion]);
+
+  const calificar = async (tipo, puntuacion) => {
+    try {
+      const token = getToken();
+      const res = await axios.post(
+        `${API_URL}/Usuarios/calificar/${id}`,
+        { puntuacion, tipo },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      if (tipo === "empleador") {
+        setMiRatingEmpleador(puntuacion);
+        setUser((prev) => ({ ...prev, rating_empleador: res.data.promedio }));
+      } else {
+        setMiRatingEmpleado(puntuacion);
+        setUser((prev) => ({ ...prev, rating_empleado: res.data.promedio }));
+      }
+    } catch (err) {
+      alert(
+        err.response?.data?.error ||
+          "No se pudo guardar tu calificación. Intenta de nuevo más tarde.",
+      );
+    }
+  };
 
   if (loading) return <div className="profile-loading">Cargando perfil...</div>;
   if (error) return <div className="profile-error">{error}</div>;
@@ -69,10 +138,7 @@ const UserProfile = () => {
           <div className="profile-photo-section">
             <div className="profile-photo">
               {user.foto ? (
-                <img
-                  src={user.foto}
-                  alt={user.name}
-                />
+                <img src={user.foto} alt={user.name} />
               ) : (
                 <FaUser className="default-avatar-icon" />
               )}
@@ -101,26 +167,25 @@ const UserProfile = () => {
             </h3>
             <div className="resume-preview">
               {user.cv ? (
-                <>
-                  <p>{user.cv}</p>
-                  <div className="resume-actions">
-                    <a
-                      href={user.cv}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <button className="view-btn">Ver</button>
-                    </a>
+                <div className="resume-actions">
+                  <a href={user.cv} target="_blank" rel="noreferrer">
+                    <button className="view-btn">Ver</button>
+                  </a>
+                  {isOwnProfile && (
                     <button
                       className="update-btn"
                       onClick={() => navigate("/EditProfile")}
                     >
                       Actualizar
                     </button>
-                  </div>
-                </>
+                  )}
+                </div>
               ) : (
-                <p>No has subido tu hoja de vida aún.</p>
+                <p>
+                  {isOwnProfile
+                    ? "No has subido tu hoja de vida aún."
+                    : "No ha subido su hoja de vida."}
+                </p>
               )}
             </div>
           </div>
@@ -141,39 +206,55 @@ const UserProfile = () => {
           <div className="ratings-section">
             <div className="rating-card">
               <h4>Como Empleador</h4>
-              <div className="stars">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className={
-                      i < Math.floor(user.rating_empleador || 0)
-                        ? "star-filled"
-                        : "star-empty"
-                    }
+              {isOwnProfile ? (
+                <>
+                  <StarRating
+                    value={Math.floor(user.rating_empleador || 0)}
+                    disabled
                   />
-                ))}
-              </div>
-              <span className="rating-value">
-                {user.rating_empleador || 0}/5
-              </span>
+                  <span className="rating-value">
+                    {user.rating_empleador || 0}/5
+                  </span>
+                </>
+              ) : (
+                <>
+                  <StarRating
+                    value={Math.floor(user.rating_empleador || 0)} // Pasamos el promedio general
+                    hovered={hoverEmpleador}
+                    onHover={setHoverEmpleador}
+                    onClick={(p) => calificar("empleador", p)}
+                  />
+                  <span className="rating-value">
+                    {user.rating_empleador || 0}/5 (promedio)
+                  </span>
+                </>
+              )}
             </div>
             <div className="rating-card">
               <h4>Como Empleado</h4>
-              <div className="stars">
-                {[...Array(5)].map((_, i) => (
-                  <FaStar
-                    key={i}
-                    className={
-                      i < Math.floor(user.rating_empleado || 0)
-                        ? "star-filled"
-                        : "star-empty"
-                    }
+              {isOwnProfile ? (
+                <>
+                  <StarRating
+                    value={Math.floor(user.rating_empleado || 0)}
+                    disabled
                   />
-                ))}
-              </div>
-              <span className="rating-value">
-                {user.rating_empleado || 0}/5
-              </span>
+                  <span className="rating-value">
+                    {user.rating_empleado || 0}/5
+                  </span>
+                </>
+              ) : (
+                <>
+                  <StarRating
+                    value={Math.floor(user.rating_empleado || 0)} // Pasamos el promedio general
+                    hovered={hoverEmpleado}
+                    onHover={setHoverEmpleado}
+                    onClick={(p) => calificar("empleado", p)}
+                  />
+                  <span className="rating-value">
+                    {user.rating_empleado || 0}/5 (promedio)
+                  </span>
+                </>
+              )}
             </div>
           </div>
 
