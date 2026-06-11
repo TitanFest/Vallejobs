@@ -3,11 +3,17 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const path = require("path");
+const fs = require("fs");
+
+const frontendBuild = path.join(__dirname, "../Frontend/build");
+const hasFrontendBuild = fs.existsSync(frontendBuild);
 
 const cors = require("cors");
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: corsOrigin.split(","),
     credentials: true,
   }),
 );
@@ -15,6 +21,9 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
+  if (hasFrontendBuild) {
+    return res.sendFile(path.join(frontendBuild, "index.html"));
+  }
   res.send("¡Bienvenido a la API Vallejobs!");
 });
 
@@ -22,6 +31,13 @@ app.use("/Usuarios/", require("./routes/users"));
 app.use("/Trabajos/", require("./routes/ofertas"));
 app.use("/Categoria/", require("./routes/categoria"));
 app.use("/Postulaciones/", require("./routes/postulaciones"));
+
+if (hasFrontendBuild) {
+  app.use(express.static(frontendBuild));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendBuild, "index.html"));
+  });
+}
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
