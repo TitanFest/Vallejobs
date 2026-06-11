@@ -3,6 +3,7 @@
   background: var(--bg);
   padding: 24px;
   overflow-y: auto;
+  min-width: 0;
 }
 
 .quick-jobs {
@@ -57,4 +58,28 @@
   margin-top: 60px;
   font-size: 15px;
   grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 16px 12px;
+  }
+
+  .quick-jobs {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .job-card {
+    padding: 16px;
+  }
+
+  .job-title {
+    font-size: 14px;
+  }
 }

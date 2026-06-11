@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa";
 import "../styles/EditProfile.css";
 import { getToken } from "../services/authService";
-import API_URL from "../config/api";
 import axios from "axios";
 
 const EditProfile = () => {
@@ -53,7 +52,7 @@ const EditProfile = () => {
           cv: null,
           foto: null,
         });
-        if (u.foto) setPreviewImage(`${API_URL}/${u.foto}`);
+        if (u.foto) setPreviewImage(u.foto);
       } catch (err) {
         setError("Error al cargar los datos del perfil.");
         console.error(err);

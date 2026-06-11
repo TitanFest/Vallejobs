@@ -72,91 +72,93 @@ const JobApplicants = () => {
             No hay postulantes para esta oferta aún.
           </p>
         ) : (
-          <table className="applicants-table">
-            <thead>
-              <tr>
-                <th>Postulante</th>
-                <th>Contacto</th>
-                <th>CV</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {applicants.map((p) => (
-                <tr key={p.id}>
-                  <td>
-                    <span
-                      className="applicant-name"
-                      onClick={() =>
-                        navigate(
-                          `/UserProfile/${p.postulante?.id || p.usuarioId}`,
-                        )
-                      }
-                      style={{ cursor: "pointer" }}
-                    >
-                      {p.postulante?.foto ? (
-                        <img
-                          src={`${API_URL}/${p.postulante.foto}`}
-                          alt=""
-                          className="applicant-photo"
-                        />
-                      ) : (
-                        <FaUser />
-                      )}
-                      {p.postulante?.name} {p.postulante?.apellido}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="applicant-contact">
-                      <div>
-                        <FaEnvelope /> {p.postulante?.email}
-                      </div>
-                      <div>
-                        <FaPhone /> {p.postulante?.telefono || "—"}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {p.postulante?.cv ? (
-                      <a
-                        href={`${API_URL}/${p.postulante.cv}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <FaFileAlt /> Ver CV
-                      </a>
-                    ) : (
-                      "—"
-                    )}
-                  </td>
-                  <td>
-                    <span className={`estado-badge ${p.estado}`}>
-                      {p.estado}
-                    </span>
-                  </td>
-                  <td>
-                    {p.estado === "pendiente" && (
-                      <>
-                        <button
-                          className="accept-btn"
-                          onClick={() => handleEstado(p.id, "aceptado")}
-                        >
-                          Aceptar
-                        </button>
-                        <button
-                          className="reject-btn"
-                          onClick={() => handleEstado(p.id, "rechazado")}
-                        >
-                          Rechazar
-                        </button>
-                      </>
-                    )}
-                  </td>
+          <div className="table-scroll">
+            <table className="applicants-table">
+              <thead>
+                <tr>
+                  <th>Postulante</th>
+                  <th>Contacto</th>
+                  <th>CV</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {applicants.map((p) => (
+                  <tr key={p.id}>
+                    <td>
+                      <span
+                        className="applicant-name"
+                        onClick={() =>
+                          navigate(
+                            `/UserProfile/${p.postulante?.id || p.usuarioId}`,
+                          )
+                        }
+                        style={{ cursor: "pointer" }}
+                      >
+                        {p.postulante?.foto ? (
+                          <img
+                            src={p.postulante.foto}
+                            alt=""
+                            className="applicant-photo"
+                          />
+                        ) : (
+                          <FaUser />
+                        )}
+                        {p.postulante?.name} {p.postulante?.apellido}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="applicant-contact">
+                        <div>
+                          <FaEnvelope /> {p.postulante?.email}
+                        </div>
+                        <div>
+                          <FaPhone /> {p.postulante?.telefono || "—"}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      {p.postulante?.cv ? (
+                        <a
+                          href={p.postulante.cv}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <FaFileAlt /> Ver CV
+                        </a>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+                    <td>
+                      <span className={`estado-badge ${p.estado}`}>
+                        {p.estado}
+                      </span>
+                    </td>
+                    <td>
+                      {p.estado === "pendiente" && (
+                        <>
+                          <button
+                            className="accept-btn"
+                            onClick={() => handleEstado(p.id, "aceptado")}
+                          >
+                            Aceptar
+                          </button>
+                          <button
+                            className="reject-btn"
+                            onClick={() => handleEstado(p.id, "rechazado")}
+                          >
+                            Rechazar
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

@@ -24,3 +24,9 @@
 .menu-button:hover {
   color: var(--primary-dark);
 }
+
+@media (max-width: 768px) {
+  .content {
+    position: relative;
+  }
+}

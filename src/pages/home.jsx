@@ -10,14 +10,20 @@ const Home = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get("search") || "";
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="home">
-      <Navbar />
+      <Navbar onMenuToggle={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
       <div className="content">
         <Sidebar
-          onCategoriaSelect={setCategoriaSeleccionada}
+          onCategoriaSelect={(cat) => {
+            setCategoriaSeleccionada(cat);
+            setSidebarOpen(false);
+          }}
           categoriaActiva={categoriaSeleccionada}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
         <MainContent
           categoriaSeleccionada={categoriaSeleccionada}

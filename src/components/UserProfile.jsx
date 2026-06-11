@@ -70,7 +70,7 @@ const UserProfile = () => {
             <div className="profile-photo">
               {user.foto ? (
                 <img
-                  src={`${API_URL}/${user.foto}`}
+                  src={user.foto}
                   alt={user.name}
                 />
               ) : (
@@ -105,7 +105,7 @@ const UserProfile = () => {
                   <p>{user.cv}</p>
                   <div className="resume-actions">
                     <a
-                      href={`${API_URL}/${user.cv}`}
+                      href={user.cv}
                       target="_blank"
                       rel="noreferrer"
                     >

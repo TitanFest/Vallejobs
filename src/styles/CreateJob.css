@@ -199,6 +199,21 @@ textarea {
 
   .create-job-container {
     padding: 20px;
+    margin: 12px;
+  }
+
+  .create-job-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .create-job-header h2 {
+    font-size: 18px;
+  }
+
+  .required-legend {
+    font-size: 12px;
   }
 
   .form-actions {
@@ -210,5 +225,9 @@ textarea {
     width: 100%;
     justify-content: center;
     display: flex;
+  }
+
+  .vacancies-input {
+    max-width: 100%;
   }
 }

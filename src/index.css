@@ -33,6 +33,10 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   font-family:
@@ -42,6 +46,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg);
   color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 input,
@@ -65,4 +75,17 @@ textarea:focus {
   padding: 80px 20px;
   font-size: 16px;
   color: var(--text-muted);
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --radius-lg: 10px;
+    --radius-xl: 12px;
+  }
 }

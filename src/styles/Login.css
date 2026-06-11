@@ -272,16 +272,32 @@
 }
 
 @media (max-width: 768px) {
+  .login-wrapper {
+    padding: 12px;
+  }
+
   .login-container {
-    padding: 30px 24px;
-    margin: 16px;
+    padding: 28px 20px;
+    margin: 12px;
   }
 
   .login-container h2 {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .login-container input {
     font-size: 15px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .login-container {
+    padding: 24px 16px;
+    margin: 8px;
+  }
+
+  .login-container h2 {
+    font-size: 22px;
   }
 }

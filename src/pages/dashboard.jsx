@@ -178,28 +178,30 @@ const Dashboard = () => {
                   No te has postulado a ninguna oferta aún.
                 </p>
               ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>Oferta</th>
-                      <th>Ubicación</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {postulaciones.slice(0, 5).map((p) => (
-                      <tr key={p.id}>
-                        <td>{p.oferta?.titulo || "Oferta eliminada"}</td>
-                        <td>{p.oferta?.localizacion || "—"}</td>
-                        <td>
-                          <span className={`estado-badge ${p.estado}`}>
-                            {p.estado}
-                          </span>
-                        </td>
+                <div className="table-scroll">
+                  <table className="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Oferta</th>
+                        <th>Ubicación</th>
+                        <th>Estado</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {postulaciones.slice(0, 5).map((p) => (
+                        <tr key={p.id}>
+                          <td>{p.oferta?.titulo || "Oferta eliminada"}</td>
+                          <td>{p.oferta?.localizacion || "—"}</td>
+                          <td>
+                            <span className={`estado-badge ${p.estado}`}>
+                              {p.estado}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               ))}
 
             {tab === "ofertas" &&
@@ -214,63 +216,65 @@ const Dashboard = () => {
                   </button>
                 </p>
               ) : (
-                <table className="dashboard-table">
-                  <thead>
-                    <tr>
-                      <th>Título</th>
-                      <th>Ubicación</th>
-                      <th>Postulantes</th>
-                      <th>Estado</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {misOfertas.map((o) => (
-                      <tr key={o.id}>
-                        <td>{o.titulo}</td>
-                        <td>{o.localizacion}</td>
-                        <td>{o.postulaciones?.length || 0}</td>
-                        <td>
-                          <span
-                            className={`estado-badge ${o.estado ? "aceptado" : "rechazado"}`}
-                          >
-                            {o.estado ? "Activa" : "Inactiva"}
-                          </span>
-                        </td>
-                        <td className="acciones-cell">
-                          <button
-                            className="edit-btn"
-                            onClick={() => navigate(`/EditJob/${o.id}`)}
-                            title="Editar"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            className="view-app-btn"
-                            onClick={() => navigate(`/JobApplicants/${o.id}`)}
-                            title="Ver postulantes"
-                          >
-                            <FaEye />
-                          </button>
-                          <button
-                            className="toggle-btn"
-                            onClick={() => handleToggleEstado(o)}
-                            title={o.estado ? "Desactivar" : "Activar"}
-                          >
-                            {o.estado ? <FaToggleOn /> : <FaToggleOff />}
-                          </button>
-                          <button
-                            className="delete-btn"
-                            onClick={() => handleEliminarOferta(o.id)}
-                            title="Eliminar"
-                          >
-                            <FaTrash />
-                          </button>
-                        </td>
+                <div className="table-scroll">
+                  <table className="dashboard-table">
+                    <thead>
+                      <tr>
+                        <th>Título</th>
+                        <th>Ubicación</th>
+                        <th>Postulantes</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {misOfertas.map((o) => (
+                        <tr key={o.id}>
+                          <td>{o.titulo}</td>
+                          <td>{o.localizacion}</td>
+                          <td>{o.postulaciones?.length || 0}</td>
+                          <td>
+                            <span
+                              className={`estado-badge ${o.estado ? "aceptado" : "rechazado"}`}
+                            >
+                              {o.estado ? "Activa" : "Inactiva"}
+                            </span>
+                          </td>
+                          <td className="acciones-cell">
+                            <button
+                              className="edit-btn"
+                              onClick={() => navigate(`/EditJob/${o.id}`)}
+                              title="Editar"
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              className="view-app-btn"
+                              onClick={() => navigate(`/JobApplicants/${o.id}`)}
+                              title="Ver postulantes"
+                            >
+                              <FaEye />
+                            </button>
+                            <button
+                              className="toggle-btn"
+                              onClick={() => handleToggleEstado(o)}
+                              title={o.estado ? "Desactivar" : "Activar"}
+                            >
+                              {o.estado ? <FaToggleOn /> : <FaToggleOff />}
+                            </button>
+                            <button
+                              className="delete-btn"
+                              onClick={() => handleEliminarOferta(o.id)}
+                              title="Eliminar"
+                            >
+                              <FaTrash />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               ))}
           </div>
 

@@ -144,12 +144,22 @@
 
   .applicants-table th,
   .applicants-table td {
-    padding: 10px 12px;
+    padding: 10px 8px;
+    white-space: nowrap;
+  }
+
+  .applicant-name {
+    font-size: 13px;
+  }
+
+  .applicant-contact div {
+    font-size: 12px;
   }
 
   .accept-btn,
   .reject-btn {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 6px 10px;
+    font-size: 11px;
+    margin-right: 4px;
   }
 }

@@ -159,7 +159,22 @@
 }
 
 @media (max-width: 768px) {
+  .registro-wrapper {
+    padding: 12px;
+  }
+
   .registro-container {
     padding: 28px 20px;
+    width: 100%;
+  }
+
+  .registro-container h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .registro-container {
+    padding: 24px 14px;
   }
 }

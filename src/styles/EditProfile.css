@@ -237,6 +237,24 @@
 }
 
 @media (max-width: 768px) {
+  .edit-profile-wrapper {
+    padding: 20px 12px;
+  }
+
+  .edit-profile-card {
+    padding: 24px 16px;
+  }
+
+  .edit-profile-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .edit-profile-card h2 {
+    font-size: 18px;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }

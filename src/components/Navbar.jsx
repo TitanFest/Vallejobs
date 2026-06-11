@@ -5,11 +5,13 @@ import {
   faUser,
   faRightFromBracket,
   faShieldHalved,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { isLoggedIn, logout, logoutUser, isAdmin } from "../services/authService";
 import "../styles/Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onMenuToggle, sidebarOpen }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const loggedIn = isLoggedIn();
@@ -41,6 +43,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
+        <button className="mobile-menu-btn" onClick={onMenuToggle}>
+          <FontAwesomeIcon icon={sidebarOpen ? faTimes : faBars} />
+        </button>
         <span className="logo" onClick={() => (window.location.href = "/")}>
           VALLEJOBS
         </span>
